@@ -1,64 +1,93 @@
 import Image from "next/image";
 import React from "react";
+import BlurText from "./BlurText";
 
 export default function Hero() {
   return (
-    <section className="pt-[130px] pb-0 px-4 flex flex-col items-center text-center relative overflow-hidden bg-[#fafafa]">
-      {/* Background Gradient Fade */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#f8f9fa] via-white to-white pointer-events-none" />
+    <section className="pt-[130px] pb-0 flex flex-col items-center text-center relative overflow-hidden bg-[#F9F9F9]">
 
-      {/* Title */}
-      <h1 className="relative z-10 text-[2rem] md:text-[3rem] font-black tracking-[-0.03em] mb-5 max-w-7xl uppercase font-poppins leading-[1.05] text-[#111827]">
-        Build for students <br />
-        Designed for <span className="text-[#2563EB]">Consistency</span>
-      </h1>
+      {/* Content Wrapper */}
+      <div className="relative z-20 flex flex-col items-center px-4 w-full">
+        {/* Title */}
+        <h1 className="text-[40px] md:text-[64px] font-normal tracking-[-1px] mb-5 max-w-7xl uppercase font-(family-name:--font-staatliches) leading-[1.1] md:leading-[69px] text-[#111827]">
+          <BlurText 
+            text="Build for students" 
+            delay={0} 
+            animateBy="words" 
+            direction="top" 
+            className="inline-block" 
+          />
+          <br />
+          <BlurText 
+            text="Designed for" 
+            delay={300} 
+            animateBy="words" 
+            direction="top" 
+            className="inline-block mr-[0.25em]" 
+          />
+          <BlurText 
+            text="Consistency" 
+            delay={600} 
+            animateBy="words" 
+            direction="top" 
+            className="inline-block text-[#2563EB]" 
+          />
+        </h1>
 
-      {/* Subtitle */}
-      <p className="relative z-10 text-[#6b7280] text-[17px] md:text-[19px] max-w-[720px] mb-8 leading-[1.6] font-medium mx-auto">
-        Consistency AI is built to help students stay consistent, practice daily,
-        and become truly career-ready in the AI era.
-      </p>
+        {/* Subtitle */}
+        <p className="text-[#6b7280] text-[17px] md:text-[19px] max-w-[720px] mb-8 leading-[1.6] font-medium mx-auto">
+          Consistency AI is built to help students stay consistent, practice daily,
+          and become truly career-ready in the AI era.
+        </p>
 
-      {/* Buttons */}
-      <div className="relative z-10 flex flex-col sm:flex-row gap-4 mb-10">
-        <button className="bg-[#3B82F6] text-white px-7 py-3.5 rounded-full font-semibold flex items-center justify-center gap-2 hover:bg-blue-600 transition-colors shadow-sm text-[15px]">
-          Explore Cohorts
-          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-             <path fillRule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z" clipRule="evenodd" />
-          </svg>
-        </button>
-        <button className="bg-[#0f1115] text-white px-7 py-3.5 rounded-full font-semibold flex items-center justify-center gap-2 hover:bg-black transition-colors shadow-sm text-[15px]">
-          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" />
-          </svg>
-          Join Community
-        </button>
+        {/* Buttons */}
+        <div className="flex flex-col sm:flex-row gap-4 mb-10 justify-center">
+          <button className="bg-[#3B82F6] bg-linear-to-r from-[#3B82F6] to-[#2563EB] text-white px-8 py-3.5 rounded-full font-medium flex items-center justify-center gap-2 hover:shadow-lg hover:-translate-y-[0.5px] transition-all shadow-sm text-[16px]">
+            Explore Cohorts
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <rect width="18" height="18" x="3" y="3" rx="4"/>
+              <path d="M8 12h8"/>
+              <path d="m12 8 4 4-4 4"/>
+            </svg>
+          </button>
+          <button className="border border-[#2563EB] text-[#2563EB] bg-transparent hover:bg-[#2563EB]/5 px-8 py-3.5 rounded-full font-medium flex items-center justify-center gap-2 transition-all shadow-sm hover:-translate-y-[0.5px] text-[16px]">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+            Join Community
+          </button>
+        </div>
+
+        {/* Trust Badge */}
+        <div className="flex items-center gap-3 mb-14">
+          <div className="flex -space-x-2.5">
+            <img src="https://i.pravatar.cc/100?img=11" alt="Student" className="w-9 h-9 rounded-full border-2 border-white object-cover shadow-sm" />
+            <img src="https://i.pravatar.cc/100?img=12" alt="Student" className="w-9 h-9 rounded-full border-2 border-white object-cover shadow-sm" />
+            <img src="https://i.pravatar.cc/100?img=18" alt="Student" className="w-9 h-9 rounded-full border-2 border-white object-cover shadow-sm" />
+          </div>
+          <div className="flex flex-col items-start text-[13px] leading-tight">
+            <span className="text-black font-bold mb-0.5">Trusted by 25,000+ students</span>
+            <span className="text-gray-400 font-medium">
+              4.9/5 from 1,200+ reviews
+              <span className="text-yellow-400 ml-1 tracking-widest text-[10px]">★★★★★</span>
+            </span>
+          </div>
+        </div>
       </div>
 
-      {/* Trust Badge */}
-      <div className="relative z-10 flex items-center gap-3 mb-14">
-        <div className="flex -space-x-2.5">
-          <img src="https://i.pravatar.cc/100?img=11" alt="Student" className="w-9 h-9 rounded-full border-2 border-white object-cover shadow-sm" />
-          <img src="https://i.pravatar.cc/100?img=12" alt="Student" className="w-9 h-9 rounded-full border-2 border-white object-cover shadow-sm" />
-          <img src="https://i.pravatar.cc/100?img=13" alt="Student" className="w-9 h-9 rounded-full border-2 border-white object-cover shadow-sm" />
-        </div>
-        <div className="flex flex-col items-start text-[11px] leading-tight">
-          <span className="text-black font-bold mb-0.5">Trusted by 25,000+ students</span>
-          <span className="text-gray-400 font-medium">
-            4.9/5 from 1,200+ reviews
-            <span className="text-yellow-400 ml-1 tracking-widest text-[10px]">★★★★★</span>
-          </span>
-        </div>
-      </div>
-
-      {/* Image */}
-      <div className="relative z-10 w-full max-w-7xl  -mt-60 ">
-        {/* We use an image representing a crowd of students walking */}
-        <div className="absolute bottom-0 w-full h-32 bg-linear-to-t from-white to-transparent z-10" />
-        <img
-          src="/students_crowd.png"
-          alt="Diverse crowd of students walking"
-          className="w-full h-auto object-cover rounded-t-[40px] opacity-95"
+      {/* Video */}
+      <div className="relative z-10 w-full -mt-60">
+        {/* Video Background Fade */}
+        <div className="absolute bottom-0 w-full h-32 bg-linear-to-t from-[#F9F9F9] to-transparent z-10" />
+        <video
+          src="/assets/video/video1.mp4"
+          autoPlay
+          loop
+          playsInline
+          className="w-full h-auto object-cover opacity-95"
           style={{ minHeight: "400px" }}
         />
       </div>
