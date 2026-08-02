@@ -4,22 +4,42 @@ import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import BlurText from "./BlurText";
 
-/* ─── tiny hook: fires when element enters/leaves viewport ──────── */
+/* ─── tiny hook: fires when element enters/leaves viewport, then keeps
+   replaying the reveal animation in a loop for as long as it stays in
+   view (instead of animating in once and sitting static) ──────── */
 function useInView(threshold = 0.15) {
   const ref = useRef<HTMLDivElement>(null);
+  const [inView, setInView] = useState(false);
   const [visible, setVisible] = useState(false);
+
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
     const obs = new IntersectionObserver(
-      ([entry]) => {
-        setVisible(entry.isIntersecting);
-      },
+      ([entry]) => setInView(entry.isIntersecting),
       { threshold }
     );
     obs.observe(el);
     return () => obs.disconnect();
   }, [threshold]);
+
+  useEffect(() => {
+    if (!inView) {
+      setVisible(false);
+      return;
+    }
+    setVisible(true);
+    let resetTimeout: ReturnType<typeof setTimeout>;
+    const interval = setInterval(() => {
+      setVisible(false);
+      resetTimeout = setTimeout(() => setVisible(true), 400);
+    }, 5000);
+    return () => {
+      clearInterval(interval);
+      clearTimeout(resetTimeout);
+    };
+  }, [inView]);
+
   return { ref, visible };
 }
 
@@ -38,10 +58,11 @@ function ProgressBar({
   return (
     <div className="self-stretch h-1.5 bg-gray-100 rounded-full overflow-hidden">
       <div
-        className={`h-full rounded-full transition-all duration-700 ease-out ${color}`}
+        className={`h-full rounded-full transition-all ease-out ${color}`}
         style={{
           width: visible ? `${percent}%` : "0%",
-          transitionDelay: `${delay}ms`,
+          transitionDelay: visible ? `${delay}ms` : "0ms",
+          transitionDuration: visible ? "700ms" : "200ms",
         }}
       />
     </div>
@@ -200,7 +221,7 @@ export default function SolutionSection() {
             <IllustrationArea>
               <div className="absolute size-44 left-8 top-4 bg-indigo-50 rounded-full blur-2xl" />
               {/* Mini check-in widget */}
-              <div className="w-full max-w-72 p-4 bg-white/10 rounded-2xl ring-1 ring-white/75 backdrop-blur-[30px] flex flex-col gap-3 relative z-10 shadow-lg">
+              <div className={`w-full max-w-72 p-4 bg-white/10 rounded-2xl ring-1 ring-white/75 backdrop-blur-[30px] flex flex-col gap-3 relative z-10 shadow-lg transition-opacity duration-500 ${visible ? "opacity-100" : "opacity-0"}`}>
                 <div className="flex justify-between items-center">
                   <span className="text-gray-900 text-xs font-bold font-sans">Today&apos;s check-in</span>
                   <span className="text-emerald-500 text-[9px] font-bold font-sans">● Low risk</span>
@@ -230,31 +251,64 @@ export default function SolutionSection() {
           {/* Card 2 — One Domain. One Path. */}
           <FeatureCard delay={200}>
             <IllustrationArea>
-              {/* Skill tags */}
-              <div className="w-full max-w-72 flex flex-wrap justify-center gap-2 mb-6 relative z-10">
-                {["React", "Python", "ML", "DSA", "UI/UX"].map((skill) => (
-                  <span
-                    key={skill}
-                    className="px-3 py-1.5 bg-white rounded-xl ring-1 ring-violet-100 shadow-sm text-gray-500 text-[10px] font-medium font-sans"
-                  >
-                    {skill}
-                  </span>
-                ))}
-              </div>
-              {/* Roadmap bar */}
-              <div className="w-full max-w-64 p-3 bg-white rounded-xl ring-1 ring-gray-100 shadow-sm flex flex-col gap-2 relative z-10">
-                <span className="text-zinc-400 text-[8px] font-bold font-sans uppercase">
-                  Roadmap &nbsp;·&nbsp; 1 domain • 12 weeks
-                </span>
-                <div className="flex justify-between items-center">
-                  {[true, true, true, false].map((done, i) => (
-                    <div key={i} className="flex items-center gap-0">
-                      <div
-                        className={`size-2.5 rounded-full ${done ? "bg-indigo-400" : "bg-slate-200 border border-slate-300"}`}
-                      />
-                      {i < 3 && <div className="w-12 h-0 border-2 border-slate-200" />}
-                    </div>
+              <div className="w-full flex flex-col items-center">
+                {/* Skill tags — pop in one by one, left to right, instead of
+                    all appearing together */}
+                <div className="w-full flex flex-nowrap justify-center gap-1.5 mb-6 relative z-10">
+                  {["React", "Python", "ML", "DSA", "UI/UX"].map((skill, i) => (
+                    <span
+                      key={skill}
+                      className={`px-2.5 py-1.5 bg-white rounded-xl ring-1 ring-violet-100 shadow-sm text-gray-500 text-[13px] font-medium font-sans whitespace-nowrap transition-all ease-out ${
+                        visible ? "scale-100 opacity-100" : "scale-0 opacity-0"
+                      }`}
+                      style={{
+                        transitionDelay: visible ? `${i * 150}ms` : "0ms",
+                        transitionDuration: "300ms",
+                      }}
+                    >
+                      {skill}
+                    </span>
                   ))}
+                </div>
+                {/* Roadmap bar */}
+                <div className="w-full max-w-64 p-3 bg-white rounded-xl ring-1 ring-gray-100 shadow-sm flex flex-col gap-2 relative z-10">
+                  <span className="text-zinc-400 text-xs font-bold font-sans uppercase">
+                    Roadmap &nbsp;·&nbsp; 1 domain • 12 weeks
+                  </span>
+                  <div className="flex justify-between items-center">
+                    {/* Chained reveal: each dot pops in only once the line
+                        connecting it to the previous dot has finished
+                        drawing, so it reads as one clean left-to-right
+                        sequence instead of dots and lines racing each other.
+                        Step = 450ms: dot_i at i*450, its outgoing line starts
+                        100ms later and finishes exactly at (i+1)*450, right
+                        when the next dot appears. */}
+                    {[true, true, true, false].map((done, i) => (
+                      <div key={i} className="flex items-center gap-0">
+                        <div
+                          className={`size-2.5 rounded-full shrink-0 transition-all ease-out ${
+                            visible ? "scale-100 opacity-100" : "scale-0 opacity-0"
+                          } ${done ? "bg-indigo-400" : "bg-slate-200 border border-slate-300"}`}
+                          style={{
+                            transitionDelay: visible ? `${i * 450}ms` : "0ms",
+                            transitionDuration: "300ms",
+                          }}
+                        />
+                        {i < 3 && (
+                          <div className="w-12 h-0.5 bg-slate-200 rounded-full overflow-hidden">
+                            <div
+                              className="h-full bg-indigo-400 rounded-full transition-all ease-out"
+                              style={{
+                                width: visible ? "100%" : "0%",
+                                transitionDelay: visible ? `${i * 450 + 100}ms` : "0ms",
+                                transitionDuration: "350ms",
+                              }}
+                            />
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </IllustrationArea>
@@ -299,7 +353,12 @@ export default function SolutionSection() {
                   );
                 })}
                 {/* Centre bubble */}
-                <div className="size-28 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-full border border-slate-100 shadow-[0px_8px_20px_rgba(0,0,0,0.06)] flex flex-col justify-center items-center gap-0.5 z-20">
+                <div
+                  className={`size-28 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-full border border-slate-100 shadow-[0px_8px_20px_rgba(0,0,0,0.06)] flex flex-col justify-center items-center gap-0.5 z-20 transition-all duration-300 ease-out ${
+                    visible ? "scale-100 opacity-100" : "scale-0 opacity-0"
+                  }`}
+                  style={{ transitionDelay: visible ? "600ms" : "0ms" }}
+                >
                   <span className="text-slate-400 text-[9px] font-semibold font-sans uppercase tracking-[0.12em]">GOAL</span>
                   <span className="text-[#0F172A] text-sm font-bold font-sans">Ship MVP</span>
                   <div className="mt-1">
@@ -327,7 +386,7 @@ export default function SolutionSection() {
           {/* Card 4 — Daily Check-ins */}
           <FeatureCard delay={400}>
             <IllustrationArea>
-              <div className="w-full max-w-72 p-4 bg-white rounded-2xl shadow-sm ring-1 ring-gray-100 flex flex-col gap-3 relative z-10">
+              <div className={`w-full max-w-72 p-4 bg-white rounded-2xl shadow-sm ring-1 ring-gray-100 flex flex-col gap-3 relative z-10 transition-opacity duration-500 ${visible ? "opacity-100" : "opacity-0"}`}>
                 <div className="flex justify-between items-center">
                   <span className="text-gray-900 text-[10px] font-bold font-sans">Daily streak</span>
                   <span className="text-indigo-400 text-[10px] font-bold font-sans">🔥 18 days</span>
@@ -361,10 +420,19 @@ export default function SolutionSection() {
                     );
                   })}
                 </div>
-                {/* Log items */}
+                {/* Log items — appear one by one after the day dots finish */}
                 <div className="flex flex-col gap-1">
-                  {["✓ What I learned", "✓ What's next"].map((t) => (
-                    <div key={t} className="px-2.5 py-1.5 bg-gray-50 rounded-md ring-1 ring-gray-100">
+                  {["✓ What I learned", "✓ What's next"].map((t, i) => (
+                    <div
+                      key={t}
+                      className={`px-2.5 py-1.5 bg-gray-50 rounded-md ring-1 ring-gray-100 transition-all ease-out ${
+                        visible ? "translate-y-0 opacity-100" : "translate-y-1.5 opacity-0"
+                      }`}
+                      style={{
+                        transitionDelay: visible ? `${1050 + i * 150}ms` : "0ms",
+                        transitionDuration: "300ms",
+                      }}
+                    >
                       <span className="text-gray-500 text-[9px] font-sans">{t}</span>
                     </div>
                   ))}
@@ -383,15 +451,24 @@ export default function SolutionSection() {
           {/* Card 5 — Corporate Habits */}
           <FeatureCard delay={500}>
             <IllustrationArea>
-              <div className="w-full max-w-72 p-3 bg-white rounded-2xl shadow-sm ring-1 ring-gray-100 flex flex-col gap-2 relative z-10">
+              <div className={`w-full max-w-72 p-3 bg-white rounded-2xl shadow-sm ring-1 ring-gray-100 flex flex-col gap-2 relative z-10 transition-opacity duration-500 ${visible ? "opacity-100" : "opacity-0"}`}>
                 <span className="text-gray-500 text-[9px] font-bold font-sans">▣ Daily Standup • 09:30 AM IST</span>
                 <div className="flex gap-1.5">
                   {[
                     { label: "DONE", color: "text-emerald-500", bg: "bg-stone-50 ring-gray-200", items: ["API auth", "PR #42 merged"] },
                     { label: "NEXT", color: "text-indigo-400", bg: "bg-slate-50 ring-slate-200", items: ["Ship dashboard", "Write tests"] },
                     { label: "BLOCKERS", color: "text-red-500", bg: "bg-stone-50 ring-red-100", items: ["Rate limit", "Env vars"] },
-                  ].map(({ label, color, bg, items }) => (
-                    <div key={label} className={`flex-1 p-2 ${bg} rounded-lg ring-1 flex flex-col gap-1.5`}>
+                  ].map(({ label, color, bg, items }, i) => (
+                    <div
+                      key={label}
+                      className={`flex-1 p-2 ${bg} rounded-lg ring-1 flex flex-col gap-1.5 transition-all ease-out ${
+                        visible ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"
+                      }`}
+                      style={{
+                        transitionDelay: visible ? `${i * 200}ms` : "0ms",
+                        transitionDuration: "350ms",
+                      }}
+                    >
                       <span className={`${color} text-[8px] font-bold font-sans`}>{label}</span>
                       <span className="text-gray-500 text-[8px] font-sans leading-3">
                         {items.map((it) => `• ${it}`).join("\n")}
@@ -413,7 +490,7 @@ export default function SolutionSection() {
           {/* Card 6 — Real Cohort Progress */}
           <FeatureCard delay={600}>
             <IllustrationArea>
-              <div className="w-full max-w-72 p-4 bg-white rounded-2xl shadow-sm ring-1 ring-gray-100 flex flex-col gap-3 relative z-10">
+              <div className={`w-full max-w-72 p-4 bg-white rounded-2xl shadow-sm ring-1 ring-gray-100 flex flex-col gap-3 relative z-10 transition-opacity duration-500 ${visible ? "opacity-100" : "opacity-0"}`}>
                 <div className="flex justify-between items-center">
                   <span className="text-zinc-400 text-[9px] font-bold font-sans">Live cohort • 124 students</span>
                   <span className="text-emerald-500 text-[9px] font-bold font-sans">● verified</span>
@@ -424,7 +501,13 @@ export default function SolutionSection() {
                   { label: "Daily check-in compliance", pct: 91, color: "bg-emerald-400", delay: 450 },
                   { label: "Mindset shift", pct: 96, color: "bg-blue-500", delay: 600 },
                 ].map(({ label, pct, color, delay }) => (
-                  <div key={label} className="flex flex-col gap-1">
+                  <div
+                    key={label}
+                    className={`flex flex-col gap-1 transition-all ease-out ${
+                      visible ? "translate-y-0 opacity-100" : "translate-y-1.5 opacity-0"
+                    }`}
+                    style={{ transitionDelay: visible ? `${delay}ms` : "0ms", transitionDuration: "350ms" }}
+                  >
                     <div className="flex justify-between">
                       <span className="text-gray-500 text-[9px] font-medium font-sans">{label}</span>
                       <span className="text-gray-900 text-[9px] font-bold font-sans">{pct}%</span>

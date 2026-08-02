@@ -9,7 +9,7 @@ export default function Hero() {
       {/* Content Wrapper */}
       <div className="relative z-20 flex flex-col items-center px-4 w-full">
         {/* Title */}
-        <h1 className="text-[40px] md:text-[64px] font-normal tracking-[-1px] mb-5 max-w-7xl uppercase font-(family-name:--font-staatliches) leading-[1.1] md:leading-[69px] text-[#111827]">
+        <h1 className="text-[40px] md:text-[64px] font-normal tracking-[-1px] mb-5 max-w-7xl uppercase font-staatliches leading-[1.1] md:leading-[69px] text-[#111827]">
           <BlurText 
             text="Build for students" 
             delay={0} 
@@ -85,6 +85,7 @@ export default function Hero() {
         <video
           src="/assets/video/video1.mp4"
           autoPlay
+          muted
           loop
           playsInline
           className="w-full h-auto object-cover opacity-95"

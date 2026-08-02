@@ -73,11 +73,14 @@ export default function ProblemSection() {
             </div>
           </div>
 
-          {/* Middle Column (Image) */}
+          {/* Middle Column (Video) */}
           <div className="lg:h-auto min-h-[400px] rounded-[2.5rem] overflow-hidden relative shadow-md">
-            <img
-              src="/assets/images/home.png"
-              alt="Student studying with frustration"
+            <video
+              src="/assets/video/v1.mp4"
+              autoPlay
+              muted
+              loop
+              playsInline
               className="absolute inset-0 w-full h-full object-cover"
             />
           </div>

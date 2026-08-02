@@ -1,16 +1,6 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Staatliches, Poppins } from "next/font/google";
+import { Staatliches, Stack_Sans_Headline } from "next/font/google";
 import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 const staatliches = Staatliches({
   weight: "400",
@@ -18,9 +8,9 @@ const staatliches = Staatliches({
   subsets: ["latin"],
 });
 
-const poppins = Poppins({
-  weight: ["300", "400", "500", "600", "700", "800", "900"],
-  variable: "--font-poppins",
+const stackSansHeadline = Stack_Sans_Headline({
+  weight: "400",
+  variable: "--font-stack-sans-headline",
   subsets: ["latin"],
 });
 
@@ -37,7 +27,8 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${staatliches.variable} ${poppins.variable} font-(family-name:--font-poppins) h-full antialiased`}
+      className={`${staatliches.variable} ${stackSansHeadline.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col font-sans">{children}</body>
     </html>
