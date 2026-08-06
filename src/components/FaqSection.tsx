@@ -7,47 +7,47 @@ type Faq = { q: string; a: string };
 
 const LEFT_FAQS: Faq[] = [
   {
-    q: "Why do students lose motivation halfway through learning?",
-    a: "Most platforms give you content but no structure. Without daily accountability, motivation fades — that's the exact gap Consistency AI closes.",
+    q: "Why do students quit courses even after paying for them?",
+    a: "Most students don't quit because they're incapable. They quit because they lose consistency, accountability, and momentum after the initial motivation fades. Consistency AI is built to solve that gap.",
   },
   {
-    q: "How is Consistency AI different from other bootcamps or courses?",
-    a: "We don't just teach. We track your daily habits, pair you with a mentor, and make sure you finish what you start instead of collecting half-done courses.",
+    q: "How does the Consistency Engine work?",
+    a: "The Consistency Engine measures learning behavior, task completion, streaks, attendance, project activity, and engagement signals to help students maintain momentum every day.",
   },
   {
-    q: "What if I'm a complete beginner?",
-    a: "The roadmap starts from the fundamentals — no prior experience required. You just need to show up daily and follow the plan.",
+    q: "How is Consistency AI different from platforms like Coursera, Udemy, or YouTube?",
+    a: "Those platforms provide content. We focus on completion. Through AI mentors, accountability systems, cohort learning, and consistency tracking, we help students finish what they start.",
   },
   {
-    q: "What happens if I miss a day of practice?",
-    a: "Your AI mentor flags the gap immediately and nudges you back on track before a missed day turns into a broken streak.",
+    q: "Will I get support from real mentors?",
+    a: "Yes. AI handles day-to-day guidance and monitoring, while human mentors provide deeper support, career advice, project reviews, and intervention when needed.",
   },
   {
-    q: "Is this self-paced or cohort-based?",
-    a: "Both — you follow a structured, phase-by-phase roadmap alongside a live cohort of peers on the same journey.",
+    q: "What does the AI Mentor actually do?",
+    a: "The AI Mentor tracks progress, answers doubts, performs daily check-ins, identifies learning slowdowns, and helps students stay on track throughout their learning journey.",
   },
 ];
 
 const RIGHT_FAQS: Faq[] = [
   {
-    q: "How does the AI mentor actually work?",
-    a: "It reviews your daily check-ins, code, and progress patterns, then tells your human mentor exactly where you need guidance.",
+    q: "What if I am a complete beginner?",
+    a: "The platform is designed for beginners. Personalized roadmaps, structured learning paths, AI guidance, and mentor support help students progress step-by-step without feeling overwhelmed.",
   },
   {
-    q: "Will I get support from real mentors?",
-    a: "Yes — every student is paired with an industry mentor for 1:1 guidance and weekly checkpoint interviews.",
+    q: "What happens if I lose motivation or stop learning?",
+    a: "The system detects inactivity, missed check-ins, and declining engagement. It then triggers reminders, interventions, and mentor support before you completely drop off.",
   },
   {
-    q: "Is there a job placement guarantee?",
-    a: "We guarantee career support — resume polishing, mock interviews, portfolio reviews, and direct referrals to hiring partners.",
+    q: "How do you help students become job-ready?",
+    a: "Students learn through cohorts, hands-on projects, portfolio building, mentorship, mock interviews, and industry-aligned skill development designed around hiring requirements.",
   },
   {
-    q: "How do you keep students accountable?",
-    a: "Daily streaks, weekly checkpoints, and a mentor who follows up personally the moment your consistency drops.",
+    q: "Is this just another online course platform?",
+    a: "No. Consistency AI is a consistency-driven learning ecosystem designed to help students build skills, complete projects, and become job-ready through structured accountability.",
   },
   {
-    q: "What is your refund policy?",
-    a: "If you complete the first two weeks and don't see value, we offer a full refund — no questions asked.",
+    q: "What is your mission?",
+    a: "Every Student Deserves Consistency. We believe talent is everywhere, but consistency is not. Our mission is to help students build lasting learning habits that lead to skills, confidence, and career opportunities.",
   },
 ];
 
