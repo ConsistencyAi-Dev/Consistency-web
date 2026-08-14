@@ -1,0 +1,13 @@
+src/
+├── app/                  # Next.js App Router layout, pages, and API routes
+├── assets/               # Static assets (images, fonts, global CSS/SCSS)
+├── components/           # Reusable React components
+│   ├── features/         # Complex components grouped by feature (e.g., auth, dashboard)
+│   ├── layout/           # Page layout components (Navbar, Sidebar, Footer)
+│   └── ui/               # Base UI elements (Buttons, Inputs, Cards, Modals)
+├── config/               # Global configuration (constants, environment variables, site config)
+├── context/              # React Context API providers for global state
+├── hooks/                # Custom React hooks (e.g., useAuth, useClickOutside)
+├── lib/                  # Utility functions, helpers, and third-party library configurations
+├── services/             # API services and data fetching logic (Axios, Fetch, mutations)
+└── types/                # TypeScript interfaces, types, and enums
