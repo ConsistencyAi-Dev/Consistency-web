@@ -25,7 +25,7 @@ export default function Navbar() {
         {/* Actions */}
         <div className="shrink-0">
           <Link
-            href="#"
+            href="/login"
             className="inline-block bg-[#0055FF] bg-linear-to-r from-[#0066FF] to-[#0044FF] text-white px-5 py-2 md:px-12 md:py-2.5 rounded-full text-[13px] md:text-[14px] font-semibold hover:shadow-[0_4px_14px_0_rgba(0,102,255,0.39)] hover:translate-y-[-0.5px] transition-all"
           >
             Log in
