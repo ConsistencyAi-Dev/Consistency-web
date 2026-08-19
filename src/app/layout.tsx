@@ -12,6 +12,7 @@ const stackSansHeadline = Stack_Sans_Headline({
   weight: "400",
   variable: "--font-stack-sans-headline",
   subsets: ["latin"],
+  adjustFontFallback: false,
 });
 
 export const metadata: Metadata = {
@@ -30,7 +31,7 @@ export default function RootLayout({
       className={`${staatliches.variable} ${stackSansHeadline.variable} h-full antialiased`}
       suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col font-sans">{children}</body>
+      <body className="min-h-full flex flex-col font-sans" suppressHydrationWarning>{children}</body>
     </html>
   );
 }

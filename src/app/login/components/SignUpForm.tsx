@@ -158,7 +158,7 @@ export default function SignUpForm({
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full pl-11 pr-11 py-2.5 border border-gray-200 focus:border-[#0055FF] focus:ring-1 focus:ring-[#0055FF] rounded-xl text-[14px] bg-white transition-all outline-none font-medium placeholder-gray-400 shadow-sm"
+              className="w-full pl-11 pr-11 py-2.5 border border-gray-200 focus:border-[#0055FF] focus:ring-1 focus:ring-[#0055FF] rounded-xl text-[14px] text-black bg-white transition-all outline-none font-medium placeholder-gray-400 shadow-sm"
             />
             <button
               type="button"
@@ -198,7 +198,7 @@ export default function SignUpForm({
               required
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              className="w-full pl-11 pr-11 py-2.5 border border-gray-200 focus:border-[#0055FF] focus:ring-1 focus:ring-[#0055FF] rounded-xl text-[14px] bg-white transition-all outline-none font-medium placeholder-gray-400 shadow-sm"
+              className="w-full pl-11 pr-11 py-2.5 border border-gray-200 focus:border-[#0055FF] focus:ring-1 focus:ring-[#0055FF] rounded-xl text-[14px] text-black bg-white transition-all outline-none font-medium placeholder-gray-400 shadow-sm"
             />
             <button
               type="button"
