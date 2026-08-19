@@ -101,7 +101,7 @@ export default function LoginForm({
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className={`w-full pl-11 pr-11 py-3 border rounded-xl text-[14px] bg-white transition-all outline-none font-medium placeholder-gray-400 shadow-sm ${
+              className={`w-full pl-11 pr-11 py-3 border rounded-xl text-[14px] text-black bg-white transition-all outline-none font-medium placeholder-gray-400 shadow-sm ${
                 error && error.includes("incorrect")
                   ? "border-red-400 focus:border-red-500 focus:ring-1 focus:ring-red-500 bg-red-50/10"
                   : "border-gray-200 focus:border-[#0055FF] focus:ring-1 focus:ring-[#0055FF]"

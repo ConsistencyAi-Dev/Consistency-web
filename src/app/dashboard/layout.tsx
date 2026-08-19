@@ -1,11 +1,30 @@
+"use client";
+
 import Link from "next/link";
-import React from "react";
+import React, { useState, useEffect } from "react";
+import OnboardingWizard from "./components/OnboardingWizard";
 
 export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const [isOnboarded, setIsOnboarded] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    // Read from localStorage on mount
+    const onboarded = localStorage.getItem("isOnboarded") === "true";
+    setIsOnboarded(onboarded);
+  }, []);
+
+  const handleOnboardingComplete = () => {
+    localStorage.setItem("isOnboarded", "true");
+    setIsOnboarded(true);
+  };
+
+  // Bypass onboarding redirect check to show the quiz screen immediately
+  return <OnboardingWizard onComplete={handleOnboardingComplete} />;
+
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col md:flex-row">
       {/* Sidebar */}

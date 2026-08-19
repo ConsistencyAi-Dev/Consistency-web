@@ -19,6 +19,7 @@ import ForgotPasswordEmail from "./components/ForgotPasswordEmail";
 import ForgotPasswordCode from "./components/ForgotPasswordCode";
 import ForgotPasswordSuccess from "./components/ForgotPasswordSuccess";
 import ResetPasswordForm from "./components/ResetPasswordForm";
+import ResetLoadingTransition from "./components/ResetLoadingTransition";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -31,6 +32,7 @@ export default function LoginPage() {
     | "forgot-code"
     | "forgot-success"
     | "reset-password"
+    | "reset-loading"
   >("login");
 
   const [isLoading, setIsLoading] = useState(false);
@@ -72,7 +74,6 @@ export default function LoginPage() {
     }
   }, [mode]);
 
-  // Login handler
   const handleLoginSubmit = (emailVal: string, passwordVal: string, remember: boolean) => {
     setError(null);
     setSuccessMsg(null);
@@ -80,12 +81,7 @@ export default function LoginPage() {
 
     setTimeout(() => {
       setIsLoading(false);
-      // Demo logic: 'alex@university.edu' with password 'password' succeeds, any other triggers the error state
-      if (emailVal === "alex@university.edu" && (passwordVal === "password" || passwordVal === "correct")) {
-        router.push("/dashboard");
-      } else {
-        setError("The email or password you entered is incorrect. Please try again.");
-      }
+      router.push("/dashboard");
     }, 1800);
   };
 
@@ -176,21 +172,15 @@ export default function LoginPage() {
       return;
     }
 
-    setIsLoading(true);
-
-    setTimeout(() => {
-      setIsLoading(false);
-      setMode("login");
-      setSuccessMsg("Password reset successfully! Log in with your new password.");
-    }, 1800);
+    setMode("reset-loading");
   };
 
-  const isCenterCardMode = ["forgot-email", "forgot-code", "forgot-success"].includes(mode);
+  const isCenterCardMode = ["forgot-email", "forgot-code", "forgot-success", "reset-loading"].includes(mode);
 
   return (
     <div className="min-h-screen w-full flex bg-[#F8F9FC] font-sans overflow-x-hidden relative">
       {/* Back to Home Link */}
-      <Link
+      {/* <Link
         href="/"
         className="absolute top-6 left-6 z-50 flex items-center gap-2 text-sm text-gray-500 hover:text-gray-900 transition-colors font-medium"
       >
@@ -198,7 +188,7 @@ export default function LoginPage() {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
         </svg>
         Back to home
-      </Link>
+      </Link> */}
 
       <div className="w-full flex min-h-screen">
         {/* Left Side: Form Container */}
@@ -309,6 +299,22 @@ export default function LoginPage() {
                     onSubmit={handleResetPasswordSubmit}
                     isLoading={isLoading}
                     error={error}
+                  />
+                </motion.div>
+              )}
+
+              {mode === "reset-loading" && (
+                <motion.div
+                  key="reset-loading"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <ResetLoadingTransition
+                    onComplete={() => {
+                      router.push("/dashboard");
+                    }}
                   />
                 </motion.div>
               )}
