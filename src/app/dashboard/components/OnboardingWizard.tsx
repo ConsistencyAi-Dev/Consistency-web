@@ -159,10 +159,10 @@ export default function OnboardingWizard({ onComplete }: OnboardingWizardProps) 
   return (
     <div className="min-h-screen bg-[#F8F9FC] flex flex-col">
       {/* Onboarding Header */}
-      <header className="h-16 bg-white border-b border-gray-100 px-6 sm:px-12 flex items-center justify-between shrink-0 shadow-sm z-10">
+      <header className="sticky top-0 z-50 h-16 bg-white border-b border-gray-100 px-6 sm:px-12 flex items-center justify-between shrink-0 shadow-sm">
         {/* Left Side: Brand Logo */}
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center shadow-sm border border-blue-100/50">
+          <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center">
             <img src="/logo.png" alt="Consistency AI" className="w-5.5 h-5.5 object-contain" />
           </div>
           <div className="flex items-baseline gap-1.5">

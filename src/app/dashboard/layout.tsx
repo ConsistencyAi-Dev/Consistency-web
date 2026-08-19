@@ -175,7 +175,7 @@ export default function DashboardLayout({
       {/* Main Workspace Frame */}
       <div className="flex-1 flex flex-col min-h-0 overflow-hidden">
         {/* Workspace Top Header */}
-        <header className="h-20 bg-white  flex items-center justify-between px-6 sm:px-8 shrink-0 shadow-sm text-left">
+        <header className="sticky top-0 z-50 h-20 bg-white flex items-center justify-between px-6 sm:px-8 shrink-0 shadow-sm text-left">
           <div>
             <h1 className="text-base font-black text-gray-800 tracking-tight flex items-center gap-1.5">
               Good morning, Santhosh <span className="animate-bounce">👋</span>

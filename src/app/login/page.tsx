@@ -324,8 +324,8 @@ export default function LoginPage() {
 
         {/* Right Side: Illustration Container */}
         {!isCenterCardMode && (
-          <div className="hidden lg:flex w-1/2 bg-transparent items-center justify-center p-12 relative overflow-hidden">
-            <div className="w-full max-w-[480px] z-10 flex flex-col items-center justify-center">
+          <div className="hidden lg:flex w-1/2 bg-transparent items-center justify-center p-6 xl:p-10 relative overflow-hidden">
+            <div className="w-full max-w-[640px] z-10 flex flex-col items-center justify-center">
               {mode === "signup" && (
                 <motion.div
                   key="signup-illustration"
@@ -339,7 +339,7 @@ export default function LoginPage() {
                     src={studentSignupIllustration}
                     alt="Student Sign Up Illustration"
                     priority
-                    className="max-h-[380px] w-auto object-contain transition-all duration-300"
+                    className="w-full h-auto max-h-[580px] object-contain transition-all duration-300"
                   />
                 </motion.div>
               )}
@@ -358,14 +358,14 @@ export default function LoginPage() {
                       src={studentLoginErrorIllustration}
                       alt="Student Login Error Illustration"
                       priority
-                      className="max-h-[380px] w-auto object-contain transition-all duration-300"
+                      className="w-full h-auto max-h-[580px] object-contain transition-all duration-300"
                     />
                   ) : (
                     <Image
                       src={studentLoginIllustration}
                       alt="Student Login Illustration"
                       priority
-                      className="max-h-[380px] w-auto object-contain transition-all duration-300"
+                      className="w-full h-auto max-h-[580px] object-contain transition-all duration-300"
                     />
                   )}
                 </motion.div>
@@ -384,7 +384,7 @@ export default function LoginPage() {
                     src={createNewPasswordIllustration}
                     alt="Create New Password Illustration"
                     priority
-                    className="max-h-[380px] w-auto object-contain transition-all duration-300"
+                    className="w-full h-auto max-h-[580px] object-contain transition-all duration-300"
                   />
                 </motion.div>
               )}
