@@ -60,7 +60,7 @@ export default function ForgotPasswordEmail({
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full pl-11 pr-4 py-3 border border-gray-200 focus:border-[#0055FF] focus:ring-1 focus:ring-[#0055FF] rounded-xl text-[14px] bg-white transition-all outline-none font-medium placeholder-gray-400"
+              className="w-full pl-11 pr-4 py-3 border border-gray-200 focus:border-[#0055FF] focus:ring-1 focus:ring-[#0055FF] rounded-xl text-[14px] text-black bg-white transition-all outline-none font-medium placeholder-gray-400"
             />
           </div>
         </div>

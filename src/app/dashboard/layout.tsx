@@ -56,7 +56,7 @@ export default function DashboardLayout({
       {/* Main Content */}
       <div className="flex-1 flex flex-col min-h-0 overflow-hidden">
         {/* Top Header */}
-        <header className="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-6 shrink-0">
+        <header className="sticky top-0 z-50 h-16 bg-white border-b border-gray-200 flex items-center justify-between px-6 shrink-0">
           <div className="font-medium text-gray-800">Learning Management System</div>
           <div className="flex items-center gap-4">
             <button className="text-gray-400 hover:text-gray-600">
