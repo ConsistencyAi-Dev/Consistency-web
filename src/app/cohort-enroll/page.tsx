@@ -86,13 +86,8 @@ export default function CohortEnrollPage() {
       {/* Header bar area */}
       <header className="bg-white border-b border-gray-100 px-6 sm:px-12 py-4 flex items-center justify-between shadow-sm shrink-0">
         <Link href="/dashboard" className="flex items-center gap-2">
-          <div
-            className="w-7 h-7 rounded-lg flex items-center justify-center shadow-md shadow-blue-500/20"
-            style={{ background: "linear-gradient(135deg, #2B50EC 0%, #223FB9 50%, #182D86 100%)" }}
-          >
-            <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25" />
-            </svg>
+          <div className="w-7 h-7 rounded-lg flex items-center justify-center shadow-md shadow-blue-500/20 bg-white p-1 overflow-hidden shrink-0">
+            <img src="/logo.png" alt="Consistency AI" className="w-full h-full object-contain" />
           </div>
           <div className="text-left">
             <span className="font-extrabold text-gray-900 text-sm tracking-tight block">Consistency AI</span>
@@ -377,7 +372,7 @@ export default function CohortEnrollPage() {
                   <button
                     type="button"
                     onClick={handlePay}
-                    className="bg-[#2B50EC] hover:bg-[#1E3BB3] text-white px-8 py-3.5 rounded-xl text-xs font-black transition-all shadow-md active:scale-[0.98] flex items-center gap-1.5 cursor-pointer w-full sm:w-auto justify-center"
+                    className="bg-[#2B50EC] hover:bg-[#1E3BB3] text-white px-8 py-3.5 rounded-xl text-xs font-black transition-all shadow-md shadow-blue-500/25 active:scale-[0.98] flex items-center gap-1.5 cursor-pointer w-full sm:w-auto justify-center"
                   >
                     <span>Pay $529.82</span>
                     <span>→</span>
@@ -679,7 +674,7 @@ export default function CohortEnrollPage() {
               <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3.5">
                 <Link
                   href="/dashboard"
-                  className="bg-[#2B50EC] hover:bg-[#1E3BB3] text-white px-10 py-3.5 rounded-xl text-xs font-black transition-all shadow-md active:scale-[0.98] flex items-center justify-center gap-1.5 w-full sm:w-auto cursor-pointer"
+                  className="bg-[#2B50EC] hover:bg-[#1E3BB3] text-white px-10 py-3.5 rounded-xl text-xs font-black transition-all shadow-md shadow-blue-500/25 active:scale-[0.98] flex items-center justify-center gap-1.5 w-full sm:w-auto cursor-pointer"
                 >
                   <span>Go to Dashboard</span>
                   <span>→</span>

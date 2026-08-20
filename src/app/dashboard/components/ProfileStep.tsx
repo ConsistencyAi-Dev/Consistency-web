@@ -266,7 +266,7 @@ export default function ProfileStep({
         <button
           type="button"
           onClick={onNext}
-          className="w-full bg-[#0055FF] hover:bg-[#0044EE] text-white py-4 px-6 rounded-2xl font-bold transition-all shadow-lg shadow-blue-500/10 active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer"
+          className="w-full bg-[#0055FF] hover:bg-[#0044EE] text-white py-4 px-6 rounded-2xl font-bold transition-all shadow-lg shadow-blue-500/25 active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer"
         >
           Continue to Quiz →
         </button>

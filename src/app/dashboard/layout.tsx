@@ -95,13 +95,8 @@ export default function DashboardLayout({
           {/* Brand Header */}
           <div className="h-16 flex items-center justify-between px-2 border-b border-gray-100 mb-6">
             <Link href="/dashboard" className="flex items-center gap-2">
-              <div
-                className="w-7 h-7 rounded-lg flex items-center justify-center shadow-md shadow-blue-500/20"
-                style={{ background: "linear-gradient(135deg, #2B50EC 0%, #223FB9 50%, #182D86 100%)" }}
-              >
-                <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25" />
-                </svg>
+              <div className="w-7 h-7 rounded-lg flex items-center justify-center shadow-md shadow-blue-500/20 bg-white p-1 overflow-hidden shrink-0">
+                <img src="/logo.png" alt="Consistency AI" className="w-full h-full object-contain" />
               </div>
               <span className="font-extrabold text-gray-900 text-base tracking-tight">Consistency AI</span>
             </Link>
