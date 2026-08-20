@@ -65,28 +65,28 @@ export default function DashboardPage() {
   ];
 
   return (
-    <div className="w-full flex flex-col gap-6 text-left">
+    <div className="w-full flex flex-col gap-4 text-left">
       <div className="rounded-2xl bg-[linear-gradient(90deg,#2B50EC_0%,#3B63FF_50%,#6D8AFF_100%)] p-px shadow-[0px_1px_2px_0px_rgba(0,0,0,0.08)]">
-        <div className="flex flex-col items-start justify-between gap-4 rounded-[15px] bg-[linear-gradient(90deg,#2B50EC_0%,#3B63FF_50%,#6D8AFF_100%)] px-6 py-4 text-white xl:flex-row xl:items-center">
+        <div className="flex flex-col items-start justify-between gap-3.5 rounded-[15px] bg-[linear-gradient(90deg,#2B50EC_0%,#3B63FF_50%,#6D8AFF_100%)] px-5 py-3 text-white xl:flex-row xl:items-center">
           <div className="flex items-start gap-4">
             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[rgba(255,255,255,0.15)] backdrop-blur-[4px]">
               <Image src="/assets/images/figma-dashboard/hero-spark.svg" alt="Spark" width={20} height={20} />
             </div>
             <div>
-              <h2 className="text-[18px] font-semibold leading-[22.5px]">Welcome, Rahul! Let&apos;s find your perfect learning path</h2>
-              <p className="mt-1 max-w-[560px] text-[13px] leading-[21.13px] text-[rgba(255,255,255,0.8)]">
+              <h2 className="text-[16px] md:text-[17px] font-semibold leading-snug">Welcome, Rahul! Let&apos;s find your perfect learning path</h2>
+              <p className="mt-1 max-w-[560px] text-[12px] leading-relaxed text-[rgba(255,255,255,0.8)]">
                 You&apos;ve completed your goals assessment. Our AI has crafted a personalized roadmap — enroll in
                 a cohort to unlock it.
               </p>
             </div>
           </div>
 
-          <div className="flex items-center gap-2.5">
-            <span className="inline-flex items-center gap-2 rounded-full border border-[rgba(255,255,255,0.15)] bg-[rgba(255,255,255,0.15)] px-[15px] py-[9px] text-[12.5px] leading-[18.75px] backdrop-blur-[4px]">
+          <div className="flex items-center gap-2">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-[rgba(255,255,255,0.15)] bg-[rgba(255,255,255,0.15)] px-3.5 py-2 text-[11px] leading-[16px] backdrop-blur-[4px]">
               <Image src="/assets/images/figma-dashboard/hero-streak.svg" alt="Streak" width={16} height={16} />
               Streak 0 days
             </span>
-            <span className="inline-flex items-center gap-2 rounded-full bg-white px-[14px] py-2 text-[12.5px] font-semibold leading-[18.75px] text-[#2B50EC] shadow-[0px_1px_1px_rgba(0,0,0,0.05)]">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-white px-3.5 py-2 text-[11px] font-semibold leading-[16px] text-[#2B50EC] shadow-[0px_1px_1px_rgba(0,0,0,0.05)]">
               <Image src="/assets/images/figma-dashboard/hero-goal.svg" alt="Goal" width={16} height={16} />
               Goal: Get a Job in 6 months
             </span>
@@ -95,38 +95,38 @@ export default function DashboardPage() {
       </div>
 
       {/* Main Grid: Left content, Right sidebars widgets */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 w-full items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 w-full items-start">
         {/* Left Column contents */}
-        <div className="lg:col-span-2 flex flex-col gap-6">
+        <div className="lg:col-span-2 flex flex-col gap-4">
 
           <div className="rounded-2xl border border-[#E2E8F0] bg-white p-px shadow-[0px_1px_2px_0px_rgba(0,0,0,0.05)]">
-            <div className="flex flex-col items-start justify-between gap-4 px-6 pb-4 pt-6 xl:flex-row xl:items-start">
+            <div className="flex flex-col items-start justify-between gap-3 px-5 pb-3 pt-5 xl:flex-row xl:items-start">
               <div>
                 <div className="flex items-center gap-2">
-                  <span className="inline-flex items-center gap-1.5 rounded-full border border-[#C7D2FE] bg-[#EEF2FF] px-[11px] py-[5px] text-[11px] font-semibold uppercase tracking-[0.275px] leading-[16.5px] text-[#2B50EC]">
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-[#C7D2FE] bg-[#EEF2FF] px-[11px] py-[5px] text-[10px] font-semibold uppercase tracking-[0.275px] leading-[15px] text-[#2B50EC]">
                     <Image src="/assets/images/figma-dashboard/chip-spark.svg" alt="AI" width={12} height={12} />
                     AI GENERATED
                   </span>
-                  <span className="text-[11px] leading-[16.5px] text-[#94A3B8]">Updated today</span>
+                  <span className="text-[10px] leading-[15px] text-[#94A3B8]">Updated today</span>
                 </div>
-                <h3 className="pt-2 text-[17px] font-semibold leading-[25.5px] tracking-[-0.425px] text-[#0F172A]">Your AI Learning Path</h3>
-                <p className="text-[13px] leading-[19.5px] text-[#64748B]">
+                <h3 className="pt-1.5 text-[15px] font-semibold leading-[22px] tracking-tight text-[#0F172A]">Your AI Learning Path</h3>
+                <p className="text-[12px] leading-5 text-[#64748B]">
                   Based on your goal: <span className="text-[#334155]">Switch to Software Engineering</span>, we recommend:
                 </p>
               </div>
 
               <div className="flex items-center gap-3 self-end xl:self-auto">
                 <div className="text-right">
-                  <p className="text-[11px] leading-[16.5px] text-[#94A3B8]">OVERALL PROGRESS</p>
-                  <p className="text-[13px] font-semibold leading-[19.5px] text-[#0F172A]">0% • 16 weeks</p>
+                  <p className="text-[10px] leading-[15px] text-[#94A3B8]">OVERALL PROGRESS</p>
+                  <p className="text-[12px] font-semibold leading-[18px] text-[#0F172A]">0% • 16 weeks</p>
                 </div>
-                <div className="flex h-12 w-12 items-center justify-center rounded-full border-4 border-[#2B50EC] text-[11px] font-semibold leading-[16.5px] text-[#0F172A]">
+                <div className="flex h-11 w-11 items-center justify-center rounded-full border-4 border-[#2B50EC] text-[11px] font-semibold leading-[16.5px] text-[#0F172A]">
                   0%
                 </div>
               </div>
             </div>
 
-            <div className="mx-[7px] mb-2 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] p-[17px]">
+            <div className="mx-[7px] mb-2 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] p-3.5">
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-5">
                 {learningPathSteps.map((step, idx) => (
                   <div key={step.num} className="relative flex flex-col items-center text-center">
@@ -142,18 +142,18 @@ export default function DashboardPage() {
                     >
                       {step.num}
                     </div>
-                    <p className="pt-[7px] text-[12.5px] leading-[15.63px] text-[#1E293B]">{step.name}</p>
-                    <p className="text-[11px] leading-[16.5px] text-[#94A3B8]">{step.duration}</p>
+                    <p className="pt-1.5 text-[11px] leading-[14px] text-[#1E293B]">{step.name}</p>
+                    <p className="text-[10px] leading-[14px] text-[#94A3B8]">{step.duration}</p>
                   </div>
                 ))}
               </div>
 
-              <div className="mt-4 flex items-center justify-between">
+              <div className="mt-3 flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <div className="h-[6px] w-20 rounded-full bg-[#E2E8F0]" />
-                  <span className="text-[11px] leading-[16.5px] text-[#64748B]">0 of 5 milestones completed</span>
+                  <span className="text-[10px] leading-[15px] text-[#64748B]">0 of 5 milestones completed</span>
                 </div>
-                <button className="inline-flex items-center gap-1 text-[12px] leading-[18px] text-[#2B50EC] transition-colors hover:text-[#1E3BB3]">
+                <button className="inline-flex items-center gap-1 text-[11px] leading-[16.5px] text-[#2B50EC] transition-colors hover:text-[#1E3BB3]">
                   <span>View detailed roadmap</span>
                   <Image src="/assets/images/figma-dashboard/arrow-right-14.svg" alt="Arrow" width={14} height={14} />
                 </button>
@@ -162,42 +162,42 @@ export default function DashboardPage() {
           </div>
 
           {/* Card 2: Top Cohorts grid list */}
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-3">
             <div className="flex items-center justify-between">
-              <h3 className="text-base font-black text-gray-800 tracking-tight">Top Cohorts For You</h3>
-              <button className="text-[#2B50EC] hover:text-[#1E3BB3] text-xs font-black transition-all">
+              <h3 className="text-sm font-black text-gray-800 tracking-tight">Top Cohorts For You</h3>
+              <button className="text-[#2B50EC] hover:text-[#1E3BB3] text-[11px] font-black transition-all">
                 View all &gt;
               </button>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               {cohorts.map((cohort, idx) => (
                 <div
                   key={idx}
-                  className="bg-white rounded-2xl  overflow-hidden shadow-sm flex flex-col justify-between"
+                  className="bg-white rounded-xl overflow-hidden shadow-sm flex flex-col justify-between"
                 >
                   <div>
                     {/* Tag Header banner area */}
-                    <div className={`bg-gradient-to-r ${cohort.gradient} p-4.5 text-white flex flex-col relative`}>
-                      <span className={`self-start text-[8px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full mb-3 shadow-inner ${cohort.tagColor}`}>
+                    <div className={`bg-gradient-to-r ${cohort.gradient} p-3.5 text-white flex flex-col relative`}>
+                      <span className={`self-start text-[8px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full mb-2.5 shadow-inner ${cohort.tagColor}`}>
                         {cohort.match}
                       </span>
 
-                      <div className="flex items-center gap-1.5 text-[9px] font-black text-white/80 mb-1.5">
+                      <div className="flex items-center gap-1.5 text-[9px] font-black text-white/80 mb-1">
                         <svg className="w-3 h-3 text-white/70" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                           <path strokeLinecap="round" strokeLinejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
                         </svg>
                         <span>Live + Recorded</span>
                       </div>
 
-                      <h4 className="text-xs font-black leading-tight tracking-tight mt-1">
+                      <h4 className="text-[11px] font-black leading-tight tracking-tight mt-0.5">
                         {cohort.title}
                       </h4>
                     </div>
 
                     {/* Meta stats details */}
-                    <div className="p-4 flex flex-col text-left">
-                      <div className="flex items-center gap-3 text-[10px] font-bold text-gray-400 mb-3 border-b border-gray-50 pb-2">
+                    <div className="p-3 flex flex-col text-left">
+                      <div className="flex items-center gap-2.5 text-[9px] font-bold text-gray-400 mb-2 border-b border-gray-50 pb-1.5">
                         <span>{cohort.duration}</span>
                         <span>•</span>
                         <span>⭐ {cohort.rating}</span>
@@ -206,7 +206,7 @@ export default function DashboardPage() {
                       </div>
 
                       {/* Skill badges */}
-                      <div className="flex flex-wrap gap-1 mb-4">
+                      <div className="flex flex-wrap gap-1 mb-3">
                         {cohort.skills.map((skill) => (
                           <span
                             key={skill}
@@ -218,7 +218,7 @@ export default function DashboardPage() {
                       </div>
 
                       {/* Mentor block */}
-                      <div className="flex items-center gap-2 border-t border-gray-50 pt-3">
+                      <div className="flex items-center gap-2 border-t border-gray-50 pt-2.5">
                         <div className="w-7 h-7 rounded-full bg-gray-100 text-gray-600 flex items-center justify-center font-black text-[10px] shrink-0 uppercase border border-gray-200">
                           {cohort.mentor.split(" ").map(n => n[0]).join("")}
                         </div>
@@ -235,16 +235,16 @@ export default function DashboardPage() {
                   </div>
 
                   {/* Purchase price and enroll button */}
-                  <div className="p-4 border-t border-gray-100/60 bg-gray-50/50 flex items-center justify-between gap-2 mt-auto">
+                  <div className="p-3 border-t border-gray-100/60 bg-gray-50/50 flex items-center justify-between gap-2 mt-auto">
                     <div>
-                      <span className="text-xs font-black text-gray-800">{cohort.price}</span>
-                      <span className="text-[10px] font-bold text-gray-400 line-through ml-1">
+                      <span className="text-[11px] font-black text-gray-800">{cohort.price}</span>
+                      <span className="text-[9px] font-bold text-gray-400 line-through ml-1">
                         {cohort.originalPrice}
                       </span>
                     </div>
                     <Link
                       href="/cohort-enroll"
-                      className="bg-[#2B50EC] hover:bg-[#1E3BB3] text-white text-[10px] font-black py-1.5 px-3 rounded-lg shadow-sm transition-all active:scale-[0.98] inline-block"
+                      className="bg-[#2B50EC] hover:bg-[#1E3BB3] text-white text-[9px] font-black py-1 px-2.5 rounded-md shadow-sm transition-all active:scale-[0.98] inline-block"
                     >
                       Enroll
                     </Link>
@@ -255,9 +255,9 @@ export default function DashboardPage() {
           </div>
 
           {/* Card 3: Upcoming Workshops */}
-          <div className="bg-white rounded-3xl p-6 sm:p-7 shadow-sm">
-            <div className="flex items-center justify-between border-b border-gray-100 pb-4 mb-4">
-              <h3 className="text-sm font-extrabold text-gray-800 tracking-tight">Upcoming Free Workshops</h3>
+          <div className="bg-white rounded-2xl p-4 sm:p-5 shadow-sm">
+            <div className="flex items-center justify-between border-b border-gray-100 pb-3 mb-3">
+              <h3 className="text-xs font-extrabold text-gray-800 tracking-tight">Upcoming Free Workshops</h3>
               <span className="bg-emerald-50 text-[#10B981] border border-emerald-100 text-[8px] font-black uppercase tracking-wider py-0.5 px-2 rounded-md">
                 Free for you
               </span>
@@ -274,13 +274,13 @@ export default function DashboardPage() {
                 {
                   type: "Live Build",
                   date: "15/8, 11 AM IST",
-                  title: "System Design Live: Design YouTube",
-                  author: "by Priya Singh",
+                  title: "Building a SaaS from scratch",
+                  author: "by Sarah Jenkins",
                 },
               ].map((item, idx) => (
                 <div
                   key={idx}
-                  className="p-4 rounded-2xl border border-gray-100 bg-white flex items-center justify-between gap-4 transition-all hover:bg-gray-50/50 cursor-pointer"
+                  className="p-3.5 rounded-xl border border-gray-100 bg-white flex items-center justify-between gap-3.5 transition-all hover:bg-gray-50/50 cursor-pointer"
                 >
                   <div className="flex items-center gap-3">
                     <div className="w-8 h-8 rounded-xl bg-gray-50 flex items-center justify-center border border-gray-100 shrink-0">
@@ -309,51 +309,52 @@ export default function DashboardPage() {
               ))}
             </div>
           </div>
-
           {/* Card 4: Free vs Pro table */}
-          <div className="bg-white rounded-3xl p-6 sm:p-7 shadow-sm">
-            <div className="flex items-center justify-between border-b border-gray-100 pb-4 mb-4">
-              <h3 className="text-sm font-extrabold text-gray-800 tracking-tight">Free vs Pro – what changes after enrollment?</h3>
-              <button className="text-[#2B50EC] hover:text-[#1E3BB3] text-xs font-black transition-colors">
+          <div className="bg-white rounded-2xl p-4 sm:p-5 shadow-sm">
+            <div className="flex items-center justify-between border-b border-gray-100 pb-3 mb-3">
+              <h3 className="text-xs font-extrabold text-gray-800 tracking-tight">Free vs Pro – what changes after enrollment?</h3>
+              <button className="text-[#2B50EC] hover:text-[#1E3BB3] text-[11px] font-black transition-colors">
                 Upgrade anytime
               </button>
             </div>
 
-            <div className="overflow-x-auto w-full">
-              <table className="w-full text-left text-xs font-semibold">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left">
                 <thead>
-                  <tr className="text-gray-400 border-b border-gray-100">
-                    <th className="py-2.5 font-black uppercase text-[9px] tracking-wider">Feature</th>
-                    <th className="py-2.5 font-black uppercase text-[9px] tracking-wider">Free</th>
-                    <th className="py-2.5 font-black uppercase text-[9px] tracking-wider">Pro</th>
+                  <tr className="text-[9px] uppercase font-black text-gray-400 border-b border-gray-50">
+                    <th className="pb-2">Feature</th>
+                    <th className="pb-2">Free</th>
+                    <th className="pb-2">Pro</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-100 text-gray-700">
+                <tbody>
                   {[
-                    { name: "AI Learning Path", free: true, pro: true },
-                    { name: "Cohort Access (Live + Recorded)", free: false, pro: true },
-                    { name: "Mentor 1:1 Sessions", free: false, pro: true },
+                    { name: "Live Sessions", free: true, pro: true },
+                    { name: "Recorded Lectures", free: true, pro: true },
+                    { name: "1:1 Mentorship", free: false, pro: true },
+                    { name: "Mock Interviews", free: false, pro: true },
+                    { name: "Resume Review", free: false, pro: true },
                   ].map((row, idx) => (
-                    <tr key={idx} className="hover:bg-gray-50/30">
-                      <td className="py-3 font-bold text-gray-800">{row.name}</td>
-                      <td className="py-3">
+                    <tr key={idx} className="text-[10px] border-b border-gray-50 last:border-none">
+                      <td className="py-2 font-bold text-gray-800">{row.name}</td>
+                      <td className="py-2">
                         {row.free ? (
-                          <svg className="w-4 h-4 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                          <svg className="w-3.5 h-3.5 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                             <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                           </svg>
                         ) : (
-                          <svg className="w-4 h-4 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                          <svg className="w-3.5 h-3.5 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                             <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                           </svg>
                         )}
                       </td>
-                      <td className="py-3">
+                      <td className="py-2">
                         {row.pro ? (
-                          <svg className="w-4 h-4 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                          <svg className="w-3.5 h-3.5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                             <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                           </svg>
                         ) : (
-                          <svg className="w-4 h-4 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                          <svg className="w-3.5 h-3.5 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                             <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                           </svg>
                         )}
@@ -368,14 +369,12 @@ export default function DashboardPage() {
         </div>
 
         {/* Right Column sidebar widgets */}
-        <div className="flex flex-col gap-6 lg:col-span-1">
+        <div className="flex flex-col gap-4 lg:col-span-1">
           {/* Widget 1: Profile Strength indicator card */}
-          <div className="bg-white rounded-2xl  p-5 shadow-sm">
-            <div className="flex items-center justify-between mb-3">
-              <h4 className="text-xs font-black text-gray-800 uppercase tracking-wider">Profile Strength</h4>
-              <span className="bg-[#FFFBEB] text-[#D97706] text-[9px] font-black py-0.5 px-2 rounded-md border border-[#FEF3C7]">
-                60%
-              </span>
+          <div className="bg-white rounded-2xl p-4 shadow-sm">
+            <div className="flex items-center justify-between mb-2.5">
+              <h4 className="text-[10px] font-black text-gray-800 uppercase tracking-wider">Profile Strength</h4>
+              <span className="text-[9px] font-black text-orange-500 bg-orange-50 px-1.5 py-0.5 rounded">60%</span>
             </div>
 
             <div className="h-1.5 w-full bg-gray-100 rounded-full overflow-hidden mb-4 shadow-inner">
@@ -386,7 +385,7 @@ export default function DashboardPage() {
               Complete your profile to get better matches.
             </p>
 
-            <ul className="space-y-3.5 text-xs font-bold text-gray-600">
+            <ul className="space-y-2 text-xs font-bold text-gray-600">
               <li className="flex items-center gap-2">
                 <div className="w-4 h-4 rounded-full bg-blue-100 border border-blue-200 flex items-center justify-center shrink-0">
                   <svg className="w-2.5 h-2.5 text-[#2B50EC]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
@@ -425,13 +424,13 @@ export default function DashboardPage() {
           </div>
 
           {/* Widget 2: Potential Mentors */}
-          <div className="bg-white rounded-2xl  p-5 shadow-sm">
-            <div className="flex items-center justify-between mb-4">
-              <h4 className="text-xs font-black text-gray-800 uppercase tracking-wider">Meet Your Potential Mentors</h4>
+          <div className="bg-white rounded-2xl p-4 shadow-sm">
+            <div className="flex items-center justify-between mb-3">
+              <h4 className="text-[10px] font-black text-gray-800 uppercase tracking-wider">Meet Your Potential Mentors</h4>
               <span className="text-[9px] font-bold text-gray-400">1:1 trial</span>
             </div>
 
-            <div className="space-y-4">
+            <div className="space-y-3">
               {mentors.map((mentor, idx) => (
                 <div key={idx} className="flex items-center justify-between gap-2">
                   <div className="flex items-center gap-3">
@@ -457,14 +456,14 @@ export default function DashboardPage() {
               ))}
             </div>
 
-            <button className="w-full mt-4 bg-gray-50 hover:bg-gray-100  text-gray-700 text-[10px] font-black py-2.5 rounded-xl transition-all flex items-center justify-center gap-1 cursor-pointer">
+            <button className="w-full mt-3 bg-gray-50 hover:bg-gray-100 text-gray-700 text-[9px] font-black py-2 rounded-lg transition-all flex items-center justify-center gap-1 cursor-pointer">
               View all mentors
             </button>
           </div>
 
           {/* Widget 3: Why Consistency AI? */}
-          <div className="bg-[#0B0F19] text-white rounded-2xl border border-gray-800 p-5 shadow-sm">
-            <h4 className="text-xs font-black text-gray-400 uppercase tracking-wider mb-3">Why Consistency AI?</h4>
+          <div className="bg-[#0B0F19] text-white rounded-2xl border border-gray-800 p-4 shadow-sm">
+            <h4 className="text-[10px] font-black text-gray-400 uppercase tracking-wider mb-2.5">Why Consistency AI?</h4>
             <div className="grid grid-cols-3 gap-2 text-center py-1">
               <div className="flex flex-col">
                 <span className="text-sm font-black text-white">12K+</span>
@@ -479,7 +478,7 @@ export default function DashboardPage() {
                 <span className="text-[9px] font-bold text-gray-500 leading-tight">rating</span>
               </div>
             </div>
-            <div className="mt-4 pt-3.5 border-t border-gray-800 flex items-center justify-center gap-1.5 text-[9px] font-bold text-gray-400">
+            <div className="mt-3 pt-2.5 border-t border-gray-800 flex items-center justify-center gap-1.5 text-[9px] font-bold text-gray-400">
               <svg className="w-3.5 h-3.5 text-gray-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
               </svg>
@@ -488,9 +487,9 @@ export default function DashboardPage() {
           </div>
 
           {/* Widget 4: Have a coupon? */}
-          <div className="bg-white rounded-2xl  p-5 shadow-sm">
-            <div className="flex items-center justify-between mb-3.5">
-              <h4 className="text-xs font-black text-gray-800 uppercase tracking-wider flex items-center gap-1.5">
+          <div className="bg-white rounded-2xl p-4 shadow-sm">
+            <div className="flex items-center justify-between mb-2.5">
+              <h4 className="text-[10px] font-black text-gray-800 uppercase tracking-wider flex items-center gap-1.5">
                 <svg className="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" />
                 </svg>
@@ -504,16 +503,16 @@ export default function DashboardPage() {
               <input
                 type="text"
                 placeholder="Enter code"
-                className="flex-1 bg-gray-50 border border-gray-200 rounded-xl py-2 px-3 text-xs font-semibold focus:outline-none focus:border-blue-300 focus:bg-white transition-all shadow-inner"
+                className="flex-1 bg-gray-50 border border-gray-200 rounded-lg py-2 px-3 text-xs font-semibold focus:outline-none focus:border-blue-300 focus:bg-white transition-all shadow-inner"
               />
-              <button className="bg-gray-900 hover:bg-black text-white text-xs font-black px-4 py-2 rounded-xl transition-all shadow-sm">
+              <button className="bg-gray-900 hover:bg-black text-white text-xs font-black px-4 py-2 rounded-lg transition-all shadow-sm">
                 Apply
               </button>
             </div>
           </div>
 
           {/* Widget 5: Invite Friends */}
-          <div className="bg-white rounded-2xl  p-5 shadow-sm flex items-center justify-between gap-4">
+          <div className="bg-white rounded-2xl p-4 shadow-sm flex items-center justify-between gap-3">
             <div className="flex items-start gap-3">
               <div className="w-8 h-8 rounded-xl bg-gray-50 border border-gray-100 flex items-center justify-center shrink-0 mt-0.5">
                 <svg className="w-4.5 h-4.5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -535,7 +534,7 @@ export default function DashboardPage() {
           </div>
 
           {/* Widget 6: Need help choosing */}
-          <div className="bg-[#2B50EC]/5 border border-[#2B50EC]/10 rounded-2xl p-5 shadow-sm text-left">
+          <div className="bg-[#2B50EC]/5 border border-[#2B50EC]/10 rounded-2xl p-4 shadow-sm text-left">
             <div className="flex items-start gap-3">
               <div className="w-8 h-8 rounded-xl bg-[#2B50EC]/10 flex items-center justify-center shrink-0">
                 <svg className="w-4.5 h-4.5 text-[#2B50EC]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -543,14 +542,14 @@ export default function DashboardPage() {
                 </svg>
               </div>
               <div>
-                <h5 className="text-xs font-black text-gray-800 leading-tight">Need help choosing?</h5>
+                <h5 className="text-[11px] font-black text-gray-800 leading-tight">Need help choosing?</h5>
                 <p className="text-[9px] font-bold text-gray-400 leading-snug mt-1">
                   Not sure which cohort fits your goals? Talk to our learning advisor – free 15 min.
                 </p>
               </div>
             </div>
 
-            <button className="w-full mt-4 bg-[#2B50EC] hover:bg-[#1E3BB3] text-white text-[10px] font-black py-2.5 rounded-xl transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer">
+            <button className="w-full mt-3 bg-[#2B50EC] hover:bg-[#1E3BB3] text-white text-[9px] font-black py-2 rounded-lg transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer">
               <span>Book free counseling</span>
             </button>
             <span className="text-[8px] font-bold text-gray-400 text-center mt-2.5 w-full block">

@@ -52,28 +52,28 @@ export default function DashboardLayout({
 
   return (
     <div className="min-h-screen bg-[#F9FBFF] text-[#0F172A]">
-      <div className="flex min-h-screen flex-col md:flex-row">
-        <aside className="w-full border-r border-[#E2E8F0] bg-[#F9FBFF] md:w-64 md:min-h-screen md:flex md:flex-col md:justify-between">
+      <div className="flex min-h-screen md:h-screen flex-col md:flex-row md:overflow-hidden">
+        <aside className="w-full border-r border-[#E2E8F0] bg-[#F9FBFF] md:fixed md:top-0 md:bottom-0 md:left-0 md:z-30 md:w-64 md:h-screen md:overflow-y-auto md:overflow-x-hidden md:flex md:flex-col md:justify-between">
           <div>
-            <div className="flex items-center gap-3 px-6 py-6">
-              <div className="relative h-[43px] w-[43px] rounded-[7.63px] bg-[linear-gradient(48.1deg,#2B50EC_27.45%,#61D3F9_94.96%)]">
+            <div className="flex items-center gap-2.5 px-5 py-4">
+              <div className="relative h-[36px] w-[36px] rounded-[6px] bg-[linear-gradient(48.1deg,#2B50EC_27.45%,#61D3F9_94.96%)]">
                 <Image
                   src="/assets/images/figma-dashboard/brand-mark.svg"
                   alt="Consistency AI"
-                  width={24}
-                  height={24}
-                  className="absolute left-[10.38px] top-[9.32px]"
+                  width={20}
+                  height={20}
+                  className="absolute left-[8px] top-[8px]"
                 />
               </div>
               <div>
-                <p className="text-[18px] leading-7 tracking-[-0.45px] text-[#0F172A]">Consistency AI</p>
-                <span className="inline-flex rounded-full bg-[rgba(43,80,236,0.1)] px-2 py-0.5 text-[10px] uppercase leading-[15px] text-[#2B50EC]">
+                <p className="text-[15px] leading-6 tracking-tight text-[#0F172A]">Consistency AI</p>
+                <span className="inline-flex rounded-full bg-[rgba(43,80,236,0.1)] px-2 py-0.5 text-[9px] uppercase leading-[12px] text-[#2B50EC]">
                   FREE ACCESS
                 </span>
               </div>
             </div>
 
-            <nav className="flex flex-col gap-2 px-4 pb-4 pt-2">
+            <nav className="flex flex-col gap-1 px-3 pb-3 pt-1">
               {navItems.map((item) => {
                 const isActive = item.href === "/dashboard" ? pathname === "/dashboard" : pathname.startsWith(item.href);
 
@@ -81,22 +81,22 @@ export default function DashboardLayout({
                   <Link
                     key={item.name}
                     href={item.href}
-                    className={`flex h-11 w-full items-center justify-between rounded-xl px-3 py-2.5 transition-colors ${
+                    className={`flex h-9 w-full items-center justify-between rounded-lg px-2.5 py-1.5 transition-colors ${
                       isActive ? "bg-[#2B50EC] text-white" : "text-[#64748B] hover:bg-[#EEF2FF]"
                     } ${!isActive && item.locked ? "opacity-60" : ""}`}
                   >
-                    <span className="flex items-center gap-3">
+                    <span className="flex items-center gap-2.5">
                       <Image
                         src={item.icon}
                         alt=""
-                        width={18}
-                        height={18}
+                        width={15}
+                        height={15}
                         className={isActive ? "brightness-0 invert" : ""}
                       />
-                      <span className="text-[16px] leading-6">{item.name}</span>
+                      <span className="text-[13px] leading-5">{item.name}</span>
                     </span>
                     {item.locked && !isActive && (
-                      <Image src="/assets/images/figma-dashboard/icon-lock.svg" alt="Locked" width={9} height={12} />
+                      <Image src="/assets/images/figma-dashboard/icon-lock.svg" alt="Locked" width={8} height={10} />
                     )}
                   </Link>
                 );
@@ -104,19 +104,19 @@ export default function DashboardLayout({
             </nav>
           </div>
 
-          <div className="space-y-4 p-4">
-            <div className="relative rounded-2xl border border-[#E2E8F0] bg-white p-[17px] shadow-[0px_1px_2px_0px_rgba(0,0,0,0.05)]">
+          <div className="space-y-3 p-3">
+            <div className="relative rounded-xl border border-[#E2E8F0] bg-white p-3 shadow-[0px_1px_2px_0px_rgba(0,0,0,0.05)]">
               <div className="absolute -right-4 -top-4 h-12 w-12 rounded-full bg-[rgba(43,80,236,0.05)]" />
               <div className="relative z-10">
-                <div className="mb-[8.7px] flex h-8 w-8 items-center justify-center rounded-lg bg-[rgba(43,80,236,0.1)]">
-                  <Image src="/assets/images/figma-dashboard/icon-bolt.svg" alt="Upgrade" width={12} height={15} />
+                <div className="mb-[6px] flex h-7 w-7 items-center justify-center rounded-md bg-[rgba(43,80,236,0.1)]">
+                  <Image src="/assets/images/figma-dashboard/icon-bolt.svg" alt="Upgrade" width={10} height={12} />
                 </div>
-                <p className="pt-[8.7px] text-[14px] leading-5 text-[#0F172A]">Upgrade for More</p>
-                <p className="pb-[13.45px] text-[12px] leading-[19.5px] text-[#64748B]">
+                <p className="pt-1.5 text-[12px] leading-4 text-[#0F172A]">Upgrade for More</p>
+                <p className="pb-2.5 text-[10px] leading-[15px] text-[#64748B]">
                   Unlock AI Mentor, Projects,<br />
                   Certificates &amp; more.
                 </p>
-                <button className="w-full rounded-xl border border-[rgba(43,80,236,0.2)] bg-[rgba(43,80,236,0.05)] px-1 py-[9px] text-[12px] leading-4 text-[#2B50EC] transition-colors hover:bg-[rgba(43,80,236,0.08)]">
+                <button className="w-full rounded-lg border border-[rgba(43,80,236,0.2)] bg-[rgba(43,80,236,0.05)] px-1 py-[7px] text-[11px] leading-4 text-[#2B50EC] transition-colors hover:bg-[rgba(43,80,236,0.08)]">
                   Upgrade Now
                 </button>
               </div>
@@ -127,7 +127,7 @@ export default function DashboardLayout({
                 localStorage.removeItem("isOnboarded");
                 window.location.reload();
               }}
-              className="flex w-full items-center justify-center gap-2 rounded-xl border border-[#E2E8F0] bg-white py-[13px] text-[14px] leading-5 text-[#475569] transition-colors hover:bg-[#F8FAFC]"
+              className="flex w-full items-center justify-center gap-2 rounded-lg border border-[#E2E8F0] bg-white py-2 text-[12px] leading-4 text-[#475569] transition-colors hover:bg-[#F8FAFC]"
             >
               <Image src="/assets/images/figma-dashboard/icon-login.svg" alt="Log in" width={10.5} height={10.5} />
               <span>Log in / Sign up</span>
@@ -135,11 +135,11 @@ export default function DashboardLayout({
           </div>
         </aside>
 
-        <div className="flex min-h-screen flex-1 flex-col bg-[#F9FBFF]">
-          <header className="flex min-h-[104px] items-center justify-between border-b border-[#E2E8F0] bg-white px-6 py-5 md:px-10">
+        <div className="flex min-h-screen md:h-screen flex-1 flex-col bg-[#F9FBFF] md:ml-64 md:overflow-hidden">
+          <header className="flex min-h-[76px] items-center justify-between border-b border-[#E2E8F0] bg-white px-6 py-3.5 md:px-8">
             <div>
-              <h1 className="text-[24px] leading-8 text-[#0F172A]">Good morning, Santhosh 👋</h1>
-              <p className="text-[16px] leading-6 text-[#64748B]">Let&apos;s learn, build and grow together.</p>
+              <h1 className="text-[18px] md:text-[20px] leading-7 text-[#0F172A]">Good morning, Santhosh 👋</h1>
+              <p className="text-[13px] md:text-[14px] leading-5 text-[#64748B]">Let&apos;s learn, build and grow together.</p>
             </div>
 
             <div className="hidden items-center gap-3 lg:flex">
