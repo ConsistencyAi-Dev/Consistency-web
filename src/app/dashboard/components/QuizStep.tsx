@@ -612,7 +612,7 @@ export default function QuizStep({
                 <button
                   type="button"
                   onClick={handleNextQuizQuestion}
-                  className="bg-[#2B50EC] hover:bg-[#1E3BB3] text-white px-6 py-3 rounded-xl text-xs font-bold transition-all shadow-md active:scale-[0.98] flex items-center gap-1.5 cursor-pointer"
+                  className="bg-[#2B50EC] hover:bg-[#1E3BB3] text-white px-6 py-3 rounded-xl text-xs font-bold transition-all shadow-md shadow-blue-500/25 active:scale-[0.98] flex items-center gap-1.5 cursor-pointer"
                 >
                   <span>{quizQuestionIndex === QUIZ_QUESTIONS.length - 1 ? "Submit Quiz" : "Continue to Next"}</span>
                   <svg className="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
@@ -775,13 +775,8 @@ export default function QuizStep({
                 className="flex flex-col items-center w-full"
               >
                 {/* Code Symbol Logo */}
-                <div
-                  className="w-16 h-16 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-700/20 mb-6 mt-4 sm:mt-0"
-                  style={{ background: "linear-gradient(135deg, #2B50EC 0%, #223FB9 50%, #182D86 100%)" }}
-                >
-                  <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25" />
-                  </svg>
+                <div className="w-16 h-16 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/20 bg-white p-2.5 mb-6 mt-4 sm:mt-0 overflow-hidden">
+                  <img src="/logo.png" alt="Consistency AI" className="w-full h-full object-contain" />
                 </div>
 
                 {/* Titles */}
@@ -859,7 +854,7 @@ export default function QuizStep({
                   <button
                     type="button"
                     onClick={() => setQuizState("quiz")}
-                    className="w-full bg-[#2B50EC] hover:bg-[#1E3BB3] text-white py-4 px-6 rounded-2xl font-bold transition-all shadow-lg shadow-blue-500/10 active:scale-[0.98] flex items-center justify-center gap-2.5 cursor-pointer"
+                    className="w-full bg-[#2B50EC] hover:bg-[#1E3BB3] text-white py-4 px-6 rounded-2xl font-bold transition-all shadow-lg shadow-blue-500/25 active:scale-[0.98] flex items-center justify-center gap-2.5 cursor-pointer"
                   >
                     <span>Start Quiz</span>
                     <svg className="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3.5}>

@@ -125,7 +125,7 @@ export default function ResetPasswordForm({
         <button
           type="submit"
           disabled={isLoading}
-          className="w-full bg-[#0055FF] hover:bg-[#0044EE] text-white py-3.5 px-4 rounded-xl text-sm font-semibold transition-all duration-200 flex items-center justify-center gap-2.5 shadow-lg shadow-blue-500/10 active:scale-[0.98] disabled:opacity-75 disabled:cursor-not-allowed cursor-pointer"
+          className="w-full bg-[#0055FF] hover:bg-[#0044EE] text-white py-3.5 px-4 rounded-xl text-sm font-semibold transition-all duration-200 flex items-center justify-center gap-2.5 shadow-lg shadow-blue-500/25 active:scale-[0.98] disabled:opacity-75 disabled:cursor-not-allowed cursor-pointer"
         >
           {isLoading ? (
             <>
