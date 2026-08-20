@@ -16,17 +16,20 @@ export default function DashboardPage() {
   const cohorts = [
     {
       title: "AI/ML Mastery Cohort",
-      match: "BEST MATCH 96%",
+      match: "BEST MATCH 98%",
       duration: "1 Year",
       rating: "4.9",
       students: "240",
       skills: ["React", "Node.js", "PostgreSQL"],
       mentor: "Alex Morgan",
       mentorTitle: "Ex-Google, Staff Eng",
+      mentorAvatar: "A",
       price: "$299",
       originalPrice: "$408",
-      gradient: "from-[#2B50EC] to-[#7C3AED]",
-      tagColor: "bg-blue-500 text-white",
+      gradient: "linear-gradient(170deg, #2B50EC 0%, #8B9EFF 100%)",
+      badgeBg: "bg-white",
+      badgeTextColor: "text-[#2B50EC]",
+      showSpark: true,
     },
     {
       title: "DSA + System Design Cohort",
@@ -37,10 +40,13 @@ export default function DashboardPage() {
       skills: ["DSA", "System Design", "Mock Interviews"],
       mentor: "Priya Singh",
       mentorTitle: "Ex-Meta, Senior Staff",
+      mentorAvatar: "P",
       price: "$199",
       originalPrice: "$349",
-      gradient: "from-[#1E293B] to-[#0F172A]",
-      tagColor: "bg-gray-700 text-gray-100",
+      gradient: "linear-gradient(170deg, #1E293B 0%, #334155 100%)",
+      badgeBg: "bg-white/20 text-white backdrop-blur-[4px]",
+      badgeTextColor: "text-white",
+      showSpark: false,
     },
     {
       title: "Full Stack Developer",
@@ -51,17 +57,20 @@ export default function DashboardPage() {
       skills: ["Next.js", "Tailwind", "Framer Motion"],
       mentor: "David Chen",
       mentorTitle: "Ex-Vercel, Design Eng",
+      mentorAvatar: "D",
       price: "$149",
       originalPrice: "$249",
-      gradient: "from-[#F97316] to-[#EA580C]",
-      tagColor: "bg-orange-500 text-white",
+      gradient: "linear-gradient(170deg, #EA580C 0%, #FB923C 100%)",
+      badgeBg: "bg-white/20 text-white backdrop-blur-[4px]",
+      badgeTextColor: "text-white",
+      showSpark: false,
     },
   ];
 
   const mentors = [
-    { name: "Alex Morgan", rating: "4.9", title: "Staff Engineer @ Linear - 2.2K students", initial: "AM", color: "bg-blue-600" },
-    { name: "Priya Singh", rating: "4.9", title: "Senior SWE @ Meta - 3.8K students", initial: "PS", color: "bg-pink-600" },
-    { name: "David Chen", rating: "4.8", title: "Design Engineer @ Vercel - 1.2K students", initial: "DC", color: "bg-orange-500" },
+    { name: "Alex Morgan", rating: "4.9", title: "Staff Engineer @ Linear • 2.1k students", initial: "AM", color: "bg-[#2B50EC]" },
+    { name: "Priya Singh", rating: "4.9", title: "Senior SWE @ Meta • 1.8k students", initial: "PS", color: "bg-[#0F172A]" },
+    { name: "David Chen", rating: "4.8", title: "Design Engineer @ Vercel • 1.2k students", initial: "DC", color: "bg-[#F59E0B]" },
   ];
 
   return (
@@ -174,30 +183,66 @@ export default function DashboardPage() {
               {cohorts.map((cohort, idx) => (
                 <div
                   key={idx}
-                  className="bg-white rounded-xl overflow-hidden shadow-sm flex flex-col justify-between"
+                  className="bg-white rounded-2xl overflow-hidden shadow-sm border border-[#E2E8F0] flex flex-col justify-between"
                 >
                   <div>
-                    {/* Tag Header banner area */}
-                    <div className={`bg-gradient-to-br ${cohort.gradient} p-3.5 text-white flex flex-col relative`}>
-                      <span className={`self-start text-[8px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full mb-2.5 shadow-inner ${cohort.tagColor}`}>
-                        {cohort.match}
-                      </span>
-
-                      <div className="flex items-center gap-1.5 text-[9px] font-black text-white/80 mb-1">
-                        <svg className="w-3 h-3 text-white/70" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                        </svg>
-                        <span>Live + Recorded</span>
+                    {/* Header banner area */}
+                    <div
+                      className="relative h-[110px] w-full overflow-hidden"
+                      style={{ background: cohort.gradient }}
+                    >
+                      {/* Match Badge */}
+                      <div className={`absolute left-[12px] top-[12px] inline-flex items-center gap-[4px] rounded-full px-[8px] py-[4px] shadow-[0px_1px_2px_rgba(0,0,0,0.05)] ${cohort.badgeBg}`}>
+                        {cohort.showSpark && (
+                          <Image
+                            src="/assets/images/figma-dashboard/chip-spark.svg"
+                            alt="Spark"
+                            width={12}
+                            height={12}
+                            className="h-[12px] w-[12px]"
+                          />
+                        )}
+                        <span className={`text-[10px] font-semibold leading-[15px] tracking-[0.25px] ${cohort.badgeTextColor}`}>
+                          {cohort.match}
+                        </span>
                       </div>
 
-                      <h4 className="text-[11px] font-black leading-tight tracking-tight mt-0.5">
-                        {cohort.title}
-                      </h4>
+                      {/* Mentor Avatar Stack */}
+                      <div className="absolute right-[12px] top-[68px] inline-flex items-start">
+                        <div className="flex h-[28px] w-[28px] items-center justify-center rounded-full bg-white/90 outline outline-2 -outline-offset-2 outline-white">
+                          <span className="text-center text-[10px] font-semibold leading-[15px] text-[#0F172A]">
+                            {cohort.mentorAvatar}
+                          </span>
+                        </div>
+                        <div className="relative h-[28px] w-[20px]">
+                          <div className="absolute -left-[8px] top-0 inline-flex h-[28px] w-[28px] items-center justify-center rounded-full bg-black/20 outline outline-2 -outline-offset-2 outline-white/50 backdrop-blur-[4px]">
+                            <svg className="h-[12px] w-[12px] text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                            </svg>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Live + Recorded badge */}
+                      <div className="absolute left-[12px] top-[79px] inline-flex items-center gap-[6px]">
+                        <div className="relative flex h-[14px] w-[14px] items-center justify-center">
+                          <svg className="h-[14px] w-[14px] text-white/90" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                          </svg>
+                        </div>
+                        <span className="text-[11px] font-normal leading-[16.5px] text-white/90">
+                          Live + Recorded
+                        </span>
+                      </div>
                     </div>
 
                     {/* Meta stats details */}
-                    <div className="p-3 flex flex-col text-left">
-                      <div className="flex items-center gap-2.5 text-[9px] font-bold text-gray-400 mb-2 border-b border-gray-50 pb-1.5">
+                    <div className="p-3.5 flex flex-col text-left">
+                      <h4 className="text-[12px] font-bold text-[#0F172A] leading-tight mb-2">
+                        {cohort.title}
+                      </h4>
+
+                      <div className="flex items-center gap-2 text-[10px] font-medium text-[#94A3B8] mb-2.5 pb-2 border-b border-[#F1F5F9]">
                         <span>{cohort.duration}</span>
                         <span>•</span>
                         <span>⭐ {cohort.rating}</span>
@@ -210,7 +255,7 @@ export default function DashboardPage() {
                         {cohort.skills.map((skill) => (
                           <span
                             key={skill}
-                            className="bg-gray-50 border border-gray-100 text-gray-500 text-[8px] font-bold px-2 py-0.5 rounded-md"
+                            className="bg-[#F8FAFC] border border-[#E2E8F0] text-[#64748B] text-[9px] font-medium px-2 py-0.5 rounded-md"
                           >
                             {skill}
                           </span>
@@ -218,15 +263,15 @@ export default function DashboardPage() {
                       </div>
 
                       {/* Mentor block */}
-                      <div className="flex items-center gap-2 border-t border-gray-50 pt-2.5">
-                        <div className="w-7 h-7 rounded-full bg-gray-100 text-gray-600 flex items-center justify-center font-black text-[10px] shrink-0 uppercase border border-gray-200">
-                          {cohort.mentor.split(" ").map(n => n[0]).join("")}
+                      <div className="flex items-center gap-2 border-t border-[#F1F5F9] pt-2.5">
+                        <div className="w-7 h-7 rounded-full bg-[#F1F5F9] text-[#475569] flex items-center justify-center font-bold text-[10px] shrink-0 uppercase border border-[#E2E8F0]">
+                          {cohort.mentor.split(" ").map((n) => n[0]).join("")}
                         </div>
                         <div>
-                          <h5 className="text-[10px] font-black text-gray-800 leading-tight">
+                          <h5 className="text-[11px] font-bold text-[#0F172A] leading-tight">
                             {cohort.mentor}
                           </h5>
-                          <span className="text-[8px] font-semibold text-gray-400 leading-tight block">
+                          <span className="text-[9px] font-medium text-[#94A3B8] leading-tight block">
                             {cohort.mentorTitle}
                           </span>
                         </div>
@@ -235,16 +280,16 @@ export default function DashboardPage() {
                   </div>
 
                   {/* Purchase price and enroll button */}
-                  <div className="p-3 border-t border-gray-100/60 bg-gray-50/50 flex items-center justify-between gap-2 mt-auto">
+                  <div className="p-3 border-t border-[#F1F5F9] bg-[#F8FAFC] flex items-center justify-between gap-2 mt-auto">
                     <div>
-                      <span className="text-[11px] font-black text-gray-800">{cohort.price}</span>
-                      <span className="text-[9px] font-bold text-gray-400 line-through ml-1">
+                      <span className="text-[12px] font-bold text-[#0F172A]">{cohort.price}</span>
+                      <span className="text-[10px] font-medium text-[#94A3B8] line-through ml-1.5">
                         {cohort.originalPrice}
                       </span>
                     </div>
                     <Link
                       href="/cohort-enroll"
-                      className="bg-[#2B50EC] hover:bg-[#1E3BB3] text-white text-[9px] font-black py-1 px-2.5 rounded-md shadow-sm transition-all active:scale-[0.98] inline-block"
+                      className="bg-[#2B50EC] hover:bg-[#1E3BB3] text-white text-[10px] font-semibold py-1.5 px-3 rounded-lg shadow-sm transition-all active:scale-[0.98] inline-block"
                     >
                       Enroll
                     </Link>
@@ -255,56 +300,70 @@ export default function DashboardPage() {
           </div>
 
           {/* Card 3: Upcoming Workshops */}
-          <div className="bg-white rounded-2xl p-4 sm:p-5 shadow-sm">
-            <div className="flex items-center justify-between border-b border-gray-100 pb-3 mb-3">
-              <h3 className="text-xs font-extrabold text-gray-800 tracking-tight">Upcoming Free Workshops</h3>
-              <span className="bg-emerald-50 text-[#10B981] border border-emerald-100 text-[8px] font-black uppercase tracking-wider py-0.5 px-2 rounded-md">
+          <div className="inline-flex w-full flex-col items-start gap-4 rounded-2xl bg-white p-5 shadow-[0px_1px_2px_rgba(0,0,0,0.05)] outline outline-[1px] outline-[#E2E8F0] -outline-offset-[1px]">
+            {/* Header */}
+            <div className="flex w-full items-center justify-between">
+              <div className="flex items-center gap-2">
+                <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#FEF3C7]">
+                  <svg className="h-3.5 w-3.5" viewBox="0 0 14 14" fill="none">
+                    <rect x="1.75" y="4.67" width="10.5" height="2.33" rx="0.5" stroke="#D97706" strokeWidth="1.17" />
+                    <rect x="2.91" y="7" width="8.17" height="5.25" rx="0.5" stroke="#D97706" strokeWidth="1.17" />
+                    <rect x="2.91" y="1.75" width="8.17" height="2.92" rx="0.5" stroke="#D97706" strokeWidth="1.17" />
+                  </svg>
+                </div>
+                <h3 className="text-[14px] font-semibold leading-[21px] text-[#0F172A]">Upcoming Free Workshops</h3>
+              </div>
+              <span className="rounded-full bg-[#ECFDF5] px-2 py-1 text-[11px] font-normal leading-[16.5px] text-[#047857] outline outline-[1px] outline-[#A7F3D0] -outline-offset-[1px]">
                 Free for you
               </span>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {/* Workshop cards grid */}
+            <div className="grid w-full grid-cols-1 gap-3 sm:grid-cols-2">
               {[
                 {
                   type: "Career",
-                  date: "12/08/24, 7 PM IST",
+                  date: "Tomorrow, 7 PM IST",
                   title: "How to crack FAANG in 90 days",
                   author: "by Alex Morgan",
                 },
                 {
                   type: "Live Build",
-                  date: "15/8, 11 AM IST",
-                  title: "Building a SaaS from scratch",
-                  author: "by Sarah Jenkins",
+                  date: "Sat, 11 AM IST",
+                  title: "System Design Live: Design YouTube",
+                  author: "by Priya Singh",
                 },
               ].map((item, idx) => (
                 <div
                   key={idx}
-                  className="p-3.5 rounded-xl border border-gray-100 bg-white flex items-center justify-between gap-3.5 transition-all hover:bg-gray-50/50 cursor-pointer"
+                  className="relative rounded-xl bg-[#F8FAFC] p-3 outline outline-[1px] outline-[#E2E8F0] -outline-offset-[1px] flex items-start gap-3 cursor-pointer hover:bg-gray-50 transition-colors"
                 >
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-xl bg-gray-50 flex items-center justify-center border border-gray-100 shrink-0">
-                      <svg className="w-4 h-4 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                      </svg>
-                    </div>
-                    <div>
-                      <div className="flex items-center gap-1.5">
-                        <span className="text-[8px] font-black uppercase text-gray-400 tracking-wider">
-                          {item.type}
-                        </span>
-                        <span className="text-gray-300 text-[8px]">•</span>
-                        <span className="text-[8px] font-bold text-gray-400">{item.date}</span>
-                      </div>
-                      <h4 className="text-xs font-black text-gray-800 leading-snug mt-1">
-                        {item.title}
-                      </h4>
-                      <span className="text-[9px] font-bold text-gray-400 leading-tight block">
-                        {item.author}
-                      </span>
-                    </div>
+                  {/* Dark icon thumb */}
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-[10px] bg-[#0F172A]">
+                    <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14" />
+                      <rect x="3" y="6" width="12" height="12" rx="2" />
+                    </svg>
                   </div>
-                  <span className="text-gray-300 font-extrabold text-base hover:text-gray-600 cursor-pointer">↗</span>
+
+                  {/* Content */}
+                  <div className="flex flex-1 flex-col gap-0.5">
+                    <div className="flex items-center gap-2">
+                      <span className="rounded px-1.5 py-0.5 text-[10px] font-semibold leading-[15px] tracking-[0.25px] text-[#0F172A] bg-white outline outline-[1px] outline-[#E5E7EB] -outline-offset-[1px]">
+                        {item.type}
+                      </span>
+                      <span className="text-[11px] font-normal leading-[16.5px] text-[#64748B]">{item.date}</span>
+                    </div>
+                    <p className="text-[13px] font-normal leading-[16.25px] text-[#0F172A] line-clamp-1">{item.title}</p>
+                    <span className="text-[11px] font-normal leading-[16.5px] text-[#64748B]">{item.author}</span>
+                  </div>
+
+                  {/* Arrow button */}
+                  <button className="absolute right-3 top-3 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white outline outline-[1px] outline-[#E2E8F0] -outline-offset-[1px] hover:bg-gray-50 cursor-pointer">
+                    <svg className="h-4 w-4" viewBox="0 0 16 16" fill="none" stroke="#0F172A" strokeWidth={1.33}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M3 13L13 3M13 3H6M13 3v7" />
+                    </svg>
+                  </button>
                 </div>
               ))}
             </div>
@@ -371,139 +430,140 @@ export default function DashboardPage() {
         {/* Right Column sidebar widgets */}
         <div className="flex flex-col gap-4 lg:col-span-1">
           {/* Widget 1: Profile Strength indicator card */}
-          <div className="bg-white rounded-2xl p-4 shadow-sm">
-            <div className="flex items-center justify-between mb-2.5">
-              <h4 className="text-[10px] font-black text-gray-800 uppercase tracking-wider">Profile Strength</h4>
-              <span className="text-[9px] font-black text-orange-500 bg-orange-50 px-1.5 py-0.5 rounded">60%</span>
+          <div className="inline-flex w-full flex-col items-start gap-3 rounded-2xl bg-white p-5 shadow-[0px_1px_2px_rgba(0,0,0,0.05)] outline outline-[1px] outline-[#E2E8F0] -outline-offset-[1px]">
+            {/* Header */}
+            <div className="flex w-full items-center justify-between">
+              <h4 className="text-[13.5px] font-semibold leading-[20.25px] text-[#0F172A]">Profile Strength</h4>
+              <span className="rounded-full bg-[#FFFBEB] px-2 py-1 text-[11px] font-semibold leading-[16.5px] text-[#B45309] outline outline-[1px] outline-[#FDE68A] -outline-offset-[1px]">60%</span>
             </div>
 
-            <div className="h-1.5 w-full bg-gray-100 rounded-full overflow-hidden mb-4 shadow-inner">
-              <div className="h-full bg-orange-500 rounded-full" style={{ width: "60%" }} />
+            {/* Progress bar + description */}
+            <div className="flex w-full flex-col gap-[7px]">
+              <div className="relative h-2 w-full overflow-hidden rounded-full bg-[#F1F5F9]">
+                <div
+                  className="absolute left-0 top-0 h-2 rounded-full bg-gradient-to-r from-[#FBBF24] to-[#F97316]"
+                  style={{ width: "60%" }}
+                />
+              </div>
+              <p className="text-[11.5px] font-normal leading-[17.25px] text-[#64748B]">
+                Complete your profile to get better matches.
+              </p>
             </div>
 
-            <p className="text-[10px] font-semibold text-gray-400 leading-snug mb-4">
-              Complete your profile to get better matches.
-            </p>
-
-            <ul className="space-y-2 text-xs font-bold text-gray-600">
-              <li className="flex items-center gap-2">
-                <div className="w-4 h-4 rounded-full bg-blue-100 border border-blue-200 flex items-center justify-center shrink-0">
-                  <svg className="w-2.5 h-2.5 text-[#2B50EC]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+            {/* Checklist */}
+            <div className="flex w-full flex-col gap-[10px] pt-1">
+              {/* Done: Goals assessment */}
+              <div className="flex w-full items-center gap-[10px]">
+                <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#2B50EC] outline outline-[1px] outline-[#2B50EC] -outline-offset-[1px]">
+                  <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="white" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
-                <span>Goals assessment</span>
-              </li>
-              <li className="flex items-center gap-2">
-                <div className="w-4 h-4 rounded-full bg-blue-100 border border-blue-200 flex items-center justify-center shrink-0">
-                  <svg className="w-2.5 h-2.5 text-[#2B50EC]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                <span className="text-[12.5px] font-normal leading-[18.75px] text-[#334155] line-through">Goals assessment</span>
+              </div>
+
+              {/* Done: Basic profile */}
+              <div className="flex w-full items-center gap-[10px]">
+                <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#2B50EC] outline outline-[1px] outline-[#2B50EC] -outline-offset-[1px]">
+                  <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="white" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
-                <span>Basic profile</span>
-              </li>
-              <li className="flex items-center justify-between gap-2 text-gray-500">
-                <div className="flex items-center gap-2">
-                  <span className="w-4 h-4 rounded-full border border-gray-200 shrink-0 block" />
-                  <span>Add resume / LinkedIn</span>
-                </div>
-                <button className="text-[#2B50EC] hover:text-[#1E3BB3] text-[10px] font-black cursor-pointer">
-                  Complete
-                </button>
-              </li>
-              <li className="flex items-center justify-between gap-2 text-gray-500">
-                <div className="flex items-center gap-2">
-                  <span className="w-4 h-4 rounded-full border border-gray-200 shrink-0 block" />
-                  <span>Skill assessment quiz (5 min)</span>
-                </div>
-                <button className="text-[#2B50EC] hover:text-[#1E3BB3] text-[10px] font-black cursor-pointer">
-                  Complete
-                </button>
-              </li>
-            </ul>
+                <span className="text-[12.5px] font-normal leading-[18.75px] text-[#334155] line-through">Basic profile</span>
+              </div>
+
+              {/* Pending: Add resume / LinkedIn */}
+              <div className="flex w-full items-center gap-[10px]">
+                <div className="h-5 w-5 shrink-0 rounded-full bg-white outline outline-[1px] outline-[#E2E8F0] -outline-offset-[1px]" />
+                <span className="text-[12.5px] font-normal leading-[18.75px] text-[#334155]">Add resume / LinkedIn</span>
+                <button className="ml-auto text-[10px] font-normal leading-[15px] text-[#2B50EC] hover:text-[#1E3BB3] cursor-pointer">Complete</button>
+              </div>
+
+              {/* Pending: Skill assessment */}
+              <div className="flex w-full items-center gap-[10px]">
+                <div className="h-5 w-5 shrink-0 rounded-full bg-white outline outline-[1px] outline-[#E2E8F0] -outline-offset-[1px]" />
+                <span className="text-[12.5px] font-normal leading-[18.75px] text-[#334155]">Skill assessment quiz (5 min)</span>
+                <button className="ml-auto text-[10px] font-normal leading-[15px] text-[#2B50EC] hover:text-[#1E3BB3] cursor-pointer">Complete</button>
+              </div>
+            </div>
           </div>
 
           {/* Widget 2: Potential Mentors */}
-          <div className="bg-white rounded-2xl p-4 shadow-sm">
-            <div className="flex items-center justify-between mb-3">
-              <h4 className="text-[10px] font-black text-gray-800 uppercase tracking-wider">Meet Your Potential Mentors</h4>
-              <span className="text-[9px] font-bold text-gray-400">1:1 trial</span>
+          <div className="inline-flex w-full flex-col items-start gap-4 rounded-2xl bg-white p-5 shadow-[0px_1px_2px_rgba(0,0,0,0.05)] outline outline-[1px] outline-[#E2E8F0] -outline-offset-[1px]">
+            {/* Header */}
+            <div className="flex w-full items-center justify-between">
+              <h4 className="text-[13.5px] font-semibold leading-[20.25px] text-[#0F172A]">Meet Your Potential Mentors</h4>
+              <span className="text-[11px] font-normal leading-[16.5px] text-[#64748B]">1:1 trial</span>
             </div>
 
-            <div className="space-y-3">
+            {/* Mentor list */}
+            <div className="flex w-full flex-col gap-3">
               {mentors.map((mentor, idx) => (
-                <div key={idx} className="flex items-center justify-between gap-2">
-                  <div className="flex items-center gap-3">
-                    <div className={`w-8 h-8 rounded-xl ${mentor.color} text-white flex items-center justify-center font-black text-xs shrink-0 shadow-sm shadow-blue-500/10`}>
-                      {mentor.initial}
-                    </div>
-                    <div>
-                      <div className="flex items-center gap-1.5">
-                        <h5 className="text-[11px] font-black text-gray-800 leading-tight">
-                          {mentor.name}
-                        </h5>
-                        <span className="text-[9px] font-black text-amber-500">⭐ {mentor.rating}</span>
-                      </div>
-                      <span className="text-[9px] font-bold text-gray-400 leading-tight block">
-                        {mentor.title}
-                      </span>
-                    </div>
+                <div key={idx} className="flex w-full items-center gap-3">
+                  {/* Avatar */}
+                  <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full ${mentor.color} text-[11px] font-semibold leading-[16.5px] text-white`}>
+                    {mentor.initial}
                   </div>
-                  <button className="text-gray-400 hover:text-gray-950 font-extrabold text-sm shrink-0">
-                    ↗
+
+                  {/* Name + subtitle */}
+                  <div className="flex flex-1 flex-col items-start">
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-[13px] font-normal leading-[19.5px] text-[#0F172A]">{mentor.name}</span>
+                      <div className="flex items-center gap-0.5">
+                        <svg className="h-3 w-3" viewBox="0 0 12 12" fill="#FBBF24">
+                          <path d="M6 0.5l1.545 3.13 3.455.503-2.5 2.437.59 3.437L6 8.25l-3.09 1.757.59-3.437L1 4.133l3.455-.502L6 0.5Z" />
+                        </svg>
+                        <span className="text-[11px] font-normal leading-[16.5px] text-[#0F172A]">{mentor.rating}</span>
+                      </div>
+                    </div>
+                    <span className="text-[11px] font-normal leading-[16.5px] text-[#64748B]">{mentor.title}</span>
+                  </div>
+
+                  {/* Arrow button */}
+                  <button className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full outline outline-[1px] outline-[#E2E8F0] -outline-offset-[1px] hover:bg-gray-50 transition-colors cursor-pointer">
+                    <svg className="h-4 w-4" viewBox="0 0 16 16" fill="none" stroke="#0F172A" strokeWidth={1.33}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M3 13L13 3M13 3H6M13 3v7" />
+                    </svg>
                   </button>
                 </div>
               ))}
             </div>
 
-            <button className="w-full mt-3 bg-gray-50 hover:bg-gray-100 text-gray-700 text-[9px] font-black py-2 rounded-lg transition-all flex items-center justify-center gap-1 cursor-pointer">
+            {/* View all CTA */}
+            <button className="inline-flex h-9 w-full items-center justify-center rounded-full bg-[#F8FAFC] outline outline-[1px] outline-[#E2E8F0] -outline-offset-[1px] text-[12.5px] font-normal leading-[18.75px] text-[#0F172A] transition-colors hover:bg-gray-100 cursor-pointer">
               View all mentors
             </button>
           </div>
 
           {/* Widget 3: Why Consistency AI? */}
-          <div className="relative overflow-hidden rounded-[16px] bg-[#0F172A] p-[20px] pt-[19px] pb-[20px] text-white shadow-[0_18px_48px_rgba(15,23,42,0.35)]">
-            <div
-              className="absolute -top-[64px] h-[192px] w-[192px] rounded-full opacity-40"
-              style={{
-                right: "-46.34px",
-                background: "linear-gradient(135deg, #2B50EC 0%, #7C3AED 100%)",
-                boxShadow: "40px 40px 40px",
-                filter: "blur(20px)",
-              }}
-            />
+          <div className="relative overflow-hidden rounded-2xl bg-[#0F172A] p-5 text-white shadow-[0_18px_48px_rgba(15,23,42,0.35)]">
+            <div className="absolute -top-16 -right-[46px] h-48 w-48 rounded-full opacity-40 bg-[linear-gradient(135deg,#2B50EC_0%,#7C3AED_100%)] blur-[20px] pointer-events-none" />
 
-            <div className="relative z-10 flex flex-col gap-[15.5px]">
-              <div>
-                <h4 className="text-[13.5px] font-semibold leading-[20.25px] text-white">
-                  Why Consistency AI?
-                </h4>
-              </div>
+            <div className="relative z-10 flex flex-col gap-4">
+              <h4 className="text-[13.5px] font-semibold leading-[20.25px] text-white">Why Consistency AI?</h4>
 
-              <div className="grid grid-cols-3 gap-[12px]">
-                <div className="rounded-[10px] border border-white/10 bg-white/10 p-[12px] text-left">
-                  <div className="text-[18px] font-semibold leading-[18px] text-white">12K+</div>
-                  <div className="mt-[3px] text-[10.5px] font-normal leading-[15.75px] text-white/70">students</div>
-                </div>
-
-                <div className="rounded-[10px] border border-white/10 bg-white/10 p-[12px] text-left">
-                  <div className="text-[18px] font-semibold leading-[18px] text-white">89%</div>
-                  <div className="mt-[3px] text-[10.5px] font-normal leading-[15.75px] text-white/70">placement</div>
-                </div>
-
-                <div className="rounded-[10px] border border-white/10 bg-white/10 p-[12px] text-left">
-                  <div className="flex items-center gap-[4px] text-[18px] font-semibold leading-[18px] text-white">
-                    <span>4.9</span>
-                    <svg viewBox="0 0 24 24" className="h-[12px] w-[12px] fill-[#FACC15]" aria-hidden="true">
-                      <path d="M12 1.75l2.76 5.59 6.17.9-4.46 4.35 1.05 6.12L12 0.45l-5.52 2.96 1.05-6.12L3.07 8.24l6.17-.9L12 1.75Z" />
-                    </svg>
+              <div className="grid grid-cols-3 gap-3">
+                {[
+                  { stat: "12K+", label: "students" },
+                  { stat: "89%", label: "placement" },
+                  { stat: "4.9", label: "rating", star: true },
+                ].map(({ stat, label, star }) => (
+                  <div key={label} className="rounded-[10px] border border-white/10 bg-white/10 p-3 text-left">
+                    <div className="flex items-center gap-1 text-[18px] font-semibold leading-[18px] text-white">
+                      <span>{stat}</span>
+                      {star && (
+                        <svg viewBox="0 0 24 24" className="h-3 w-3 fill-[#FACC15]" aria-hidden="true">
+                          <path d="M12 1.75l2.76 5.59 6.17.9-4.46 4.35 1.05 6.12L12 0.45l-5.52 2.96 1.05-6.12L3.07 8.24l6.17-.9L12 1.75Z" />
+                        </svg>
+                      )}
+                    </div>
+                    <div className="mt-px text-[10.5px] font-normal leading-[15.75px] text-white/70">{label}</div>
                   </div>
-                  <div className="mt-[3px] text-[10.5px] font-normal leading-[15.75px] text-white/70">rating</div>
-                </div>
+                ))}
               </div>
 
-              <div className="flex items-center gap-[8px] text-[11px] font-normal leading-[16.5px] text-white/60">
-                <svg viewBox="0 0 24 24" className="h-[16px] w-[16px] shrink-0 text-white/60" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <div className="flex items-center gap-2 text-[11px] font-normal leading-[16.5px] text-white/60">
+                <svg viewBox="0 0 24 24" className="h-4 w-4 shrink-0" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                   <path d="M16 19v-1a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v1" />
                   <circle cx="10" cy="7" r="3.5" />
                   <path d="M19 18v-1a4 4 0 0 0-3-3.87" />
@@ -514,75 +574,87 @@ export default function DashboardPage() {
             </div>
           </div>
 
-          {/* Widget 4: Have a coupon? */}
-          <div className="bg-white rounded-2xl p-4 shadow-sm">
-            <div className="flex items-center justify-between mb-2.5">
-              <h4 className="text-[10px] font-black text-gray-800 uppercase tracking-wider flex items-center gap-1.5">
-                <svg className="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" />
+          {/* Widget 4: Have a coupon + Invite Friends */}
+          <div className="inline-flex w-full flex-col items-start gap-3 rounded-2xl bg-white p-5 shadow-[0px_1px_2px_rgba(0,0,0,0.05)] outline outline-[1px] outline-[#E2E8F0] -outline-offset-[1px]">
+            {/* Header */}
+            <div className="flex w-full items-center gap-2">
+              <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#EEF2FF]">
+                <svg className="h-4 w-4" viewBox="0 0 16 16" fill="none">
+                  <rect x="2" y="5.33" width="12" height="2.67" rx="0.5" stroke="#2B50EC" strokeWidth="1.33" />
+                  <rect x="3.34" y="8" width="9.33" height="6" rx="0.5" stroke="#2B50EC" strokeWidth="1.33" />
+                  <rect x="3.34" y="2" width="9.33" height="3.33" rx="0.5" stroke="#2B50EC" strokeWidth="1.33" />
                 </svg>
-                <span>Have a coupon?</span>
-              </h4>
-              <span className="bg-[#E6F4EA] text-[#137333] text-[9px] font-black px-1.5 py-0.5 rounded-md">
-                -25% OFF
+              </div>
+              <h4 className="text-[13px] font-semibold leading-[19.5px] text-[#0F172A]">Have a coupon?</h4>
+              <span className="ml-auto rounded-full bg-[#ECFDF5] px-2 py-0.5 text-[10px] font-semibold leading-[15px] text-[#047857] outline outline-[1px] outline-[#A7F3D0] -outline-offset-[1px]">
+                -20% OFF
               </span>
             </div>
-            <div className="flex gap-2">
+
+            {/* Input row */}
+            <div className="flex w-full items-center gap-2">
               <input
                 type="text"
                 placeholder="Enter code"
-                className="flex-1 bg-gray-50 border border-gray-200 rounded-lg py-2 px-3 text-xs font-semibold focus:outline-none focus:border-blue-300 focus:bg-white transition-all shadow-inner"
+                className="h-9 flex-1 rounded-full bg-[#F8FAFC] px-4 text-[12.5px] font-normal text-[#6B7280] placeholder:text-[#6B7280] outline outline-[1px] outline-[#E2E8F0] -outline-offset-[1px] focus:outline-[#2B50EC] focus:bg-white transition-all"
               />
-              <button className="bg-gray-900 hover:bg-black text-white text-xs font-black px-4 py-2 rounded-lg transition-all shadow-sm">
+              <button className="h-9 rounded-full bg-[#0F172A] px-4 text-[12px] font-normal leading-[18px] text-white hover:bg-black transition-colors cursor-pointer">
                 Apply
+              </button>
+            </div>
+
+            {/* Invite friends sub-section */}
+            <div className="flex w-full items-center gap-3 rounded-xl bg-[linear-gradient(178deg,#F8FAFC_0%,#EEF2FF_100%)] px-3 pb-3 pt-4 outline outline-[1px] outline-[#E2E8F0] -outline-offset-[1px]">
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white outline outline-[1px] outline-[#E5E7EB] -outline-offset-[1px]">
+                <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="#0F172A" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2" />
+                  <circle cx="9" cy="7" r="4" />
+                  <path d="M19 8v6M22 11h-6" />
+                </svg>
+              </div>
+              <div className="flex flex-1 flex-col">
+                <span className="text-[12px] font-normal leading-[18px] text-[#0F172A]">Invite friend → Get $30</span>
+                <span className="text-[11px] font-normal leading-[16.5px] text-[#64748B]">They get $30 off too</span>
+              </div>
+              <button className="text-[11px] font-semibold leading-[16.5px] text-[#2B50EC] hover:text-[#1E3BB3] cursor-pointer">
+                Invite
               </button>
             </div>
           </div>
 
-          {/* Widget 5: Invite Friends */}
-          <div className="bg-white rounded-2xl p-4 shadow-sm flex items-center justify-between gap-3">
-            <div className="flex items-start gap-3">
-              <div className="w-8 h-8 rounded-xl bg-gray-50 border border-gray-100 flex items-center justify-center shrink-0 mt-0.5">
-                <svg className="w-4.5 h-4.5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                </svg>
-              </div>
-              <div>
-                <h5 className="text-[11px] font-black text-gray-800 leading-tight">
-                  Invite Friend – Get $30
-                </h5>
-                <span className="text-[9px] font-bold text-gray-400 leading-tight block">
-                  They get $30 off too
-                </span>
-              </div>
-            </div>
-            <button className="text-[#2B50EC] hover:text-[#1E3BB3] text-xs font-black transition-colors shrink-0">
-              Invite
-            </button>
-          </div>
-
           {/* Widget 6: Need help choosing */}
-          <div className="bg-[#2B50EC]/5 border border-[#2B50EC]/10 rounded-2xl p-4 shadow-sm text-left">
-            <div className="flex items-start gap-3">
-              <div className="w-8 h-8 rounded-xl bg-[#2B50EC]/10 flex items-center justify-center shrink-0">
-                <svg className="w-4.5 h-4.5 text-[#2B50EC]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <div className="relative w-full overflow-hidden rounded-2xl bg-[#EEF2FF] p-5 outline outline-[1px] outline-[#C7D2FE] -outline-offset-[1px] flex flex-col items-start gap-3">
+            {/* Glow blob */}
+            <div className="absolute right-1 top-0 h-24 w-24 rounded-full bg-[rgba(43,80,236,0.10)] blur-[12px] pointer-events-none" />
+
+            <div className="flex items-start gap-3 w-full">
+              {/* Icon pill */}
+              <div className="flex h-10 w-[29px] shrink-0 items-center justify-center rounded-full bg-white shadow-[0px_1px_2px_rgba(0,0,0,0.05)] outline outline-[1px] outline-[#C7D2FE] -outline-offset-[1px]">
+                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="#2B50EC" strokeWidth={1.67}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2a1 1 0 01-.321.988l-1.305.98a10.582 10.582 0 004.872 4.872l.98-1.305a1 1 0 01.988-.321l2.2.548a1 1 0 01.725.94V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                 </svg>
               </div>
-              <div>
-                <h5 className="text-[11px] font-black text-gray-800 leading-tight">Need help choosing?</h5>
-                <p className="text-[9px] font-bold text-gray-400 leading-snug mt-1">
-                  Not sure which cohort fits your goals? Talk to our learning advisor – free 15 min.
+
+              {/* Content */}
+              <div className="relative flex-1">
+                <h5 className="m-0 text-[13.5px] font-semibold leading-[20.25px] text-[#0F172A]">Need help choosing?</h5>
+                <p className="mt-1 text-xs font-normal leading-[19.5px] text-[#475569]">
+                  Not sure which cohort fits your goals? Talk to our learning advisor — free 15 min.
                 </p>
+                <button className="mt-3.5 inline-flex items-center gap-1.5 rounded-full bg-[#2B50EC] px-4 py-2 text-[12.5px] font-normal leading-[18.75px] text-white shadow-[0px_4px_12px_rgba(43,80,236,0.25)] cursor-pointer border-none hover:bg-[#1E3BB3] transition-colors">
+                  Book free counseling
+                  <svg className="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="white" strokeWidth={1.33}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </button>
+                <div className="mt-3 flex items-center gap-1.5">
+                  <svg className="h-3 w-3 shrink-0 text-[#64748B]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  </svg>
+                  <span className="text-[10.5px] font-normal leading-[15.75px] text-[#64748B]">Avg response 2h • No spam</span>
+                </div>
               </div>
             </div>
-
-            <button className="w-full mt-3 bg-[#2B50EC] hover:bg-[#1E3BB3] text-white text-[9px] font-black py-2 rounded-lg transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer">
-              <span>Book free counseling</span>
-            </button>
-            <span className="text-[8px] font-bold text-gray-400 text-center mt-2.5 w-full block">
-              ⚡ Response within 2h • No spam
-            </span>
           </div>
         </div>
       </div>
