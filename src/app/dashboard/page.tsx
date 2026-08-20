@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import Image from "next/image";
 
 export default function DashboardPage() {
   const learningPathSteps = [
@@ -66,32 +66,31 @@ export default function DashboardPage() {
 
   return (
     <div className="w-full flex flex-col gap-6 text-left">
-      {/* Top Banner (Blue Card) */}
-      <div className="w-full bg-[#2B50EC] text-white rounded-3xl p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-md shadow-blue-500/10">
-        <div className="flex-1">
-          <div className="flex items-center gap-2 mb-2">
-            <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center">
-              <svg className="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
-              </svg>
+      <div className="rounded-2xl bg-[linear-gradient(90deg,#2B50EC_0%,#3B63FF_50%,#6D8AFF_100%)] p-px shadow-[0px_1px_2px_0px_rgba(0,0,0,0.08)]">
+        <div className="flex flex-col items-start justify-between gap-4 rounded-[15px] bg-[linear-gradient(90deg,#2B50EC_0%,#3B63FF_50%,#6D8AFF_100%)] px-6 py-4 text-white xl:flex-row xl:items-center">
+          <div className="flex items-start gap-4">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[rgba(255,255,255,0.15)] backdrop-blur-[4px]">
+              <Image src="/assets/images/figma-dashboard/hero-spark.svg" alt="Spark" width={20} height={20} />
             </div>
-            <span className="text-xs font-black uppercase tracking-wider text-blue-200">Personalized Plan</span>
+            <div>
+              <h2 className="text-[18px] font-semibold leading-[22.5px]">Welcome, Rahul! Let&apos;s find your perfect learning path</h2>
+              <p className="mt-1 max-w-[560px] text-[13px] leading-[21.13px] text-[rgba(255,255,255,0.8)]">
+                You&apos;ve completed your goals assessment. Our AI has crafted a personalized roadmap — enroll in
+                a cohort to unlock it.
+              </p>
+            </div>
           </div>
-          <h2 className="text-xl sm:text-2xl font-black tracking-tight leading-tight">
-            Welcome, Rahul! Let&apos;s find your perfect learning path
-          </h2>
-          <p className="text-blue-100 text-xs sm:text-sm font-semibold mt-1 max-w-[650px]">
-            You&apos;ve completed your goals assessment. Our AI has crafted a personalized roadmap – enroll in a cohort to unlock it.
-          </p>
-        </div>
 
-        <div className="flex flex-wrap md:flex-col gap-3 shrink-0">
-          <span className="bg-white/10 border border-white/10 px-3.5 py-2 rounded-xl text-xs font-black tracking-wide flex items-center gap-1.5 backdrop-blur-sm">
-            🔥 Streak: 0 days
-          </span>
-          <span className="bg-white text-gray-900 px-3.5 py-2 rounded-xl text-xs font-black tracking-wide flex items-center gap-1.5 shadow-sm">
-            🎯 Goal: Get a job in 6 months
-          </span>
+          <div className="flex items-center gap-2.5">
+            <span className="inline-flex items-center gap-2 rounded-full border border-[rgba(255,255,255,0.15)] bg-[rgba(255,255,255,0.15)] px-[15px] py-[9px] text-[12.5px] leading-[18.75px] backdrop-blur-[4px]">
+              <Image src="/assets/images/figma-dashboard/hero-streak.svg" alt="Streak" width={16} height={16} />
+              Streak 0 days
+            </span>
+            <span className="inline-flex items-center gap-2 rounded-full bg-white px-[14px] py-2 text-[12.5px] font-semibold leading-[18.75px] text-[#2B50EC] shadow-[0px_1px_1px_rgba(0,0,0,0.05)]">
+              <Image src="/assets/images/figma-dashboard/hero-goal.svg" alt="Goal" width={16} height={16} />
+              Goal: Get a Job in 6 months
+            </span>
+          </div>
         </div>
       </div>
 
@@ -100,57 +99,65 @@ export default function DashboardPage() {
         {/* Left Column contents */}
         <div className="lg:col-span-2 flex flex-col gap-6">
 
-          {/* Card 1: Your AI Learning Path progress step circles */}
-          <div className="bg-white rounded-3xl  p-6 sm:p-7 shadow-sm">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 border-b border-gray-100 pb-4 mb-6">
+          <div className="rounded-2xl border border-[#E2E8F0] bg-white p-px shadow-[0px_1px_2px_0px_rgba(0,0,0,0.05)]">
+            <div className="flex flex-col items-start justify-between gap-4 px-6 pb-4 pt-6 xl:flex-row xl:items-start">
               <div>
-                <span className="bg-blue-50 text-[#2B50EC] text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md">
-                  ✨ AI Generated
-                </span>
-                <span className="text-[10px] font-bold text-gray-400 ml-2">Updated today</span>
-                <h3 className="text-base font-black text-gray-800 tracking-tight mt-1">Your AI Learning Path</h3>
+                <div className="flex items-center gap-2">
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-[#C7D2FE] bg-[#EEF2FF] px-[11px] py-[5px] text-[11px] font-semibold uppercase tracking-[0.275px] leading-[16.5px] text-[#2B50EC]">
+                    <Image src="/assets/images/figma-dashboard/chip-spark.svg" alt="AI" width={12} height={12} />
+                    AI GENERATED
+                  </span>
+                  <span className="text-[11px] leading-[16.5px] text-[#94A3B8]">Updated today</span>
+                </div>
+                <h3 className="pt-2 text-[17px] font-semibold leading-[25.5px] tracking-[-0.425px] text-[#0F172A]">Your AI Learning Path</h3>
+                <p className="text-[13px] leading-[19.5px] text-[#64748B]">
+                  Based on your goal: <span className="text-[#334155]">Switch to Software Engineering</span>, we recommend:
+                </p>
               </div>
-              <div className="flex items-center gap-2">
-                <span className="text-[11px] font-black text-gray-400">OVERALL PROGRESS</span>
-                <div className="relative w-8 h-8 rounded-full bg-gray-50 border border-gray-200 flex items-center justify-center text-[10px] font-black text-gray-700 shadow-inner">
+
+              <div className="flex items-center gap-3 self-end xl:self-auto">
+                <div className="text-right">
+                  <p className="text-[11px] leading-[16.5px] text-[#94A3B8]">OVERALL PROGRESS</p>
+                  <p className="text-[13px] font-semibold leading-[19.5px] text-[#0F172A]">0% • 16 weeks</p>
+                </div>
+                <div className="flex h-12 w-12 items-center justify-center rounded-full border-4 border-[#2B50EC] text-[11px] font-semibold leading-[16.5px] text-[#0F172A]">
                   0%
                 </div>
               </div>
             </div>
 
-            <p className="text-xs font-semibold text-gray-500 mb-6">
-              Based on your goal: <strong className="text-gray-800 font-bold">Switch to Software Engineering</strong>, we recommend:
-            </p>
-
-            {/* Path Steps visualization circles */}
-            <div className="grid grid-cols-5 gap-2 relative mb-6">
-              {learningPathSteps.map((step, idx) => (
-                <div key={step.num} className="flex flex-col items-center text-center relative z-10">
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-black shadow-sm transition-all border ${idx === 0
-                      ? "bg-[#2B50EC] text-white border-[#2B50EC]"
-                      : "bg-white text-gray-500 border-gray-200"
-                    }`}>
-                    {step.num}
+            <div className="mx-[7px] mb-2 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] p-[17px]">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-5">
+                {learningPathSteps.map((step, idx) => (
+                  <div key={step.num} className="relative flex flex-col items-center text-center">
+                    {idx < learningPathSteps.length - 1 && (
+                      <div className="absolute left-[calc(50%+28px)] top-[18px] hidden h-px w-[calc(100%-56px)] bg-gradient-to-r from-[#E2E8F0] to-[#CBD5E1] sm:block" />
+                    )}
+                    <div
+                      className={`z-10 flex h-9 w-9 items-center justify-center rounded-full border text-[12px] font-semibold leading-[18px] ${
+                        idx === 0
+                          ? "border-[#2B50EC] bg-[#2B50EC] text-white shadow-[0px_4px_6px_rgba(43,80,236,0.3)]"
+                          : "border-[#E2E8F0] bg-white text-[#64748B]"
+                      }`}
+                    >
+                      {step.num}
+                    </div>
+                    <p className="pt-[7px] text-[12.5px] leading-[15.63px] text-[#1E293B]">{step.name}</p>
+                    <p className="text-[11px] leading-[16.5px] text-[#94A3B8]">{step.duration}</p>
                   </div>
-                  <span className="text-[10px] font-black text-gray-800 tracking-tight mt-2.5 leading-tight block truncate w-full">
-                    {step.name}
-                  </span>
-                  <span className="text-[9px] font-bold text-gray-400 leading-tight block">
-                    {step.duration}
-                  </span>
+                ))}
+              </div>
+
+              <div className="mt-4 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <div className="h-[6px] w-20 rounded-full bg-[#E2E8F0]" />
+                  <span className="text-[11px] leading-[16.5px] text-[#64748B]">0 of 5 milestones completed</span>
                 </div>
-              ))}
-
-              {/* Connector Line behind steps */}
-              <div className="absolute top-4 left-6 right-6 h-[1.5px] bg-gray-100 z-0" />
-            </div>
-
-            <div className="flex items-center justify-between border-t border-gray-100 pt-4 mt-6">
-              <span className="text-[10px] font-bold text-gray-400">0 of 5 milestones completed</span>
-              <button className="text-[#2B50EC] hover:text-[#1E3BB3] text-xs font-black transition-all flex items-center gap-0.5">
-                <span>View detailed roadmap</span>
-                <span>&gt;</span>
-              </button>
+                <button className="inline-flex items-center gap-1 text-[12px] leading-[18px] text-[#2B50EC] transition-colors hover:text-[#1E3BB3]">
+                  <span>View detailed roadmap</span>
+                  <Image src="/assets/images/figma-dashboard/arrow-right-14.svg" alt="Arrow" width={14} height={14} />
+                </button>
+              </div>
             </div>
           </div>
 
