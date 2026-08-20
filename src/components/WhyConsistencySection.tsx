@@ -1,140 +1,91 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
 
-const STATS = [
-  { value: "5000+", label: "Learning Hours" },
-  { value: "120+", label: "Live Projects" },
-  { value: "92%", label: "Placement Rate" },
-  { value: "15k+", label: "Active Students" },
-];
-
-const PITFALLS = [
-  { title: "No Clear Roadmap", desc: "Getting lost in a sea of random tutorials without a clear path." },
-  { title: "Zero Accountability", desc: "Starting with high motivation but quitting after the first week." },
-  { title: "Tutorial Hell", desc: "Watching videos but never building anything real independently." },
-];
-
-const SYSTEM = [
-  { title: "Industry Roadmap", desc: "Expert-curated curriculum tailored to current market demands." },
-  { title: "1:1 Mentorship", desc: "Personalized guidance from FAANG engineers to keep you on track." },
-  { title: "Daily Streak System", desc: "Gamified learning rewards to ensure daily progress and habit building." },
-];
-
-function XIcon() {
+function StarIcon() {
   return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M18 6 6 18M6 6l12 12" />
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className="h-[12px] w-[12px]">
+      <path d="M12 2.5l2.74 5.56 6.14.89-4.44 4.33 1.05 6.12L12 0 6.51 19.4l1.05-6.12L3.12 9l6.14-.89L12 2.5Z" />
     </svg>
   );
 }
 
-function CheckIcon() {
+function TrustIcon() {
   return (
-    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M20 6 9 17l-5-5" />
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className="h-[16px] w-[16px] text-white/60">
+      <path d="M16 19v-1a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v1" />
+      <circle cx="10" cy="7" r="3.5" />
+      <path d="M19 18v-1a4 4 0 0 0-3-3.87" />
+      <path d="M16 4.13a4 4 0 0 1 0 7.75" />
     </svg>
-  );
-}
-
-function StatsBar() {
-  return (
-    <div className="max-w-5xl mx-auto bg-white rounded-3xl shadow-[0_12px_40px_-12px_rgba(37,99,235,0.15)] px-6 sm:px-10 py-8 sm:py-10">
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 sm:gap-6 divide-x divide-gray-100">
-        {STATS.map((stat, i) => (
-          <motion.div
-            key={stat.label}
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.5, delay: i * 0.1, ease: "easeOut" }}
-            className={`text-center ${i > 0 ? "pl-4 sm:pl-0" : ""}`}
-          >
-            <div className="text-[#2563EB] text-3xl sm:text-4xl font-bold font-sans mb-1">{stat.value}</div>
-            <div className="text-gray-500 text-sm font-medium font-sans">{stat.label}</div>
-          </motion.div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function ListItem({
-  title,
-  desc,
-  icon,
-  iconClass,
-  titleClass,
-  descClass,
-}: {
-  title: string;
-  desc: string;
-  icon: React.ReactNode;
-  iconClass: string;
-  titleClass: string;
-  descClass: string;
-}) {
-  return (
-    <div className="flex items-start gap-3">
-      <span className={`mt-0.5 shrink-0 flex items-center justify-center size-5 rounded-full ${iconClass}`}>
-        {icon}
-      </span>
-      <div>
-        <h4 className={`text-sm font-bold font-sans mb-0.5 ${titleClass}`}>{title}</h4>
-        <p className={`text-sm leading-5 font-sans ${descClass}`}>{desc}</p>
-      </div>
-    </div>
   );
 }
 
 export default function WhyConsistencySection() {
   return (
-    <section className="px-4 sm:px-6 py-16 sm:py-20 bg-[#F9F9F9]">
-      <StatsBar />
+    <section className="px-4 py-10 sm:px-6">
+      <div className="relative mx-auto w-full max-w-[389px] overflow-hidden rounded-[16px] bg-[#0F172A] p-[20px] pt-[19px] pb-[20px] shadow-[0_18px_48px_rgba(15,23,42,0.35)]">
+        <div
+          className="absolute -top-[64px] h-[192px] w-[192px] rounded-full opacity-40"
+          style={{
+            right: "-46.34px",
+            background: "linear-gradient(135deg, #2B50EC 0%, #7C3AED 100%)",
+            boxShadow: "40px 40px 40px",
+            filter: "blur(20px)",
+          }}
+        />
 
-      <div className="max-w-5xl mx-auto mt-20 sm:mt-24">
-        <h2 className="text-[#2563EB] text-3xl sm:text-4xl font-bold font-sans mb-4">
-          Why Consistency AI?
-        </h2>
-        <p className="text-slate-500 text-base sm:text-lg leading-relaxed max-w-2xl mb-10">
-          Traditional learning lacks structure. We built a system that ensures you actually finish what you start.
-        </p>
+        <div className="relative flex flex-col gap-[15.5px]">
+          <div className="w-full">
+            <h2 className="font-['Stack_Sans_Headline:SemiBold'] text-[13.5px] font-semibold leading-[20.25px] text-white">
+              Why Consistency AI?
+            </h2>
+          </div>
 
-        <div className="grid md:grid-cols-2 gap-6">
-          {/* Common Pitfalls */}
-          <div className="bg-indigo-50/60 rounded-2xl p-7 sm:p-8">
-            <h3 className="text-gray-900 text-lg font-bold font-sans mb-6">Common Pitfalls</h3>
-            <div className="flex flex-col gap-5">
-              {PITFALLS.map((item) => (
-                <ListItem
-                  key={item.title}
-                  title={item.title}
-                  desc={item.desc}
-                  icon={<XIcon />}
-                  iconClass="bg-red-50 text-red-500"
-                  titleClass="text-gray-900"
-                  descClass="text-gray-500"
-                />
-              ))}
+          <div className="flex w-full items-start justify-center gap-[12px]">
+            <div className="w-[108.44px] shrink-0 rounded-[10px] border border-white/10 bg-white/10 p-[12px]">
+              <div className="mb-[3px] flex flex-col">
+                <div className="font-['Stack_Sans_Headline:SemiBold'] text-[18px] font-semibold leading-[18px] text-white">
+                  12k+
+                </div>
+              </div>
+              <div className="font-['Stack_Sans_Headline:Regular'] text-[10.5px] font-normal leading-[15.75px] text-white/70">
+                students
+              </div>
+            </div>
+
+            <div className="w-[108.45px] shrink-0 rounded-[10px] border border-white/10 bg-white/10 p-[12px]">
+              <div className="mb-[3px] flex flex-col">
+                <div className="font-['Stack_Sans_Headline:SemiBold'] text-[18px] font-semibold leading-[18px] text-white">
+                  89%
+                </div>
+              </div>
+              <div className="font-['Stack_Sans_Headline:Regular'] text-[10.5px] font-normal leading-[15.75px] text-white/70">
+                placement
+              </div>
+            </div>
+
+            <div className="w-[108.44px] shrink-0 rounded-[10px] border border-white/10 bg-white/10 p-[12px]">
+              <div className="mb-[3px] flex items-center gap-[4px]">
+                <div className="font-['Stack_Sans_Headline:SemiBold'] whitespace-nowrap text-[18px] font-semibold leading-[18px] text-white">
+                  4.9
+                </div>
+                <div className="flex h-[12px] w-[12px] items-center justify-center text-[#facc15]">
+                  <StarIcon />
+                </div>
+              </div>
+              <div className="font-['Stack_Sans_Headline:Regular'] text-[10.5px] font-normal leading-[15.75px] text-white/70">
+                rating
+              </div>
             </div>
           </div>
 
-          {/* The Consistency System */}
-          <div className="bg-gradient-to-br from-[#3B6BFF] to-[#1D3FDE] rounded-2xl p-7 sm:p-8 shadow-[0_20px_45px_-15px_rgba(37,99,235,0.4)]">
-            <h3 className="text-white text-lg font-bold font-sans mb-6">The Consistency System</h3>
-            <div className="flex flex-col gap-5">
-              {SYSTEM.map((item) => (
-                <ListItem
-                  key={item.title}
-                  title={item.title}
-                  desc={item.desc}
-                  icon={<CheckIcon />}
-                  iconClass="bg-white/20 text-white"
-                  titleClass="text-white"
-                  descClass="text-blue-100"
-                />
-              ))}
+          <div className="flex w-full items-center gap-[8px]">
+            <div className="flex h-[16px] w-[16px] items-center justify-center text-white/60">
+              <TrustIcon />
+            </div>
+            <div className="font-['Stack_Sans_Headline:Regular'] whitespace-nowrap text-[11px] font-normal leading-[16.5px] text-white/60">
+              Trusted by engineers at Google, Meta, Amazon
             </div>
           </div>
         </div>

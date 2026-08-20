@@ -387,7 +387,7 @@ export default function CohortEnrollPage() {
             <div className="flex flex-col gap-6 lg:col-span-1 text-left">
               <div className="bg-white rounded-3xl overflow-hidden shadow-sm">
                 {/* Top header details */}
-                <div className="bg-[#2B50EC] text-white p-6 flex flex-col">
+                <div className="bg-gradient-to-br from-[#2B50EC] to-[#7C3AED] text-white p-6 flex flex-col">
                   <div className="w-8 h-8 rounded-full bg-white/15 flex items-center justify-center mb-3">
                     <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
