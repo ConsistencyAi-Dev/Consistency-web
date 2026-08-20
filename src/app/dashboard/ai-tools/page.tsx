@@ -30,31 +30,29 @@ export default function AIToolsPage() {
       ],
       image: mockImg,
     },
-    {
-      title: "AI Tutor",
-      description: "Your 24/7 personal study buddy. Ask coding questions, get clarifications, and request code explanations.",
-      bullets: [
-        "24/7 personalized help",
-        "Get help working through problems, checking solutions, and understanding errors",
-        "No need to waste time searching online",
-      ],
-      image: chatbotImg,
-    },
+    // {
+    //   title: "AI Tutor",
+    //   description: "Your 24/7 personal study buddy. Ask coding questions, get clarifications, and request code explanations.",
+    //   bullets: [
+    //     "24/7 personalized help",
+    //     "Get help working through problems, checking solutions, and understanding errors",
+    //     "No need to waste time searching online",
+    //   ],
+    //   image: chatbotImg,
+    // },
   ];
 
   return (
     <div className="w-full flex flex-col gap-6 text-left">
       {/* Title Header Section */}
-      <div className="bg-white rounded-3xl p-8 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm">
-        <div>
-          <h2 className="text-2xl font-black text-gray-900 tracking-tight leading-tight">
-            AI Tools
-          </h2>
-          <p className="text-gray-500 text-sm font-semibold mt-1">
-            Learn with AI to upskill, grow and prepare
-          </p>
-        </div>
-        <button className="bg-[#2B50EC] hover:bg-[#1E3BB3] text-white text-xs font-black py-3 px-6 rounded-xl shadow-md transition-all shrink-0">
+      <div className="p-8 flex flex-col items-center justify-center gap-3  text-center">
+        <h2 className="text-2xl font-black text-gray-900 tracking-tight leading-tight">
+          AI Tools
+        </h2>
+        <p className="text-gray-500 text-sm">
+          Learn with AI to upskill, grow and prepare
+        </p>
+        <button className="mt-1 border border-[#2B50EC] text-[#2B50EC] hover:bg-[#2B50EC] hover:text-white text-xs font-semibold py-2 px-6 rounded-lg transition-all">
           Try Now
         </button>
       </div>
