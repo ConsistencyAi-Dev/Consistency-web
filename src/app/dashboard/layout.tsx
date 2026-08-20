@@ -1,9 +1,27 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import OnboardingWizard from "./components/OnboardingWizard";
+
+type NavItem = {
+  name: string;
+  href: string;
+  icon: string;
+  locked?: boolean;
+};
+
+const navItems: NavItem[] = [
+  { name: "Home", href: "/dashboard", icon: "/assets/images/figma-dashboard/nav-home.svg" },
+  { name: "AI Tools", href: "/dashboard/ai-tools", icon: "/assets/images/figma-dashboard/nav-ai-tools.svg", locked: true },
+  { name: "Projects", href: "/dashboard/projects", icon: "/assets/images/figma-dashboard/nav-projects.svg", locked: true },
+  { name: "Events", href: "/dashboard/events", icon: "/assets/images/figma-dashboard/nav-events.svg" },
+  { name: "Community", href: "#", icon: "/assets/images/figma-dashboard/nav-community.svg" },
+  { name: "Jobs", href: "/dashboard/jobs", icon: "/assets/images/figma-dashboard/nav-projects.svg", locked: true },
+  { name: "Settings", href: "#", icon: "/assets/images/figma-dashboard/nav-settings.svg", locked: true },
+];
 
 export default function DashboardLayout({
   children,
@@ -14,8 +32,8 @@ export default function DashboardLayout({
   const pathname = usePathname();
 
   useEffect(() => {
-    // Read from localStorage on mount
     const onboarded = localStorage.getItem("isOnboarded") === "true";
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsOnboarded(onboarded);
   }, []);
 
@@ -24,205 +42,138 @@ export default function DashboardLayout({
     setIsOnboarded(true);
   };
 
-  // Avoid flash before reading state from localStorage
   if (isOnboarded === null) {
-    return <div className="min-h-screen bg-[#F8F9FC]" />;
+    return <div className="min-h-screen bg-[#F9FBFF]" />;
   }
 
-  // If not onboarded, show the Onboarding wizard (starts at Quiz step 4)
   if (!isOnboarded) {
     return <OnboardingWizard onComplete={handleOnboardingComplete} />;
   }
 
-  const navItems = [
-    {
-      name: "Home", href: "/dashboard", icon: (
-        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-          <path strokeLinecap="round" strokeLinejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-        </svg>
-      )
-    },
-    {
-      name: "AI Tools", href: "/dashboard/ai-tools", locked: true, icon: (
-        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-          <path strokeLinecap="round" strokeLinejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
-        </svg>
-      )
-    },
-    {
-      name: "Projects", href: "/dashboard/projects", locked: true, icon: (
-        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-          <path strokeLinecap="round" strokeLinejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-        </svg>
-      )
-    },
-    {
-      name: "Events", href: "/dashboard/events", icon: (
-        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-          <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-        </svg>
-      )
-    },
-    {
-      name: "Community", href: "#", icon: (
-        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-          <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-        </svg>
-      )
-    },
-    {
-      name: "Jobs", href: "/dashboard/jobs", locked: true, icon: (
-        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-          <path strokeLinecap="round" strokeLinejoin="round" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-        </svg>
-      )
-    },
-    {
-      name: "Settings", href: "#", locked: true, icon: (
-        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-          <path strokeLinecap="round" strokeLinejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-          <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-        </svg>
-      )
-    },
-  ];
-
   return (
-    <div className="min-h-screen bg-[#F8F9FC] flex flex-col md:flex-row font-sans text-gray-800 antialiased">
-      {/* Sidebar Navigation */}
-      <aside className="w-full md:w-64 bg-white  shrink-0 flex flex-col justify-between p-4 shadow-sm">
-        <div>
-          {/* Brand Header */}
-          <div className="h-16 flex items-center justify-between px-2 border-b border-gray-100 mb-6">
-            <Link href="/dashboard" className="flex items-center gap-2">
-              <div className="w-7 h-7 rounded-lg flex items-center justify-center shadow-md shadow-blue-500/20 bg-white p-1 overflow-hidden shrink-0">
-                <img src="/logo.png" alt="Consistency AI" className="w-full h-full object-contain" />
-              </div>
-              <span className="font-extrabold text-gray-900 text-base tracking-tight">Consistency AI</span>
-            </Link>
-            <span className="bg-blue-50 text-[#2B50EC] text-[8px] font-black uppercase tracking-wider py-0.5 px-2 rounded-md">
-              Free Access
-            </span>
-          </div>
-
-          {/* Navigation Links */}
-          <nav className="space-y-1 px-1">
-            {navItems.map((item) => {
-              const isActive = pathname === item.href;
-              return (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className={`flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-black transition-all ${isActive
-                      ? "bg-[#2B50EC] text-white shadow-md shadow-blue-500/10"
-                      : "text-gray-500 hover:text-gray-900 hover:bg-gray-50"
-                    }`}
-                >
-                  <div className="flex items-center gap-3">
-                    {item.icon}
-                    <span>{item.name}</span>
-                  </div>
-                  {item.locked && !isActive && (
-                    <svg className="w-3 h-3 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                    </svg>
-                  )}
-                </Link>
-              );
-            })}
-          </nav>
-        </div>
-
-        {/* Sidebar Footer Cards */}
-        <div className="mt-8 space-y-4 px-1">
-          {/* Upgrade Card Promo */}
-          <div className="bg-[#2B50EC]/5 border border-[#2B50EC]/10 rounded-2xl p-4 flex flex-col items-start text-left relative overflow-hidden">
-            <div className="w-8 h-8 rounded-full bg-[#2B50EC]/10 flex items-center justify-center mb-3">
-              <svg className="w-4 h-4 text-[#2B50EC]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
-              </svg>
-            </div>
-            <h4 className="text-xs font-black text-gray-800 mb-1">Upgrade for More</h4>
-            <p className="text-[10px] font-bold text-gray-400 leading-snug mb-3">
-              Unlock AI Mentor, Projects, Certificates & more.
-            </p>
-            <button className="text-[#2B50EC] hover:text-[#1E3BB3] text-xs font-black transition-colors outline-none">
-              Upgrade Now
-            </button>
-          </div>
-
-          {/* Log out / Sign up trigger */}
-          <button
-            onClick={() => {
-              localStorage.removeItem("isOnboarded");
-              window.location.reload();
-            }}
-            className="w-full border border-gray-200 bg-white hover:bg-gray-50 text-gray-700 py-3 rounded-xl text-xs font-black transition-colors shadow-sm flex items-center justify-center gap-1.5 cursor-pointer"
-          >
-            <svg className="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-            </svg>
-            <span>Log in / Sign up</span>
-          </button>
-        </div>
-      </aside>
-
-      {/* Main Workspace Frame */}
-      <div className="flex-1 flex flex-col min-h-0 overflow-hidden">
-        {/* Workspace Top Header */}
-        <header className="sticky top-0 z-50 h-20 bg-white flex items-center justify-between px-6 sm:px-8 shrink-0 shadow-sm text-left">
+    <div className="min-h-screen bg-[#F9FBFF] text-[#0F172A]">
+      <div className="flex min-h-screen flex-col md:flex-row">
+        <aside className="w-full border-r border-[#E2E8F0] bg-[#F9FBFF] md:w-64 md:min-h-screen md:flex md:flex-col md:justify-between">
           <div>
-            <h1 className="text-base font-black text-gray-800 tracking-tight flex items-center gap-1.5">
-              Good morning, Santhosh <span className="animate-bounce">👋</span>
-            </h1>
-            <p className="text-[11px] font-bold text-gray-400">
-              Let&apos;s learn, build and grow together.
-            </p>
-          </div>
-
-          <div className="flex items-center gap-5">
-            {/* Search Input Box */}
-            <div className="relative hidden md:block">
-              <input
-                type="text"
-                placeholder="Search cohorts, topics..."
-                className="w-64 bg-gray-50 border border-gray-200/80 rounded-xl py-2 pl-9 pr-10 text-xs font-semibold focus:outline-none focus:border-blue-300 focus:bg-white transition-all shadow-inner"
-              />
-              <svg className="w-4 h-4 text-gray-400 absolute left-3.5 top-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
-              <kbd className="absolute right-3.5 top-2 bg-white border border-gray-200 text-gray-400 text-[9px] px-1.5 py-0.5 rounded shadow-sm font-sans font-black">
-                ⌘K
-              </kbd>
-            </div>
-
-            {/* Notification Bell */}
-            <button className="w-9 h-9 rounded-xl border border-gray-200 flex items-center justify-center hover:bg-gray-50 transition-colors relative cursor-pointer">
-              <svg className="w-4 h-4 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-              </svg>
-              <span className="absolute top-2 right-2.5 w-1.5 h-1.5 bg-red-500 rounded-full" />
-            </button>
-
-            {/* User Profile avatar info */}
-            <div className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-xl bg-purple-600 text-white flex items-center justify-center font-black text-xs shadow-md shadow-purple-600/10">
-                RK
+            <div className="flex items-center gap-3 px-6 py-6">
+              <div className="relative h-[43px] w-[43px] rounded-[7.63px] bg-[linear-gradient(48.1deg,#2B50EC_27.45%,#61D3F9_94.96%)]">
+                <Image
+                  src="/assets/images/figma-dashboard/brand-mark.svg"
+                  alt="Consistency AI"
+                  width={24}
+                  height={24}
+                  className="absolute left-[10.38px] top-[9.32px]"
+                />
               </div>
-              <div className="hidden lg:block">
-                <h4 className="text-xs font-black text-gray-800 leading-tight">Rahul K</h4>
-                <span className="text-[10px] font-bold text-gray-400 leading-tight block">
-                  rahul.k@gmail.com
+              <div>
+                <p className="text-[18px] leading-7 tracking-[-0.45px] text-[#0F172A]">Consistency AI</p>
+                <span className="inline-flex rounded-full bg-[rgba(43,80,236,0.1)] px-2 py-0.5 text-[10px] uppercase leading-[15px] text-[#2B50EC]">
+                  FREE ACCESS
                 </span>
               </div>
             </div>
-          </div>
-        </header>
 
-        {/* Dynamic Inner Tab workspace page views */}
-        <main className="flex-1 overflow-y-auto p-6 sm:p-8">
-          {children}
-        </main>
+            <nav className="flex flex-col gap-2 px-4 pb-4 pt-2">
+              {navItems.map((item) => {
+                const isActive = item.href === "/dashboard" ? pathname === "/dashboard" : pathname.startsWith(item.href);
+
+                return (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    className={`flex h-11 w-full items-center justify-between rounded-xl px-3 py-2.5 transition-colors ${
+                      isActive ? "bg-[#2B50EC] text-white" : "text-[#64748B] hover:bg-[#EEF2FF]"
+                    } ${!isActive && item.locked ? "opacity-60" : ""}`}
+                  >
+                    <span className="flex items-center gap-3">
+                      <Image
+                        src={item.icon}
+                        alt=""
+                        width={18}
+                        height={18}
+                        className={isActive ? "brightness-0 invert" : ""}
+                      />
+                      <span className="text-[16px] leading-6">{item.name}</span>
+                    </span>
+                    {item.locked && !isActive && (
+                      <Image src="/assets/images/figma-dashboard/icon-lock.svg" alt="Locked" width={9} height={12} />
+                    )}
+                  </Link>
+                );
+              })}
+            </nav>
+          </div>
+
+          <div className="space-y-4 p-4">
+            <div className="relative rounded-2xl border border-[#E2E8F0] bg-white p-[17px] shadow-[0px_1px_2px_0px_rgba(0,0,0,0.05)]">
+              <div className="absolute -right-4 -top-4 h-12 w-12 rounded-full bg-[rgba(43,80,236,0.05)]" />
+              <div className="relative z-10">
+                <div className="mb-[8.7px] flex h-8 w-8 items-center justify-center rounded-lg bg-[rgba(43,80,236,0.1)]">
+                  <Image src="/assets/images/figma-dashboard/icon-bolt.svg" alt="Upgrade" width={12} height={15} />
+                </div>
+                <p className="pt-[8.7px] text-[14px] leading-5 text-[#0F172A]">Upgrade for More</p>
+                <p className="pb-[13.45px] text-[12px] leading-[19.5px] text-[#64748B]">
+                  Unlock AI Mentor, Projects,<br />
+                  Certificates &amp; more.
+                </p>
+                <button className="w-full rounded-xl border border-[rgba(43,80,236,0.2)] bg-[rgba(43,80,236,0.05)] px-1 py-[9px] text-[12px] leading-4 text-[#2B50EC] transition-colors hover:bg-[rgba(43,80,236,0.08)]">
+                  Upgrade Now
+                </button>
+              </div>
+            </div>
+
+            <button
+              onClick={() => {
+                localStorage.removeItem("isOnboarded");
+                window.location.reload();
+              }}
+              className="flex w-full items-center justify-center gap-2 rounded-xl border border-[#E2E8F0] bg-white py-[13px] text-[14px] leading-5 text-[#475569] transition-colors hover:bg-[#F8FAFC]"
+            >
+              <Image src="/assets/images/figma-dashboard/icon-login.svg" alt="Log in" width={10.5} height={10.5} />
+              <span>Log in / Sign up</span>
+            </button>
+          </div>
+        </aside>
+
+        <div className="flex min-h-screen flex-1 flex-col bg-[#F9FBFF]">
+          <header className="flex min-h-[104px] items-center justify-between border-b border-[#E2E8F0] bg-white px-6 py-5 md:px-10">
+            <div>
+              <h1 className="text-[24px] leading-8 text-[#0F172A]">Good morning, Santhosh 👋</h1>
+              <p className="text-[16px] leading-6 text-[#64748B]">Let&apos;s learn, build and grow together.</p>
+            </div>
+
+            <div className="hidden items-center gap-3 lg:flex">
+              <div className="flex h-9 items-center gap-2 rounded-full border border-[#E2E8F0] bg-[#F1F5F9] px-[13px] py-px">
+                <Image src="/assets/images/figma-dashboard/icon-search.svg" alt="Search" width={16} height={16} />
+                <span className="pr-6 text-[13px] leading-[19.5px] text-[#64748B]">Search cohorts, topics...</span>
+                <kbd className="rounded border border-[#E5E7EB] bg-white px-[7px] py-[3px] text-[11px] leading-[16.5px] text-[#64748B]">
+                  ⌘K
+                </kbd>
+              </div>
+
+              <button className="relative flex h-9 w-9 items-center justify-center rounded-full border border-[#E2E8F0] bg-white">
+                <Image src="/assets/images/figma-dashboard/icon-bell.svg" alt="Notifications" width={16} height={16} />
+                <span className="absolute right-[10px] top-[8px] h-2 w-2 rounded-full border-2 border-white bg-[#EF4444]" />
+              </button>
+
+              <div className="h-6 w-px bg-[#E2E8F0]" />
+
+              <div className="flex items-center gap-[10px] pl-1">
+                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[linear-gradient(135deg,#8B5CF6_0%,#6366F1_100%)] text-[12px] leading-[18px] text-white">
+                  RK
+                </div>
+                <div>
+                  <p className="text-[13px] leading-[13px] text-[#0F172A]">Rahul K</p>
+                  <p className="text-[11px] leading-[11px] text-[#64748B]">rahul.k@gmail.com</p>
+                </div>
+              </div>
+            </div>
+          </header>
+
+          <main className="flex-1 overflow-y-auto p-6">
+            {children}
+          </main>
+        </div>
       </div>
     </div>
   );
