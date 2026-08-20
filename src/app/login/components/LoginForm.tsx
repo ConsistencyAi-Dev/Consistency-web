@@ -32,13 +32,13 @@ export default function LoginForm({
 
   return (
     <div>
-      <div className="mb-8">
-        <h2 className="text-3xl font-extrabold text-gray-900 tracking-tight">Welcome back</h2>
-        <p className="text-[#6B7280] text-[14px] mt-1.5 font-medium">Log in to continue your progress</p>
+      <div className="mb-5">
+        <h2 className="text-[26px] leading-[32px] font-extrabold text-gray-900 tracking-tight">Welcome back</h2>
+        <p className="text-[#6B7280] text-[14px] mt-1 font-medium">Log in to continue your progress</p>
       </div>
 
       {error && (
-        <div className="mb-6 p-4 bg-red-50 border border-red-100 rounded-xl flex gap-3 items-start text-xs text-red-700 leading-relaxed font-semibold">
+        <div className="mb-4 p-4 bg-red-50 border border-red-100 rounded-xl flex gap-3 items-start text-xs text-red-700 leading-relaxed font-semibold">
           <svg className="w-4.5 h-4.5 text-red-500 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
@@ -47,7 +47,7 @@ export default function LoginForm({
       )}
 
       {successMsg && (
-        <div className="mb-6 p-4 bg-emerald-50 border border-emerald-100 rounded-xl flex gap-3 items-start text-xs text-emerald-700 leading-relaxed font-semibold">
+        <div className="mb-4 p-4 bg-emerald-50 border border-emerald-100 rounded-xl flex gap-3 items-start text-xs text-emerald-700 leading-relaxed font-semibold">
           <svg className="w-4.5 h-4.5 text-emerald-500 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
@@ -55,7 +55,7 @@ export default function LoginForm({
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-5">
+      <form onSubmit={handleSubmit} className="space-y-4">
         {/* Email Input */}
         <div>
           <label className="block text-xs font-semibold text-[#4B5563] uppercase tracking-wider mb-2">
@@ -74,7 +74,7 @@ export default function LoginForm({
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className={`w-full pl-11 pr-4 py-3 border rounded-xl text-[14px] text-black bg-white transition-all outline-none font-medium placeholder-gray-400 shadow-sm ${
+              className={`w-full pl-11 pr-4 py-2.5 border rounded-xl text-[14px] text-black bg-white transition-all outline-none font-medium placeholder-gray-400 shadow-sm ${
                 error && error.includes("incorrect")
                   ? "border-red-400 focus:border-red-500 focus:ring-1 focus:ring-red-500 bg-red-50/10"
                   : "border-gray-200 focus:border-[#0055FF] focus:ring-1 focus:ring-[#0055FF]"
@@ -101,7 +101,7 @@ export default function LoginForm({
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className={`w-full pl-11 pr-11 py-3 border rounded-xl text-[14px] text-black bg-white transition-all outline-none font-medium placeholder-gray-400 shadow-sm ${
+              className={`w-full pl-11 pr-11 py-2.5 border rounded-xl text-[14px] text-black bg-white transition-all outline-none font-medium placeholder-gray-400 shadow-sm ${
                 error && error.includes("incorrect")
                   ? "border-red-400 focus:border-red-500 focus:ring-1 focus:ring-red-500 bg-red-50/10"
                   : "border-gray-200 focus:border-[#0055FF] focus:ring-1 focus:ring-[#0055FF]"
@@ -157,7 +157,7 @@ export default function LoginForm({
         <button
           type="submit"
           disabled={isLoading}
-          className="w-full bg-[#0055FF] hover:bg-[#0044EE] text-white py-3.5 px-4 rounded-xl text-sm font-semibold transition-all duration-200 flex items-center justify-center gap-2.5 shadow-lg shadow-blue-500/25 active:scale-[0.98] disabled:opacity-75 disabled:cursor-not-allowed cursor-pointer"
+          className="w-full bg-[#0055FF] hover:bg-[#0044EE] text-white py-2.5 px-4 rounded-xl text-sm font-semibold transition-all duration-200 flex items-center justify-center gap-2.5 shadow-lg shadow-blue-500/25 active:scale-[0.98] disabled:opacity-75 disabled:cursor-not-allowed cursor-pointer"
         >
           {isLoading ? (
             <>
@@ -174,7 +174,7 @@ export default function LoginForm({
       </form>
 
       {/* Divider */}
-      <div className="relative my-7">
+      <div className="relative my-4">
         <div className="absolute inset-0 flex items-center">
           <div className="w-full border-t border-gray-150"></div>
         </div>
@@ -188,7 +188,7 @@ export default function LoginForm({
         <button
           type="button"
           disabled={isLoading}
-          className="flex items-center justify-center gap-2 py-3 px-4 border border-gray-200 hover:bg-gray-50 bg-white rounded-xl text-sm font-bold text-[#4B5563] transition-colors cursor-pointer"
+          className="flex items-center justify-center gap-2 py-2.5 px-4 border border-gray-200 hover:bg-gray-50 bg-white rounded-xl text-sm font-bold text-[#4B5563] transition-colors cursor-pointer"
         >
           <svg className="w-5 h-5" viewBox="0 0 24 24">
             <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
@@ -201,7 +201,7 @@ export default function LoginForm({
         <button
           type="button"
           disabled={isLoading}
-          className="flex items-center justify-center gap-2 py-3 px-4 border border-gray-200 hover:bg-gray-50 bg-white rounded-xl text-sm font-bold text-[#4B5563] transition-colors cursor-pointer"
+          className="flex items-center justify-center gap-2 py-2.5 px-4 border border-gray-200 hover:bg-gray-50 bg-white rounded-xl text-sm font-bold text-[#4B5563] transition-colors cursor-pointer"
         >
           <svg className="w-5 h-5 text-black" fill="currentColor" viewBox="0 0 24 24">
             <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.48.001-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.577.688.479C19.138 20.164 22 16.418 22 12c0-5.523-4.477-10-10-10z" />
@@ -210,7 +210,7 @@ export default function LoginForm({
         </button>
       </div>
 
-      <p className="mt-8 text-center text-sm font-semibold text-[#4B5563]">
+      <p className="mt-4 text-center text-sm font-semibold text-[#4B5563]">
         Don't have an account?{" "}
         <button
           type="button"
