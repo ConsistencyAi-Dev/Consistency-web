@@ -25,7 +25,7 @@ export default function DashboardPage() {
       mentorTitle: "Ex-Google, Staff Eng",
       price: "$299",
       originalPrice: "$408",
-      gradient: "from-blue-600 to-indigo-700",
+      gradient: "from-[#2B50EC] to-[#7C3AED]",
       tagColor: "bg-blue-500 text-white",
     },
     {
@@ -178,7 +178,7 @@ export default function DashboardPage() {
                 >
                   <div>
                     {/* Tag Header banner area */}
-                    <div className={`bg-gradient-to-r ${cohort.gradient} p-3.5 text-white flex flex-col relative`}>
+                    <div className={`bg-gradient-to-br ${cohort.gradient} p-3.5 text-white flex flex-col relative`}>
                       <span className={`self-start text-[8px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full mb-2.5 shadow-inner ${cohort.tagColor}`}>
                         {cohort.match}
                       </span>
@@ -462,27 +462,55 @@ export default function DashboardPage() {
           </div>
 
           {/* Widget 3: Why Consistency AI? */}
-          <div className="bg-[#0B0F19] text-white rounded-2xl border border-gray-800 p-4 shadow-sm">
-            <h4 className="text-[10px] font-black text-gray-400 uppercase tracking-wider mb-2.5">Why Consistency AI?</h4>
-            <div className="grid grid-cols-3 gap-2 text-center py-1">
-              <div className="flex flex-col">
-                <span className="text-sm font-black text-white">12K+</span>
-                <span className="text-[9px] font-bold text-gray-500 leading-tight">students</span>
+          <div className="relative overflow-hidden rounded-[16px] bg-[#0F172A] p-[20px] pt-[19px] pb-[20px] text-white shadow-[0_18px_48px_rgba(15,23,42,0.35)]">
+            <div
+              className="absolute -top-[64px] h-[192px] w-[192px] rounded-full opacity-40"
+              style={{
+                right: "-46.34px",
+                background: "linear-gradient(135deg, #2B50EC 0%, #7C3AED 100%)",
+                boxShadow: "40px 40px 40px",
+                filter: "blur(20px)",
+              }}
+            />
+
+            <div className="relative z-10 flex flex-col gap-[15.5px]">
+              <div>
+                <h4 className="text-[13.5px] font-semibold leading-[20.25px] text-white">
+                  Why Consistency AI?
+                </h4>
               </div>
-              <div className="flex flex-col border-x border-gray-800">
-                <span className="text-sm font-black text-white">89%</span>
-                <span className="text-[9px] font-bold text-gray-500 leading-tight">placement</span>
+
+              <div className="grid grid-cols-3 gap-[12px]">
+                <div className="rounded-[10px] border border-white/10 bg-white/10 p-[12px] text-left">
+                  <div className="text-[18px] font-semibold leading-[18px] text-white">12K+</div>
+                  <div className="mt-[3px] text-[10.5px] font-normal leading-[15.75px] text-white/70">students</div>
+                </div>
+
+                <div className="rounded-[10px] border border-white/10 bg-white/10 p-[12px] text-left">
+                  <div className="text-[18px] font-semibold leading-[18px] text-white">89%</div>
+                  <div className="mt-[3px] text-[10.5px] font-normal leading-[15.75px] text-white/70">placement</div>
+                </div>
+
+                <div className="rounded-[10px] border border-white/10 bg-white/10 p-[12px] text-left">
+                  <div className="flex items-center gap-[4px] text-[18px] font-semibold leading-[18px] text-white">
+                    <span>4.9</span>
+                    <svg viewBox="0 0 24 24" className="h-[12px] w-[12px] fill-[#FACC15]" aria-hidden="true">
+                      <path d="M12 1.75l2.76 5.59 6.17.9-4.46 4.35 1.05 6.12L12 0.45l-5.52 2.96 1.05-6.12L3.07 8.24l6.17-.9L12 1.75Z" />
+                    </svg>
+                  </div>
+                  <div className="mt-[3px] text-[10.5px] font-normal leading-[15.75px] text-white/70">rating</div>
+                </div>
               </div>
-              <div className="flex flex-col">
-                <span className="text-sm font-black text-white">4.9 ★</span>
-                <span className="text-[9px] font-bold text-gray-500 leading-tight">rating</span>
+
+              <div className="flex items-center gap-[8px] text-[11px] font-normal leading-[16.5px] text-white/60">
+                <svg viewBox="0 0 24 24" className="h-[16px] w-[16px] shrink-0 text-white/60" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M16 19v-1a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v1" />
+                  <circle cx="10" cy="7" r="3.5" />
+                  <path d="M19 18v-1a4 4 0 0 0-3-3.87" />
+                  <path d="M16 4.13a4 4 0 0 1 0 7.75" />
+                </svg>
+                <span>Trusted by engineers at Google, Meta, Amazon</span>
               </div>
-            </div>
-            <div className="mt-3 pt-2.5 border-t border-gray-800 flex items-center justify-center gap-1.5 text-[9px] font-bold text-gray-400">
-              <svg className="w-3.5 h-3.5 text-gray-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-              </svg>
-              <span>Trusted by engineers at Google, Meta, Amazon.</span>
             </div>
           </div>
 
