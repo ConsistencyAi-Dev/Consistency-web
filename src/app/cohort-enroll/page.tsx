@@ -484,7 +484,7 @@ export default function CohortEnrollPage() {
           // SUCCESS / ENROLLMENT CONFIRMED SCREEN
           <div className="bg-white rounded-3xl p-6 sm:p-10 shadow-sm  text-center max-w-[800px] w-full mx-auto relative overflow-hidden">
             {/* Header check circle badge */}
-            <div className="w-14 h-14 rounded-full bg-emerald-50 border border-emerald-100 flex items-center justify-center mx-auto mb-6 shadow-sm shadow-emerald-500/10">
+            <div className="w-14 h-14 rounded-full  border border-emerald-100 flex items-center justify-center mx-auto mb-6 shadow-sm shadow-emerald-500/10">
               <svg className="w-7 h-7 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
               </svg>

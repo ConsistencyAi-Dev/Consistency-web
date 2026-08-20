@@ -178,7 +178,7 @@ export default function LoginPage() {
   const isCenterCardMode = ["forgot-email", "forgot-code", "forgot-success", "reset-loading"].includes(mode);
 
   return (
-    <div className="min-h-screen w-full flex bg-[#F8F9FC] font-sans overflow-x-hidden relative">
+    <div className="h-screen w-full flex bg-[#F8F9FC] font-sans overflow-hidden relative">
       {/* Back to Home Link */}
       {/* <Link
         href="/"
@@ -190,12 +190,12 @@ export default function LoginPage() {
         Back to home
       </Link> */}
 
-      <div className="w-full flex min-h-screen">
+      <div className="w-full flex h-full">
         {/* Left Side: Form Container */}
         <div
           className={`w-full ${
             isCenterCardMode ? "lg:w-full" : "lg:w-1/2"
-          } flex items-center justify-center px-6 sm:px-12 lg:px-16 py-12 bg-transparent relative transition-all duration-300`}
+          } flex items-center justify-center px-6 sm:px-12 lg:px-16 py-6 lg:py-8 bg-transparent relative transition-all duration-300`}
         >
           <div className={`w-full ${mode === "signup" ? "max-w-[448px]" : "max-w-[420px]"}`}>
             <AnimatePresence mode="wait">

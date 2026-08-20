@@ -39,30 +39,30 @@ export default function SignUpForm({
   return (
     <div className="w-full max-w-[448px]">
       <div>
-        <h2 className="text-[30px] leading-[36px] font-semibold text-[#1E293B]">Create your student account</h2>
-        <div className="mt-2 flex items-center gap-2">
-          <p className="text-[16px] leading-6 text-[#64748B]">Join 12,000+ learners</p>
+        <h2 className="text-[26px] leading-[32px] font-semibold text-[#1E293B]">Create your student account</h2>
+        <div className="mt-1 flex items-center gap-2">
+          <p className="text-[14px] leading-5 text-[#64748B]">Join 12,000+ learners</p>
           <div className="flex items-center">
             <Image
               src="/assets/images/figma-signup/avatar-1.png"
               alt="Learner avatar"
-              width={24}
-              height={24}
-              className="h-6 w-6 rounded-full border-2 border-[#F9FAFB] object-cover"
+              width={20}
+              height={20}
+              className="h-5 w-5 rounded-full border-2 border-[#F9FAFB] object-cover"
             />
             <Image
               src="/assets/images/figma-signup/avatar-2.png"
               alt="Learner avatar"
-              width={24}
-              height={24}
-              className="-ml-2 h-6 w-6 rounded-full border-2 border-[#F9FAFB] object-cover"
+              width={20}
+              height={20}
+              className="-ml-1.5 h-5 w-5 rounded-full border-2 border-[#F9FAFB] object-cover"
             />
             <Image
               src="/assets/images/figma-signup/avatar-3.png"
               alt="Learner avatar"
-              width={24}
-              height={24}
-              className="-ml-2 h-6 w-6 rounded-full border-2 border-[#F9FAFB] object-cover"
+              width={20}
+              height={20}
+              className="-ml-1.5 h-5 w-5 rounded-full border-2 border-[#F9FAFB] object-cover"
             />
           </div>
         </div>
@@ -74,11 +74,11 @@ export default function SignUpForm({
         </div>
       )}
 
-      <div className="grid grid-cols-2 gap-4 pt-8">
+      <div className="grid grid-cols-2 gap-4 pt-4.5">
         <button
           type="button"
           disabled={isLoading}
-          className="flex items-center justify-center gap-2 rounded-xl border border-[#E2E8F0] bg-white px-4 py-[13px] text-[14px] leading-5 text-[#1E293B] transition-colors hover:bg-[#F8FAFC] disabled:cursor-not-allowed disabled:opacity-70"
+          className="flex items-center justify-center gap-2 rounded-xl border border-[#E2E8F0] bg-white px-4 py-[9px] text-[14px] leading-5 text-[#1E293B] transition-colors hover:bg-[#F8FAFC] disabled:cursor-not-allowed disabled:opacity-70"
         >
           <Image src="/assets/images/figma-signup/google.svg" alt="Google" width={20} height={20} />
           Continue with Google
@@ -86,22 +86,22 @@ export default function SignUpForm({
         <button
           type="button"
           disabled={isLoading}
-          className="flex items-center justify-center gap-2 rounded-xl border border-[#E2E8F0] bg-white px-4 py-[13px] text-[14px] leading-5 text-[#1E293B] transition-colors hover:bg-[#F8FAFC] disabled:cursor-not-allowed disabled:opacity-70"
+          className="flex items-center justify-center gap-2 rounded-xl border border-[#E2E8F0] bg-white px-4 py-[9px] text-[14px] leading-5 text-[#1E293B] transition-colors hover:bg-[#F8FAFC] disabled:cursor-not-allowed disabled:opacity-70"
         >
           <Image src="/assets/images/figma-signup/github.svg" alt="GitHub" width={20} height={20} />
           GitHub
         </button>
       </div>
 
-      <div className="flex items-center pb-5 pt-11">
+      <div className="flex items-center pb-3.5 pt-4.5">
         <div className="h-px flex-1 bg-[#D1D5DB]" />
         <div className="px-4 text-[12px] uppercase tracking-[0.6px] text-[#64748B]">OR</div>
         <div className="h-px flex-1 bg-[#D1D5DB]" />
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-5">
-        <div className="space-y-1.5">
-          <label className="block text-[14px] leading-5 text-[#1E293B]">Full Name</label>
+      <form onSubmit={handleSubmit} className="space-y-3.5">
+        <div className="space-y-1">
+          <label className="block text-[13px] leading-4 text-[#1E293B]">Full Name</label>
           <div className="relative">
             <Image
               src="/assets/images/figma-signup/user.svg"
@@ -117,13 +117,13 @@ export default function SignUpForm({
               required
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
-              className="w-full rounded-xl border border-[#E2E8F0] bg-white py-[13px] pl-[41px] pr-3.5 text-[14px] leading-5 text-[#1E293B] outline-none transition-colors placeholder:text-[#64748B] focus:border-[#4662F0] disabled:cursor-not-allowed disabled:opacity-70"
+              className="w-full rounded-xl border border-[#E2E8F0] bg-white py-[9px] pl-[41px] pr-3.5 text-[14px] leading-5 text-[#1E293B] outline-none transition-colors placeholder:text-[#64748B] focus:border-[#4662F0] disabled:cursor-not-allowed disabled:opacity-70"
             />
           </div>
         </div>
 
-        <div className="space-y-1.5">
-          <label className="block text-[14px] leading-5 text-[#1E293B]">Email Address</label>
+        <div className="space-y-1">
+          <label className="block text-[13px] leading-4 text-[#1E293B]">Email Address</label>
           <div className="relative">
             <Image
               src="/assets/images/figma-signup/email.svg"
@@ -139,13 +139,13 @@ export default function SignUpForm({
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full rounded-xl border border-[#E2E8F0] bg-white py-[13px] pl-[41px] pr-3.5 text-[14px] leading-5 text-[#1E293B] outline-none transition-colors placeholder:text-[#64748B] focus:border-[#4662F0] disabled:cursor-not-allowed disabled:opacity-70"
+              className="w-full rounded-xl border border-[#E2E8F0] bg-white py-[9px] pl-[41px] pr-3.5 text-[14px] leading-5 text-[#1E293B] outline-none transition-colors placeholder:text-[#64748B] focus:border-[#4662F0] disabled:cursor-not-allowed disabled:opacity-70"
             />
           </div>
         </div>
 
-        <div className="space-y-1.5">
-          <label className="block text-[14px] leading-5 text-[#1E293B]">Password</label>
+        <div className="space-y-1">
+          <label className="block text-[13px] leading-4 text-[#1E293B]">Password</label>
           <div className="relative">
             <button
               type="button"
@@ -162,13 +162,13 @@ export default function SignUpForm({
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full rounded-xl border border-[#E2E8F0] bg-white py-[13px] pl-[17px] pr-[41px] text-[14px] leading-5 text-[#1E293B] outline-none transition-colors placeholder:text-[#64748B] focus:border-[#4662F0] disabled:cursor-not-allowed disabled:opacity-70"
+              className="w-full rounded-xl border border-[#E2E8F0] bg-white py-[9px] pl-[17px] pr-[41px] text-[14px] leading-5 text-[#1E293B] outline-none transition-colors placeholder:text-[#64748B] focus:border-[#4662F0] disabled:cursor-not-allowed disabled:opacity-70"
             />
           </div>
         </div>
 
-        <div className="space-y-1.5">
-          <label className="block text-[14px] leading-5 text-[#1E293B]">Confirm Password</label>
+        <div className="space-y-1">
+          <label className="block text-[13px] leading-4 text-[#1E293B]">Confirm Password</label>
           <div className="relative">
             <Image
               src="/assets/images/figma-signup/lock.svg"
@@ -184,7 +184,7 @@ export default function SignUpForm({
               required
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              className="w-full rounded-xl border border-[#E2E8F0] bg-white py-[13px] pl-[41px] pr-3.5 text-[14px] leading-5 text-[#1E293B] outline-none transition-colors placeholder:text-[#64748B] focus:border-[#4662F0] disabled:cursor-not-allowed disabled:opacity-70"
+              className="w-full rounded-xl border border-[#E2E8F0] bg-white py-[9px] pl-[41px] pr-3.5 text-[14px] leading-5 text-[#1E293B] outline-none transition-colors placeholder:text-[#64748B] focus:border-[#4662F0] disabled:cursor-not-allowed disabled:opacity-70"
             />
           </div>
         </div>
@@ -219,7 +219,7 @@ export default function SignUpForm({
         <button
           type="submit"
           disabled={isLoading}
-          className="flex w-full items-center justify-center gap-2 rounded-xl border border-transparent bg-[#4662F0] px-4 py-[15px] text-[16px] leading-5 text-white transition-colors hover:bg-[#3b56e6] active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-70"
+          className="flex w-full items-center justify-center gap-2 rounded-xl border border-transparent bg-[#4662F0] px-4 py-[11px] text-[15px] leading-5 text-white transition-colors hover:bg-[#3b56e6] active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-70"
         >
           {isLoading ? (
             <>
@@ -238,7 +238,7 @@ export default function SignUpForm({
         </button>
       </form>
 
-      <p className="pt-8 text-center text-[14px] leading-5 text-[#64748B]">
+      <p className="pt-4 text-center text-[14px] leading-5 text-[#64748B]">
         Already have an account?{" "}
         <button
           type="button"
@@ -250,7 +250,7 @@ export default function SignUpForm({
         </button>
       </p>
 
-      <div className="mx-auto mt-6 flex w-full max-w-[320px] items-center justify-center gap-2 rounded-full border border-dashed border-[#D1D5DB] bg-[rgba(255,255,255,0.5)] px-4 py-[9px] text-center text-[12px] leading-4 text-[#64748B]">
+      <div className="mx-auto mt-3.5 flex w-full max-w-[320px] items-center justify-center gap-2 rounded-full border border-dashed border-[#D1D5DB] bg-[rgba(255,255,255,0.5)] px-4 py-[6px] text-center text-[12px] leading-4 text-[#64748B]">
         <Image src="/assets/images/figma-signup/shield.svg" alt="Security shield" width={14} height={14} />
         <span>No credit card required • Cancel anytime</span>
       </div>
