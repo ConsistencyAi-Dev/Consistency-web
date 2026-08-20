@@ -1,19 +1,32 @@
 "use client";
 
+import Image from "next/image";
 import React, { useState } from "react";
+
+type Job = {
+  title: string;
+  company: string;
+  location: string;
+  tags: string[];
+  posted: string;
+  logo: string;
+  faded: boolean;
+};
 
 export default function JobsPage() {
   const [activeFilter, setActiveFilter] = useState("All Roles");
 
-  const recommendedJobs = [
+  const filters = ["All Roles", "Remote", "Full-time", "Internship"];
+
+  const recommendedJobs: Job[] = [
     {
       title: "Data Analyst",
       company: "Quantify Analytics",
       location: "Remote",
       tags: ["Full-time", "Entry Level", "$70k - $90k"],
       posted: "Posted 2d ago",
-      initial: "QA",
-      color: "bg-indigo-50 text-indigo-600 border-indigo-100",
+      logo: "/assets/images/figma-jobs/logo-data-analyst.png",
+      faded: false,
     },
     {
       title: "UX/UI Designer Intern",
@@ -21,50 +34,52 @@ export default function JobsPage() {
       location: "New York, NY (On-site)",
       tags: ["Internship", "High Match"],
       posted: "Posted 5h ago",
-      initial: "CF",
-      color: "bg-orange-50 text-orange-600 border-orange-100",
+      logo: "/assets/images/figma-jobs/logo-uxui.png",
+      faded: false,
+    },
+    {
+      title: "Junior Frontend Developer",
+      company: "WebScale Inc.",
+      location: "Austin, TX (Hybrid)",
+      tags: ["Full-time", "React / Tailwind"],
+      posted: "Posted 1w ago",
+      logo: "/assets/images/figma-jobs/logo-frontend-generic.svg",
+      faded: true,
     },
   ];
 
   return (
-    <div className="w-full flex flex-col gap-6 text-left">
-      {/* Title Header Section */}
-      <div className="bg-white rounded-3xl p-8 shadow-sm">
-        <h2 className="text-2xl font-black text-gray-900 tracking-tight leading-tight">
-          Find your dream role
-        </h2>
-        <p className="text-gray-500 text-sm font-semibold mt-1">
-          Explore tailored career opportunities matching your skillset
-        </p>
-      </div>
+    <div className="flex w-full flex-col gap-6 text-left">
+      <h2 className="text-[36px] leading-[56px] tracking-[-0.96px] text-[#191C1E]">Find your dream role</h2>
 
-      {/* Toolbar filter area */}
-      <div className="flex flex-col md:flex-row items-center gap-4 mt-2">
-        {/* Search Input Box */}
+      <div className="flex flex-col items-center gap-2 md:flex-row">
         <div className="relative w-full md:flex-1">
           <input
             type="text"
             placeholder="Search jobs, skills, or companies..."
-            className="w-full bg-white rounded-xl py-3 pl-10 pr-4 text-xs font-semibold focus:outline-none focus:border-blue-300 focus:bg-white transition-all shadow-sm"
+            className="h-11 w-full rounded-lg border border-[#C4C5D8] bg-white py-3 pl-[33px] pr-4 text-[16px] leading-normal text-[#6B7280] outline-none"
           />
-          <svg className="w-4 h-4 text-gray-400 absolute left-3.5 top-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-          </svg>
+          <Image
+            src="/assets/images/figma-jobs/search-18.svg"
+            alt="Search"
+            width={18}
+            height={18}
+            className="absolute left-2 top-1/2 -translate-y-1/2"
+          />
         </div>
 
-        {/* Filter Pills */}
-        <div className="flex items-center gap-2 overflow-x-auto w-full md:w-auto shrink-0 pb-1 md:pb-0">
-          {["All Roles", "Remote", "Full-time", "Internship"].map((filter) => {
+        <div className="flex w-full items-center gap-1 overflow-auto md:w-auto">
+          {filters.map((filter) => {
             const isActive = activeFilter === filter;
             return (
               <button
                 key={filter}
                 type="button"
                 onClick={() => setActiveFilter(filter)}
-                className={`px-4 py-2.5 rounded-full text-xs font-black transition-all cursor-pointer whitespace-nowrap ${
+                className={`h-9 shrink-0 rounded-lg border px-[17px] pb-[10.5px] pt-[9.5px] text-[14px] tracking-[0.14px] transition-colors ${
                   isActive
-                    ? "bg-[#2B50EC] text-white shadow-md shadow-blue-500/10"
-                    : "bg-white text-gray-500 hover:text-gray-800"
+                    ? "border-transparent bg-[#DAE2FD] text-[#0035CE]"
+                    : "border-[#E0E3E5] bg-white text-[#444655] hover:bg-[#F8FAFC]"
                 }`}
               >
                 {filter}
@@ -74,181 +89,185 @@ export default function JobsPage() {
         </div>
       </div>
 
-      {/* Main Jobs Layout grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 w-full items-start">
-        {/* Left Column content */}
-        <div className="lg:col-span-2 flex flex-col gap-6">
-          
-          {/* Card 1: Featured Opportunity Hero Card */}
-          <div className="bg-white rounded-3xl p-6 sm:p-7 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-6 relative overflow-hidden">
-            <div className="flex-1 text-left">
-              <span className="text-[#2B50EC] text-[9px] font-black uppercase tracking-wider mb-2.5 inline-block">
-                ★ Featured Opportunity
-              </span>
-              <h3 className="text-lg sm:text-xl font-black text-gray-900 tracking-tight leading-snug">
-                Software Engineering Intern
-              </h3>
-              <p className="text-xs font-bold text-gray-500 mt-1">
-                TechNova Systems • San Francisco, CA (Hybrid)
-              </p>
-              
-              <div className="flex items-center gap-3 text-[10px] font-black text-gray-400 mt-4">
-                <span className="bg-gray-50 py-1 px-3 rounded-full text-[10px]">Summer 2024</span>
-                <span>•</span>
-                <span className="text-gray-700 font-bold">$45-55/hr</span>
+      <div className="grid w-full grid-cols-1 items-start gap-6 lg:grid-cols-12">
+        <div className="flex flex-col gap-6 lg:col-span-8">
+          <section className="relative flex items-center gap-6 overflow-hidden rounded-2xl border border-[#E0E3E5] bg-white p-[33px]">
+            <div className="pointer-events-none absolute -right-32 -top-32 h-64 w-64 rounded-full bg-[rgba(218,226,253,0.3)] blur-[32px]" />
+
+            <div className="flex-1">
+              <div className="flex items-center gap-1">
+                <Image src="/assets/images/figma-jobs/featured-star.svg" alt="Featured" width={17} height={16} />
+                <span className="text-[12px] uppercase tracking-[0.6px] text-[#0035CE]">FEATURED OPPORTUNITY</span>
               </div>
 
-              <button className="bg-[#2B50EC] hover:bg-[#1E3BB3] text-white text-xs font-black py-3 px-6 rounded-xl shadow-md transition-all mt-6 flex items-center gap-1 cursor-pointer">
-                <span>Apply Now</span>
-                <span>→</span>
+              <h3 className="pt-1 text-[24px] leading-8 text-[#191C1E]">Software Engineering Intern</h3>
+
+              <div className="flex gap-2 pt-1 text-[16px] leading-6">
+                <p className="pr-[60px] text-[#191C1E]">
+                  TechNova
+                  <br />
+                  Systems
+                </p>
+                <p className="text-[#444655]">
+                  • San Francisco, CA
+                  <br />
+                  (Hybrid)
+                </p>
+              </div>
+
+              <div className="flex gap-2 pb-5 pt-3">
+                <span className="rounded-lg bg-[#ECEEF0] px-2 py-1 text-[12px] leading-4 text-[#444655]">Summer 2024</span>
+                <span className="rounded-lg bg-[#ECEEF0] px-2 py-1 text-[12px] leading-4 text-[#444655]">$45-55/hr</span>
+              </div>
+
+              <button className="inline-flex h-11 items-center gap-1 rounded-lg bg-[#2B50EC] px-6 text-[14px] tracking-[0.14px] text-white transition-colors hover:bg-[#1E3BB3]">
+                Apply Now
+                <Image src="/assets/images/figma-jobs/arrow-right-12.svg" alt="Arrow" width={12} height={12} />
               </button>
             </div>
 
-            {/* Showcase building illustration block on right */}
-            <div className="w-48 h-32 bg-gray-50 rounded-2xl flex items-center justify-center p-4 shrink-0 relative overflow-hidden">
-              <svg className="w-14 h-14 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-              </svg>
+            <div className="h-48 w-48 overflow-hidden rounded-lg border border-[#C4C5D8] bg-[#F7F9FB]">
+              <Image
+                src="/assets/images/figma-jobs/featured-role.png"
+                alt="Featured role"
+                width={192}
+                height={192}
+                className="h-full w-full object-cover"
+              />
             </div>
-          </div>
+          </section>
 
-          {/* List Section: Recommended Roles */}
-          <div className="flex flex-col gap-4 text-left">
-            <h4 className="text-sm font-extrabold text-gray-800 tracking-tight">Recommended Roles</h4>
-            
-            <div className="space-y-3">
-              {recommendedJobs.map((job, idx) => (
-                <div
-                  key={idx}
-                  className="bg-white rounded-2xl p-5 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 transition-all hover:shadow-md"
-                >
-                  <div className="flex items-center gap-3.5">
-                    {/* Logo block */}
-                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-black text-xs shrink-0 uppercase border ${job.color}`}>
-                      {job.initial}
-                    </div>
+          <section className="flex flex-col gap-4">
+            <h4 className="text-[24px] leading-8 text-[#191C1E]">Recommended Roles</h4>
 
-                    <div>
-                      <h5 className="text-xs sm:text-sm font-black text-gray-800 leading-snug">
-                        {job.title}
-                      </h5>
-                      <span className="text-[10px] font-bold text-gray-400 block leading-tight">
-                        {job.company} • {job.location}
+            {recommendedJobs.map((job) => (
+              <article
+                key={job.title}
+                className={`flex items-center gap-6 rounded-2xl border border-[#E0E3E5] bg-white p-[25px] ${job.faded ? "opacity-70" : ""}`}
+              >
+                <div className="flex h-16 w-16 items-center justify-center rounded-lg border border-[#C4C5D8] bg-[#F7F9FB]">
+                  <Image src={job.logo} alt={job.title} width={48} height={48} className="max-h-12 max-w-12" />
+                </div>
+
+                <div className="min-w-0 flex-1">
+                  <h5 className="text-[20px] leading-[25px] text-[#191C1E]">{job.title}</h5>
+                  <p className="text-[14px] leading-5 text-[#444655]">
+                    {job.company} • {job.location}
+                  </p>
+
+                  <div className="flex flex-wrap gap-1 pt-1">
+                    {job.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className={`rounded-lg px-2 py-1 text-[12px] leading-4 ${
+                          tag === "High Match" ? "bg-[#DAE2FD] text-[#0035CE]" : "bg-[#ECEEF0] text-[#444655]"
+                        }`}
+                      >
+                        {tag}
                       </span>
-                      
-                      {/* Job Pills */}
-                      <div className="flex flex-wrap items-center gap-1.5 mt-2.5">
-                        {job.tags.map((tag) => (
-                          <span
-                            key={tag}
-                            className={`text-[8px] font-black uppercase tracking-wider py-0.5 px-2 rounded-md ${
-                              tag === "High Match"
-                                ? "bg-blue-50 text-[#2B50EC]"
-                                : "bg-gray-50 text-gray-500"
-                            }`}
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="flex sm:flex-col items-end gap-2.5 w-full sm:w-auto shrink-0 border-t sm:border-t-0 border-gray-50 pt-3 sm:pt-0">
-                    <span className="text-[9px] font-bold text-gray-400 block sm:mb-1">{job.posted}</span>
-                    <button className="bg-white hover:bg-gray-50 text-gray-700 text-[10px] font-black py-2.5 px-4 rounded-xl shadow-sm transition-all  cursor-pointer">
-                      View Details
-                    </button>
+                    ))}
                   </div>
                 </div>
-              ))}
-            </div>
-          </div>
 
+                <div className="flex flex-col items-end gap-2">
+                  <p className="text-[12px] leading-4 text-[#444655]">{job.posted}</p>
+                  <button className="h-9 rounded-lg border border-[#C4C5D8] px-[17px] pb-[10.5px] pt-[9.5px] text-[14px] leading-4 tracking-[0.14px] text-[#191C1E] transition-colors hover:bg-[#F8FAFC]">
+                    View Details
+                  </button>
+                </div>
+              </article>
+            ))}
+
+            <button className="w-full rounded-lg border border-[#E0E3E5] bg-white py-[17px] text-[14px] leading-4 tracking-[0.14px] text-[#191C1E] transition-colors hover:bg-[#F8FAFC]">
+              Load More Jobs
+            </button>
+          </section>
         </div>
 
-        {/* Right Widgets Column */}
-        <div className="flex flex-col gap-6 lg:col-span-1">
-          {/* Application tracker card */}
-          <div className="bg-white rounded-2xl p-5 shadow-sm text-left">
-            <div className="flex items-center justify-between mb-4">
-              <h4 className="text-xs font-black text-gray-800 uppercase tracking-wider">Application Tracker</h4>
-              <button className="text-[#2B50EC] hover:text-[#1E3BB3] text-[10px] font-black">
-                View All
-              </button>
+        <aside className="flex flex-col gap-6 lg:col-span-4">
+          <section className="rounded-2xl border border-[#E0E3E5] bg-white p-[25px]">
+            <div className="flex items-center justify-between">
+              <h4 className="text-[18px] leading-[27px] text-[#191C1E]">Application Tracker</h4>
+              <button className="text-[12px] leading-4 text-[#0035CE]">View All</button>
             </div>
 
-            {/* List */}
-            <div className="space-y-4">
+            <div className="mt-4 flex flex-col gap-4">
               {[
                 {
                   role: "Frontend Intern",
                   company: "TechNova Systems",
+                  dot: "bg-[#2B50EC]",
                   status: "Interviewing",
-                  color: "bg-blue-50 text-[#2B50EC] border-blue-100",
+                  pill: "bg-[#DAE2FD] text-[#0035CE]",
                 },
                 {
                   role: "Data Science Fellow",
                   company: "Quantify Analytics",
+                  dot: "bg-[#C4C5D8]",
                   status: "Applied",
-                  color: "bg-gray-50 text-gray-500 border-gray-100",
+                  pill: "bg-[#ECEEF0] text-[#444655]",
                 },
                 {
                   role: "QA Tester",
                   company: "WebScale Inc.",
+                  dot: "bg-[#10B981]",
                   status: "Offer",
-                  color: "bg-emerald-50 text-emerald-600 border-emerald-100",
+                  pill: "bg-[#D1FAE5] text-[#047857]",
                 },
-              ].map((item, idx) => (
-                <div key={idx} className="flex items-center justify-between gap-2 border-b border-gray-50/50 pb-3 last:border-b-0 last:pb-0">
-                  <div>
-                    <h5 className="text-[11px] font-black text-gray-800 leading-tight">
-                      {item.role}
-                    </h5>
-                    <span className="text-[9px] font-bold text-gray-400 block leading-tight mt-0.5">
-                      {item.company}
-                    </span>
+              ].map((item) => (
+                <div key={item.role} className="flex items-center gap-4">
+                  <span className={`h-2 w-2 rounded-full ${item.dot}`} />
+                  <div className="flex-1">
+                    <p className="text-[14px] leading-4 tracking-[0.14px] text-[#191C1E]">{item.role}</p>
+                    <p className="text-[14px] leading-5 text-[#444655]">{item.company}</p>
                   </div>
-
-                  <span className={`text-[8px] font-black uppercase tracking-wider py-0.5 px-2 rounded-md border ${item.color}`}>
-                    {item.status}
-                  </span>
+                  <span className={`rounded-lg px-2 py-1 text-[12px] leading-4 ${item.pill}`}>{item.status}</span>
                 </div>
               ))}
             </div>
-          </div>
+          </section>
 
-          {/* Profile Match missing skills card */}
-          <div className="bg-white rounded-2xl p-5 shadow-sm text-left">
-            <h4 className="text-xs font-black text-gray-800 uppercase tracking-wider mb-2.5">Profile Match</h4>
-            <p className="text-[10px] font-semibold text-gray-400 leading-relaxed mb-4">
-              Your profile is missing <strong className="text-gray-700 font-bold">2 key skills</strong> often requested for Frontend roles.
+          <section className="rounded-2xl bg-white p-6">
+            <div className="flex items-center gap-2">
+              <Image src="/assets/images/figma-jobs/profile-match-icon.svg" alt="Profile Match" width={22} height={22} />
+              <h4 className="text-[18px] leading-[27px] text-[#191C1E]">Profile Match</h4>
+            </div>
+
+            <p className="mt-4 text-[14px] leading-5 text-[#444655]">
+              Your profile is missing 2 key skills
+              <br />
+              often requested for Frontend roles.
             </p>
 
-            <div className="flex flex-wrap gap-1.5 mb-5">
+            <div className="mt-4 flex gap-1">
               {["TypeScript", "GraphQL"].map((skill) => (
                 <span
                   key={skill}
-                  className="bg-gray-50 border border-gray-100 text-gray-500 text-[9px] font-black py-0.5 px-2.5 rounded-full"
+                  className="rounded-lg border border-[#C4C5D8] bg-[#E0E3E5] px-[9px] py-[5px] text-[12px] leading-4 text-[#444655] line-through opacity-60"
                 >
                   {skill}
                 </span>
               ))}
             </div>
 
-            <button className="w-full bg-white hover:bg-gray-50 text-gray-850 text-[10px] font-black py-2.5 rounded-xl transition-all shadow-sm flex items-center justify-center gap-1.5 cursor-pointer border border-gray-200">
-              <span>Update Skills</span>
+            <button className="mt-4 h-9 w-full rounded-lg border border-[#C4C5D8] bg-white pb-[10.5px] pt-[9.5px] text-[14px] leading-4 tracking-[0.14px] text-[#0035CE] transition-colors hover:bg-[#F8FAFC]">
+              Update Skills
             </button>
-          </div>
+          </section>
 
-          {/* Career tip widget */}
-          <div className="bg-white rounded-2xl p-5 shadow-sm text-left">
-            <h4 className="text-[9px] font-black text-gray-400 uppercase tracking-wider mb-2">Career tip of the day</h4>
-            <p className="text-[10px] font-bold text-gray-500 leading-relaxed italic">
-              &quot;Tailor your resume for every application. Highlight the projects that directly correlate with the job description to pass ATS filters.&quot;
+          <section className="rounded-2xl border border-[#E0E3E5] bg-white p-[25px]">
+            <h4 className="text-[14px] uppercase leading-4 tracking-[0.7px] text-[#191C1E]">CAREER TIP OF THE DAY</h4>
+            <p className="mt-2 text-[14px] font-light leading-5 text-[#444655]">
+              &quot;Tailor your resume for every
+              <br />
+              application. Highlight the projects that
+              <br />
+              directly correlate with the job
+              <br />
+              description to pass ATS filters.&quot;
             </p>
-          </div>
-        </div>
+          </section>
+        </aside>
       </div>
     </div>
   );
