@@ -197,7 +197,7 @@ export default function LoginPage() {
             isCenterCardMode ? "lg:w-full" : "lg:w-1/2"
           } flex items-center justify-center px-6 sm:px-12 lg:px-16 py-12 bg-transparent relative transition-all duration-300`}
         >
-          <div className="max-w-[420px] w-full">
+          <div className={`w-full ${mode === "signup" ? "max-w-[448px]" : "max-w-[420px]"}`}>
             <AnimatePresence mode="wait">
               {mode === "login" && (
                 <motion.div
