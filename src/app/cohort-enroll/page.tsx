@@ -1,11 +1,10 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 
 export default function CohortEnrollPage() {
-  const [view, setView] = useState<"checkout" | "success" | "loading">("checkout");
+  const [view, setView] = useState<"checkout" | "success" | "receipt" | "loading">("checkout");
   const [expandedCurriculum, setExpandedCurriculum] = useState<number | null>(1);
   const [paymentTab, setPaymentTab] = useState<"Card" | "UPI" | "EMI">("Card");
 
@@ -28,8 +27,10 @@ export default function CohortEnrollPage() {
 
   const handleConnectLinkedIn = () => {
     setIsLinkedInConnected(true);
-    setProfileProgress((prev) => Math.min(prev + 25, 100));
+    setProfileProgress(100);
   };
+
+  const handleViewReceipt = () => setView("receipt");
 
   const handlePay = () => {
     setView("loading");
@@ -82,9 +83,9 @@ export default function CohortEnrollPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#F8F9FC] font-sans antialiased text-gray-800 flex flex-col">
+    <div className="min-h-screen bg-[#f7f9fb] font-sans antialiased text-gray-800 flex flex-col">
       {/* Header bar area */}
-      <header className="bg-white border-b border-gray-100 px-6 sm:px-12 py-4 flex items-center justify-between shadow-sm shrink-0">
+      <header className="bg-white border-b border-[#e5e7eb] px-6 sm:px-12 py-4 flex items-center justify-between shrink-0">
         <Link href="/dashboard" className="flex items-center gap-2">
           <div className="w-7 h-7 rounded-lg flex items-center justify-center shadow-md shadow-blue-500/20 bg-white p-1 overflow-hidden shrink-0">
             <img src="/logo.png" alt="Consistency AI" className="w-full h-full object-contain" />
@@ -111,14 +112,16 @@ export default function CohortEnrollPage() {
           }`}>
             Success
           </span>
-          <span className="text-gray-400 text-[10px] font-black px-3.5 py-1">
+          <span className={`text-[10px] font-black px-3.5 py-1 rounded-full transition-all ${
+            view === "receipt" ? "bg-white text-gray-800 shadow-sm" : "text-gray-400"
+          }`}>
             Receipt
           </span>
         </div>
       </header>
 
       {/* Main Container contents */}
-      <main className="flex-1 max-w-[1100px] w-full mx-auto p-6 sm:p-10 flex flex-col justify-center">
+      <main className={`flex-1 max-w-[1100px] w-full mx-auto p-6 sm:p-10 flex flex-col ${view === "receipt" ? "justify-start" : "justify-center"}`}>
         
         {view === "loading" && (
           <div className="w-full flex flex-col items-center justify-center py-20 bg-white rounded-3xl shadow-sm ">
@@ -147,7 +150,7 @@ export default function CohortEnrollPage() {
                 </div>
                 <div>
                   <h3 className="text-base font-black text-gray-900 tracking-tight leading-snug">
-                    AI/ML Mastery Cohort – 1 year
+                    Gen AI Cohort — 1 year
                   </h3>
                   <p className="text-xs font-bold text-gray-400 leading-tight block mt-0.5">
                     Batch starting Dec 2, 2026 • Live + Projects • 40 seats
@@ -165,14 +168,14 @@ export default function CohortEnrollPage() {
               </div>
 
               {/* Box 2: Curriculum Accordion preview list */}
-              <div className="bg-white rounded-3xl p-6 shadow-sm">
+              <div className="bg-white rounded-2xl border border-[#f1f5f9] p-8 shadow-sm">
                 <div className="flex items-center justify-between border-b border-gray-50 pb-4 mb-4">
                   <div>
                     <span className="bg-gray-900 text-white text-[8px] font-black uppercase tracking-widest px-2 py-0.5 rounded-md">
                       Bestseller
                     </span>
                     <h3 className="text-base font-black text-gray-800 mt-1.5 tracking-tight">
-                      AI/ML Mastery – From Zero to ML Engineer
+                      Gen AI Mastery — From Zero to ML Engineer
                     </h3>
                     <div className="flex items-center gap-2.5 text-[10px] font-semibold text-gray-400 mt-1">
                       <span>12 weeks</span>
@@ -258,7 +261,7 @@ export default function CohortEnrollPage() {
               </div>
 
               {/* Box 3: Payment Method card details inputs */}
-              <div className="bg-white rounded-3xl p-6 shadow-sm text-left">
+              <div className="bg-white rounded-2xl border border-[#e5e7eb] p-8 shadow-sm text-left">
                 <h3 className="text-sm font-extrabold text-gray-800 tracking-tight mb-4">Payment Method</h3>
                 
                 {/* Tabs */}
@@ -269,7 +272,7 @@ export default function CohortEnrollPage() {
                       <button
                         key={tab}
                         type="button"
-                        onClick={() => setPaymentTab(tab as any)}
+                        onClick={() => setPaymentTab(tab as "Card" | "UPI" | "EMI")}
                         className={`flex-1 text-center text-xs font-black py-2 rounded-lg transition-all cursor-pointer ${
                           isActive
                             ? "bg-white text-gray-800 shadow-sm"
@@ -394,10 +397,10 @@ export default function CohortEnrollPage() {
                     </svg>
                   </div>
                   <h4 className="text-sm font-black tracking-tight leading-snug">
-                    AI/ML Mastery Cohort
+                    Gen AI Cohort
                   </h4>
                   <span className="text-[10px] font-semibold text-blue-100 mt-0.5">
-                    1 year - Live + Projects - GPU
+                    1 year · Live + Projects · GPU
                   </span>
                 </div>
 
@@ -405,8 +408,7 @@ export default function CohortEnrollPage() {
                 <div className="p-6">
                   <div className="flex flex-col gap-3.5 mb-6 pb-5 border-b border-gray-50 text-xs font-semibold text-gray-500">
                     <div className="flex items-center justify-between">
-                      <span>Batch: Dec 2 - Dec 14</span>
-                      <span className="font-bold text-gray-800">384 live sessions</span>
+                        <span>Batch: Dec 2 - Dec 14 · 384 live sessions</span>
                     </div>
 
                     <div className="grid grid-cols-2 gap-2 mt-2">
@@ -482,38 +484,40 @@ export default function CohortEnrollPage() {
 
         {view === "success" && (
           // SUCCESS / ENROLLMENT CONFIRMED SCREEN
-          <div className="bg-white rounded-3xl p-6 sm:p-10 shadow-sm  text-center max-w-[800px] w-full mx-auto relative overflow-hidden">
+          <div className="cohort-success bg-white rounded-[24px] border border-[#e2e8f0] p-0 shadow-sm text-center max-w-[864px] w-full mx-auto relative overflow-hidden">
             {/* Header check circle badge */}
-            <div className="w-14 h-14 rounded-full  border border-emerald-100 flex items-center justify-center mx-auto mb-6 shadow-sm shadow-emerald-500/10">
+            <div className="success-header w-full flex flex-col items-center border-b border-[#f1f5f9] px-6 py-12 sm:px-16 sm:py-16">
+            <div className="w-20 h-20 rounded-full bg-[#10b981] border-0 flex items-center justify-center mx-auto mb-4 shadow-sm shadow-emerald-500/10">
               <svg className="w-7 h-7 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
               </svg>
             </div>
 
-            <h2 className="text-xl sm:text-2xl font-black text-gray-900 tracking-tight leading-tight">
+            <h2 className="text-2xl sm:text-4xl font-black text-[#0f172a] tracking-tight leading-tight">
               Welcome Rahul – You&apos;re in! 🎉
             </h2>
 
-            <p className="text-gray-500 text-xs sm:text-sm font-semibold mt-2.5 max-w-[500px] mx-auto leading-relaxed">
+            <p className="text-[#475569] text-sm sm:text-lg font-semibold mt-2.5 max-w-[672px] mx-auto leading-7">
               Your payment succeeded and enrollment is confirmed. Order <strong className="text-gray-800 font-bold">#CAI-ML-2026-8842</strong> - Cohort starts Dec 2
             </p>
 
-            <span className="bg-[#E6F4EA] text-[#137333] text-[10px] font-black uppercase tracking-wider py-1 px-3.5 rounded-full mt-4 inline-block">
+            <span className="bg-[#ecfdf5] text-[#047857] border border-[#d1fae5] text-[10px] sm:text-sm font-semibold py-2 px-4 rounded-full mt-4 inline-block">
               ● Payment via UPI @okaxis - razorpay_9XyZ123
             </span>
+            </div>
 
             {/* Profile sync box */}
-            <div className="border-t border-gray-100 mt-8 pt-8 text-left">
-              <div className="flex items-start justify-between gap-4 mb-5">
+            <div className="success-body mt-0 p-6 sm:p-12 text-left">
+                <div className="flex items-start justify-between gap-4 mb-4">
                 <div>
-                  <h4 className="text-sm font-extrabold text-gray-800 tracking-tight">
+                      <h4 className="text-base sm:text-xl font-extrabold text-[#0f172a] tracking-tight leading-7">
                     Connect your developer profiles to personalize your AI/ML journey
                   </h4>
                   <p className="text-[10px] font-semibold text-gray-400 mt-0.5 leading-snug">
                     We use these to tailor DSA, projects & job matches. Takes 30 seconds each.
                   </p>
                 </div>
-                <span className="bg-blue-50 text-[#2B50EC] text-[8px] font-black uppercase tracking-widest py-1 px-2.5 rounded-md shrink-0">
+                  <span className="bg-[#eef2ff] border border-[#e0e7ff] text-[#4f46e5] text-[10px] font-semibold py-1.5 px-3 rounded-md shrink-0">
                   ✨ AI Personalized
                 </span>
               </div>
@@ -521,14 +525,15 @@ export default function CohortEnrollPage() {
               {/* Profiles Checklist cards */}
               <div className="space-y-3.5">
                 {/* LC */}
-                <div className="p-4 rounded-2xl bg-white border border-gray-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className={`p-6 rounded-2xl flex flex-col gap-6 ${isLeetCodeConnected ? "bg-[#fff7ed] border border-[#fed7aa]" : "bg-white border border-[#e2e8f0]"}`}>
                   <div className="flex items-start gap-3">
-                    <div className="w-8 h-8 rounded-xl bg-amber-500 text-white flex items-center justify-center font-black text-xs shrink-0 mt-0.5">
+                    <div className="w-12 h-12 rounded-full bg-[#ffa116] text-white flex items-center justify-center font-black text-sm shrink-0 mt-0.5">
                       LC
                     </div>
                     <div>
-                      <h5 className="text-[11px] font-black text-gray-800 leading-tight">
+                      <h5 className="text-[11px] font-black text-gray-800 leading-tight flex items-center gap-2">
                         Connect LeetCode
+                        {isLeetCodeConnected && <span className="bg-[#d1fae5] text-[#047857] text-[8px] px-2 py-0.5 rounded-full">CONNECTED</span>}
                       </h5>
                       <p className="text-[9px] font-bold text-gray-400 leading-tight mt-0.5">
                         Sync DSA problems, track 500+ problems for ML interviews - Streak & rating
@@ -545,58 +550,55 @@ export default function CohortEnrollPage() {
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-2 shrink-0 w-full sm:w-auto">
-                    <input
-                      type="text"
-                      defaultValue="rahul_coder"
-                      className="flex-1 sm:w-36 bg-gray-50 border border-gray-100 rounded-xl py-2 px-3.5 text-xs font-semibold focus:outline-none"
-                    />
-                    <button
-                      type="button"
-                      onClick={handleConnectLeetCode}
-                      disabled={isLeetCodeConnected}
-                      className={`text-[10px] font-black py-2.5 px-5 rounded-xl shadow-sm transition-all active:scale-[0.98] shrink-0 ${
-                        isLeetCodeConnected
-                          ? "bg-emerald-50 text-emerald-600 cursor-not-allowed"
-                          : "bg-gray-900 hover:bg-black text-white cursor-pointer"
-                      }`}
-                    >
-                      {isLeetCodeConnected ? "Connected" : "Connect"}
-                    </button>
-                  </div>
+                  {isLeetCodeConnected ? (
+                    <div className="border-t border-[#fed7aa] pt-3 text-[9px] font-bold text-[#475569] flex items-center justify-between">
+                      <span>@rahul_coder · 120 problems synced · Contest 1642 · Streak 12 days</span>
+                      <span className="w-4 h-4 rounded-full bg-[#10b981] text-white flex items-center justify-center">✓</span>
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-2 shrink-0 w-full sm:w-auto">
+                      <input type="text" defaultValue="rahul_coder" className="flex-1 sm:w-36 bg-gray-50 border border-gray-100 rounded-xl py-2 px-3.5 text-xs font-semibold focus:outline-none" />
+                      <button type="button" onClick={handleConnectLeetCode} className="text-[10px] font-black py-2.5 px-5 rounded-xl shadow-sm transition-all active:scale-[0.98] shrink-0 bg-gray-900 hover:bg-black text-white cursor-pointer">Connect</button>
+                    </div>
+                  )}
                 </div>
 
                 {/* GitHub */}
-                <div className="p-4 rounded-2xl bg-white border border-gray-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className={`p-6 rounded-2xl flex flex-col gap-6 ${isGitHubConnected ? "bg-[#0f172a] border border-[#0f172a] text-white shadow-md" : "bg-white border border-[#e2e8f0]"}`}>
                   <div className="flex items-start gap-3">
-                    <div className="w-8 h-8 rounded-xl bg-black text-white flex items-center justify-center font-black text-xs shrink-0 mt-0.5">
+                    <div className="w-12 h-12 rounded-full bg-[#0f172a] text-white flex items-center justify-center font-black text-sm shrink-0 mt-0.5">
                       <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
                       </svg>
                     </div>
                     <div>
-                      <h5 className="text-[11px] font-black text-gray-800 leading-tight">
+                      <h5 className={`text-[11px] font-black leading-tight flex items-center gap-2 ${isGitHubConnected ? "text-white" : "text-gray-800"}`}>
                         Connect GitHub
+                        {isGitHubConnected && <span className="bg-[#064e3b] text-[#6ee7b7] text-[8px] px-2 py-0.5 rounded-full">CONNECTED</span>}
                       </h5>
-                      <p className="text-[9px] font-bold text-gray-400 leading-tight mt-0.5">
+                      <p className={`text-[9px] font-bold leading-tight mt-0.5 ${isGitHubConnected ? "text-slate-400" : "text-gray-400"}`}>
                         Sync repos, auto-track ML projects, commits, contributions
                       </p>
                       
                       <div className="flex items-center gap-1.5 mt-2">
-                        <span className="bg-gray-50 text-gray-500 text-[8px] font-bold py-0.5 px-2 rounded-md">
+                        <span className={`${isGitHubConnected ? "bg-[#1e293b] text-slate-300 border-[#334155]" : "bg-gray-50 text-gray-500 border-transparent"} border text-[8px] font-bold py-0.5 px-2 rounded-md`}>
                           ml-projects
                         </span>
-                        <span className="bg-gray-50 text-gray-500 text-[8px] font-bold py-0.5 px-2 rounded-md">
+                        <span className={`${isGitHubConnected ? "bg-[#1e293b] text-slate-300 border-[#334155]" : "bg-gray-50 text-gray-500 border-transparent"} border text-[8px] font-bold py-0.5 px-2 rounded-md`}>
                           rag-chatbot
                         </span>
-                        <span className="bg-gray-50 text-gray-500 text-[8px] font-bold py-0.5 px-2 rounded-md">
+                        <span className={`${isGitHubConnected ? "bg-[#1e293b] text-slate-300 border-[#334155]" : "bg-gray-50 text-gray-500 border-transparent"} border text-[8px] font-bold py-0.5 px-2 rounded-md`}>
                           transformer-from-scratch
                         </span>
                       </div>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-2 shrink-0 w-full sm:w-auto">
+                  {isGitHubConnected ? (
+                    <div className="border-t border-[#1e293b] pt-3 text-[9px] font-bold text-slate-300">
+                      @rahul_kumar · 24 repos · 342 contributions this year
+                    </div>
+                  ) : <div className="flex items-center gap-2 shrink-0 w-full sm:w-auto">
                     <input
                       type="text"
                       defaultValue="rahul_coder"
@@ -614,20 +616,21 @@ export default function CohortEnrollPage() {
                     >
                       {isGitHubConnected ? "Connected" : "Connect with GitHub"}
                     </button>
-                  </div>
+                  </div>}
                 </div>
 
                 {/* LinkedIn */}
-                <div className="p-4 rounded-2xl bg-white border border-gray-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className={`p-6 rounded-2xl flex flex-col gap-6 ${isLinkedInConnected ? "bg-[#eef4ff] border border-[#c7d8ff]" : "bg-white border border-[#e2e8f0]"}`}>
                   <div className="flex items-start gap-3">
-                    <div className="w-8 h-8 rounded-xl bg-blue-600 text-white flex items-center justify-center font-black text-xs shrink-0 mt-0.5">
+                    <div className="w-12 h-12 rounded-full bg-[#0077b5] text-white flex items-center justify-center font-black text-sm shrink-0 mt-0.5">
                       <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
                       </svg>
                     </div>
                     <div>
-                      <h5 className="text-[11px] font-black text-gray-800 leading-tight">
+                      <h5 className="text-[11px] font-black text-gray-800 leading-tight flex items-center gap-2">
                         Connect LinkedIn
+                        {isLinkedInConnected && <span className="bg-[#dbeafe] text-[#2563eb] text-[8px] px-2 py-0.5 rounded-full">CONNECTED</span>}
                       </h5>
                       <p className="text-[9px] font-bold text-gray-400 leading-tight mt-0.5">
                         Get AI-powered profile optimization, job matching, referral network
@@ -635,7 +638,11 @@ export default function CohortEnrollPage() {
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-2 shrink-0 w-full sm:w-auto">
+                  {isLinkedInConnected ? (
+                    <div className="border-t border-[#c7d8ff] pt-3 text-[9px] font-bold text-[#334155] flex items-center justify-between">
+                      <span>RK · Rahul Kumar · 500+ connections · Profile strength 78%</span><span className="text-[#2563eb]">♙</span>
+                    </div>
+                  ) : <div className="flex items-center gap-2 shrink-0 w-full sm:w-auto">
                     <input
                       type="text"
                       defaultValue="rahul_coder"
@@ -653,12 +660,12 @@ export default function CohortEnrollPage() {
                     >
                       {isLinkedInConnected ? "Connected" : "Connect LinkedIn"}
                     </button>
-                  </div>
+                  </div>}
                 </div>
               </div>
 
               {/* Progress Completion indicator */}
-              <div className="bg-gray-50/50 rounded-2xl p-4.5 border border-gray-100 flex flex-col gap-2 mt-6 text-left">
+              <div className="bg-[#f8fafc] rounded-2xl p-5 border border-[#e2e8f0] flex flex-col gap-3 mt-6 text-left">
                 <div className="flex items-center justify-between text-[10px] font-black">
                   <span className="text-[#2B50EC] uppercase tracking-wider">
                     Profile Completion - {profileProgress}%
@@ -671,16 +678,16 @@ export default function CohortEnrollPage() {
               </div>
 
               {/* Actions navigation links */}
-              <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3.5">
+              <div className="mt-2 flex flex-col sm:flex-row items-center justify-center gap-3.5">
                 <Link
                   href="/dashboard"
-                  className="bg-[#2B50EC] hover:bg-[#1E3BB3] text-white px-10 py-3.5 rounded-xl text-xs font-black transition-all shadow-md shadow-blue-500/25 active:scale-[0.98] flex items-center justify-center gap-1.5 w-full sm:w-auto cursor-pointer"
+                  className="bg-[#2B50EC] hover:bg-[#1E3BB3] text-white px-6 py-3.5 rounded-xl text-sm font-semibold transition-all shadow-md shadow-blue-500/25 active:scale-[0.98] flex items-center justify-center gap-1.5 w-full sm:flex-1 cursor-pointer"
                 >
                   <span>Go to Dashboard</span>
                   <span>→</span>
                 </Link>
 
-                <button className="bg-white hover:bg-gray-50 text-gray-700 px-6 py-3.5 rounded-xl text-xs font-black transition-all border border-gray-200 shadow-sm flex items-center justify-center gap-1.5 w-full sm:w-auto cursor-pointer">
+                <button type="button" onClick={handleViewReceipt} className="bg-white hover:bg-gray-50 text-gray-700 px-6 py-3.5 rounded-xl text-sm font-semibold transition-all border border-[#e2e8f0] shadow-sm flex items-center justify-center gap-1.5 w-full sm:flex-1 cursor-pointer">
                   <svg className="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                   </svg>
@@ -688,7 +695,7 @@ export default function CohortEnrollPage() {
                 </button>
               </div>
 
-              <span className="text-[10px] font-bold text-gray-400 block text-center mt-6">
+              <span className="text-[10px] font-bold text-[#64748b] block text-center mt-1">
                 Need help? <a href="mailto:support@consistency.ai" className="text-[#2B50EC] hover:underline">support@consistency.ai</a> - Response in 2 hours
               </span>
 
@@ -697,12 +704,40 @@ export default function CohortEnrollPage() {
           </div>
         )}
 
+        {view === "receipt" && (
+          <div className="w-full max-w-[896px] mx-auto text-left">
+            <div className="flex flex-wrap items-center justify-between gap-3 pb-8">
+              <button type="button" onClick={() => setView("success")} className="bg-white border border-[#e2e8f0] shadow-sm rounded-full px-4 py-2 text-xs font-semibold text-[#334155]">← Back to Success</button>
+              <span className="text-xs text-[#64748b]">✉ Email preview · Gmail-style</span>
+            </div>
+            <div className="bg-[#f8fafc] border border-[#e2e8f0] shadow-sm rounded-2xl p-4 sm:p-6">
+              <div className="flex items-center gap-2 px-2 pb-4 text-[10px] text-[#94a3b8] font-semibold">
+                <span className="w-3 h-3 rounded-full bg-[#f87171]" /><span className="w-3 h-3 rounded-full bg-[#fbbf24]" /><span className="w-3 h-3 rounded-full bg-[#4ade80]" />
+                <span className="pl-2">Gmail · Inbox · Payment Receipt</span>
+              </div>
+              <article className="bg-white border border-[#e2e8f0] rounded-xl shadow-sm overflow-hidden">
+                <header className="border-b border-[#f1f5f9] p-6 sm:p-8 space-y-4">
+                  <div className="text-xs leading-5"><p><span className="text-[#94a3b8] inline-block w-12">From:</span><strong>Consistency AI</strong> <span className="text-[#475569]">&lt;billing@consistency.ai&gt;</span></p><p><span className="text-[#94a3b8] inline-block w-12">To:</span><strong>rahul@example.com</strong></p></div>
+                  <h1 className="break-words text-lg sm:text-xl font-black text-[#0f172a]">Subject: Payment Receipt &amp; Enrollment Confirmed — AI/ML Mastery Cohort</h1>
+                  <div className="flex flex-wrap items-center gap-3"><span className="bg-[#ecfdf5] border border-[#a7f3d0] text-[#047857] px-3 py-1 rounded-full text-[10px] font-bold">Payment Successful</span><span className="text-xs text-[#64748b]">Dec 15, 2026 · 11:42 AM IST</span></div>
+                </header>
+                <div className="p-6 sm:p-8 space-y-8">
+                  <div className="flex flex-wrap items-center justify-between gap-4"><div className="flex items-center gap-3"><div className="w-12 h-12 rounded-full bg-[#0f172a] text-white flex flex-col items-center justify-center text-[9px] font-black">C<span className="text-[#60a5fa]">AI</span></div><div><h2 className="font-black text-[#0f172a]">Consistency AI</h2><p className="text-xs text-[#64748b]">AI/ML Mastery Cohort</p></div></div><span className="bg-[#059669] text-white rounded-full px-3 py-1.5 text-[10px] font-black">✓ PAYMENT SUCCESSFUL</span></div>
+                  <div><h2 className="text-2xl sm:text-3xl font-black text-[#0f172a]">Hello Rahul, You&apos;re enrolled! 🎉</h2><p className="mt-3 text-sm leading-6 text-[#475569]">Thank you for joining the <strong className="text-[#0f172a]">AI/ML Mastery 12-Week Cohort</strong>. Your payment of <strong className="text-[#0f172a]">$529.82</strong> was successful via Razorpay UPI. Your seat is confirmed.</p></div>
+                  <div className="grid grid-cols-2 lg:grid-cols-4 border border-[#e2e8f0] rounded-xl overflow-hidden text-xs"><div className="p-4 bg-[#f8fafc]"><b className="block text-[9px] text-[#64748b]">ORDER ID</b>#CAI-ML-2026-8842</div><div className="p-4 border-l border-[#e2e8f0]"><b className="block text-[9px] text-[#64748b]">DATE</b>Dec 15, 2026</div><div className="p-4 border-l border-[#e2e8f0]"><b className="block text-[9px] text-[#64748b]">COHORT</b>AI/ML · Dec 2 Batch</div><div className="p-4 border-l border-[#e2e8f0]"><b className="block text-[9px] text-[#64748b]">AMOUNT</b>$529.82 incl. GST</div><div className="p-4 border-t border-[#e2e8f0]"><b className="block text-[9px] text-[#64748b]">PAYMENT METHOD</b>UPI @okaxis · 98xx10</div><div className="p-4 border-l border-t border-[#e2e8f0]"><b className="block text-[9px] text-[#64748b]">TRANSACTION ID</b>razorpay_9XyZ123</div><div className="p-4 border-l border-t border-[#e2e8f0]"><b className="block text-[9px] text-[#64748b]">GSTIN</b>29AABCU9603R1ZX</div><div className="p-4 border-l border-t border-[#e2e8f0]"><b className="block text-[9px] text-[#64748b]">INVOICE</b>INV-8842</div></div>
+                  <div><h3 className="text-xs font-black text-[#0f172a] mb-3">What you paid for</h3><ul className="space-y-2 text-xs text-[#475569]"><li className="flex gap-2"><span className="text-[#10b981]">⊙</span>12 Weeks of Live Sessions + Lifetime Recordings</li><li className="flex gap-2"><span className="text-[#10b981]">⊙</span>3 Capstone Projects: RAG Chatbot, Transformer, MLOps Pipeline</li><li className="flex gap-2"><span className="text-[#10b981]">⊙</span>FAANG ML Interview Prep + Mock Interviews</li></ul></div>
+                </div>
+              </article>
+            </div>
+          </div>
+        )}
+
       </main>
       
       {/* Footer stripe */}
-      <footer className="bg-white border-t border-gray-100 py-3 px-6 sm:px-12 flex flex-col sm:flex-row items-center justify-between text-[9px] font-bold text-gray-400 uppercase tracking-wider mt-auto select-none shrink-0">
+      <footer className="bg-[#f1f5f9] border-t border-[#e2e8f0] py-5 px-6 sm:px-12 flex flex-col sm:flex-row items-center justify-between text-[9px] font-bold text-[#64748b] mt-auto select-none shrink-0">
         <span>Payments secured by Razorpay • 256-bit SSL • PCI DSS Compliant</span>
-        <span>© 2026 Consistency AI • GSTIN 29AABCU9602R1ZX</span>
+        <span>© 2026 Consistency AI • GSTIN 29AABCU9603R1ZX</span>
       </footer>
     </div>
   );

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import OnboardingWizard from "./components/OnboardingWizard";
 
@@ -30,6 +30,7 @@ export default function DashboardLayout({
 }) {
   const [isOnboarded, setIsOnboarded] = useState<boolean | null>(null);
   const pathname = usePathname();
+  const router = useRouter();
 
   useEffect(() => {
     const onboarded = localStorage.getItem("isOnboarded") === "true";
@@ -125,12 +126,16 @@ export default function DashboardLayout({
             <button
               onClick={() => {
                 localStorage.removeItem("isOnboarded");
-                window.location.reload();
+                router.push("/login");
               }}
-              className="flex w-full items-center justify-center gap-2 rounded-lg border border-[#E2E8F0] bg-white py-2 text-[12px] leading-4 text-[#475569] transition-colors hover:bg-[#F8FAFC]"
+              className="flex w-full items-center justify-center gap-2 rounded-lg border border-[#E2E8F0] bg-white py-2 text-[12px] leading-4 text-[#475569] transition-colors hover:bg-[#FEF2F2] hover:text-[#EF4444] hover:border-[#FECACA] group"
             >
-              <Image src="/assets/images/figma-dashboard/icon-login.svg" alt="Log in" width={10.5} height={10.5} />
-              <span>Log in / Sign up</span>
+              <svg className="h-[10.5px] w-[10.5px] text-[#475569] group-hover:text-[#EF4444] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" />
+                <polyline points="16 17 21 12 16 7" />
+                <line x1="21" y1="12" x2="9" y2="12" />
+              </svg>
+              <span>Log Out</span>
             </button>
           </div>
         </aside>

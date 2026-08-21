@@ -218,9 +218,8 @@ export default function QuizStep({
       animate={{ opacity: 1, y: 0, scale: 1 }}
       exit={{ opacity: 0, y: -15, scale: 0.98 }}
       transition={{ duration: 0.25 }}
-      className={`w-full flex flex-col items-center gap-6 ${
-        quizState === "quiz" || quizState === "results" ? "max-w-[1100px]" : "max-w-[700px]"
-      }`}
+      className={`w-full flex flex-col items-center gap-6 ${quizState === "quiz" || quizState === "results" ? "max-w-[1100px]" : "max-w-[700px]"
+        }`}
     >
       {/* Floating Pill Badges above the main card (only on landing page) */}
       {quizState === "landing" && (
@@ -245,28 +244,28 @@ export default function QuizStep({
       {quizState === "results" ? (
         // SKILL ANALYSIS / RESULTS SCREEN
         <div className="w-full flex flex-col gap-6 text-left">
-          
+
           {/* Top Card: Overview Analysis */}
           <div className="w-full bg-white rounded-3xl border border-gray-150 p-8 flex flex-col relative overflow-hidden shadow-sm">
-            
+
             {/* Header Section */}
             <div className="flex items-start gap-4 mb-6">
               {/* Overall Score Badge */}
               <div className="w-16 h-16 rounded-2xl bg-[#2B50EC] text-white flex flex-col items-center justify-center font-bold shadow-md shadow-blue-500/10 text-xl shrink-0">
                 <span>{scorePercent}%</span>
               </div>
-              
+
               <div className="flex-1">
                 {/* Quiz Completed Pill */}
                 <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#E6F4EA] text-[#137333] text-[10px] font-black rounded-full uppercase tracking-wider mb-2">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#10B981]" />
                   Quiz Completed • {answeredCount}/{totalQuestions} attempted
                 </span>
-                
+
                 <h2 className="text-xl sm:text-2xl font-black text-gray-900 tracking-tight leading-tight">
                   Great job, Rahul! Here&apos;s your skill analysis
                 </h2>
-                
+
                 <p className="text-gray-500 text-sm font-semibold mt-1">
                   Score {correctCount}/{totalQuestions} • {scorePercent}% — We&apos;ve mapped your strengths and gaps. Your roadmap is now calibrated for the next 8 weeks.
                 </p>
@@ -354,7 +353,7 @@ export default function QuizStep({
                 {QUIZ_QUESTIONS.map((q) => {
                   const userAnswer = quizAnswers[q.id];
                   const isCorrect = userAnswer === q.correctAnswer;
-                  
+
                   return (
                     <div
                       key={q.id}
@@ -363,9 +362,8 @@ export default function QuizStep({
                       <div className="flex items-start gap-3">
                         {/* Status Check circle */}
                         <div
-                          className={`w-5 h-5 rounded-full flex items-center justify-center shrink-0 mt-0.5 ${
-                            isCorrect ? "bg-[#E6F4EA] text-[#137333]" : "bg-gray-100 text-gray-400"
-                          }`}
+                          className={`w-5 h-5 rounded-full flex items-center justify-center shrink-0 mt-0.5 ${isCorrect ? "bg-[#E6F4EA] text-[#137333]" : "bg-gray-100 text-gray-400"
+                            }`}
                         >
                           {isCorrect ? (
                             <svg className="w-3 h-3 text-[#137333]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3.5}>
@@ -381,7 +379,7 @@ export default function QuizStep({
                           <h4 className="text-xs sm:text-sm font-extrabold text-gray-800 tracking-tight leading-snug">
                             {q.id}. {q.text}
                           </h4>
-                          
+
                           {/* Metadata badges line */}
                           <div className="flex items-center gap-2 mt-2 flex-wrap">
                             <span className="bg-gray-50 border border-gray-200 text-gray-500 text-[10px] font-black py-0.5 px-2.5 rounded-full">
@@ -420,7 +418,7 @@ export default function QuizStep({
                   >
                     Submit
                   </button>
-                  
+
                   <span className="text-[9px] font-bold text-gray-500 text-center mt-2.5 w-full block">
                     Your private data • No impact until you continue
                   </span>
@@ -461,13 +459,12 @@ export default function QuizStep({
                     <button
                       key={q.id}
                       onClick={() => handleJumpToQuestion(idx)}
-                      className={`w-2 h-2 rounded-full transition-colors cursor-pointer ${
-                        isCurrent
+                      className={`w-2 h-2 rounded-full transition-colors cursor-pointer ${isCurrent
                           ? "bg-[#2B50EC]"
                           : isAnswered
-                          ? "bg-[#10B981]"
-                          : "bg-gray-200 hover:bg-gray-300"
-                      }`}
+                            ? "bg-[#10B981]"
+                            : "bg-gray-200 hover:bg-gray-300"
+                        }`}
                       aria-label={`Go to question ${idx + 1}`}
                     />
                   );
@@ -568,20 +565,18 @@ export default function QuizStep({
                       key={option}
                       type="button"
                       onClick={() => handleSelectQuizOption(option)}
-                      className={`w-full flex items-center p-4.5 rounded-2xl border-2 transition-all cursor-pointer text-left ${
-                        isSelected
+                      className={`w-full flex items-center p-4.5 rounded-2xl border-2 transition-all cursor-pointer text-left ${isSelected
                           ? "border-[#2B50EC] bg-[#2B50EC]/5 shadow-sm"
                           : "border-gray-150 bg-white hover:bg-gray-50/50"
-                      }`}
+                        }`}
                     >
                       <div className="flex items-center gap-4">
                         {/* Letter indicator (circle) */}
                         <div
-                          className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-extrabold shrink-0 border-2 transition-all ${
-                            isSelected
+                          className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-extrabold shrink-0 border-2 transition-all ${isSelected
                               ? "border-[#2B50EC] text-[#2B50EC] bg-transparent"
                               : "bg-white border-gray-200 text-gray-500"
-                          }`}
+                            }`}
                         >
                           {optionLetters[index]}
                         </div>
@@ -643,13 +638,12 @@ export default function QuizStep({
                         key={q.id}
                         type="button"
                         onClick={() => handleJumpToQuestion(idx)}
-                        className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold cursor-pointer transition-all border ${
-                          isCurrent
+                        className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold cursor-pointer transition-all border ${isCurrent
                             ? "bg-[#2B50EC] text-white border-[#2B50EC] shadow-sm shadow-blue-500/20"
                             : isAnswered
-                            ? "bg-[#10B981] text-white border-[#10B981] shadow-sm shadow-emerald-500/20"
-                            : "bg-white text-gray-500 border-gray-200 hover:bg-gray-50"
-                        }`}
+                              ? "bg-[#10B981] text-white border-[#10B981] shadow-sm shadow-emerald-500/20"
+                              : "bg-white text-gray-500 border-gray-200 hover:bg-gray-50"
+                          }`}
                       >
                         {isAnswered && !isCurrent ? (
                           <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
@@ -684,11 +678,10 @@ export default function QuizStep({
               <div className="bg-white rounded-2xl border border-gray-150 p-5 shadow-sm text-left flex flex-col">
                 <div className="flex items-center justify-between mb-2">
                   <h4 className="text-sm font-extrabold text-gray-800 tracking-tight">Time left</h4>
-                  <span className={`text-[10px] font-black py-0.5 px-2 rounded-md tracking-wider ${
-                    countdownSeconds < 60
+                  <span className={`text-[10px] font-black py-0.5 px-2 rounded-md tracking-wider ${countdownSeconds < 60
                       ? "bg-[#EF4444] text-white"
                       : "bg-black text-white"
-                  }`}>
+                    }`}>
                     {formatTime(countdownSeconds)}
                   </span>
                 </div>

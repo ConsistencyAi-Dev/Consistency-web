@@ -200,13 +200,12 @@ export default function OnboardingWizard({ onComplete }: OnboardingWizardProps) 
               <motion.div
                 className="h-full bg-gray-900"
                 animate={{
-                  width: `${
-                    step === 4 && quizState === "quiz"
+                  width: `${step === 4 && quizState === "quiz"
                       ? 90
                       : step === 4 && quizState === "loading"
-                      ? 100
-                      : ((step - 0.2) / 4) * 100
-                  }%`,
+                        ? 100
+                        : ((step - 0.2) / 4) * 100
+                    }%`,
                 }}
                 transition={{ type: "spring", stiffness: 120, damping: 15 }}
               />
