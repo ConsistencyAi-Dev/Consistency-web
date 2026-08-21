@@ -78,7 +78,7 @@ export default function ProfileStep({
               +{getProfileStrength()}% strength
             </span>
           </div>
-          
+
           <button
             type="button"
             onClick={onBack}
@@ -181,11 +181,10 @@ export default function ProfileStep({
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}
-            className={`p-5 rounded-2xl border-2 border-dashed flex flex-col justify-between transition-all ${
-              isDragging
+            className={`p-5 rounded-2xl border-2 border-dashed flex flex-col justify-between transition-all ${isDragging
                 ? "border-[#0055FF] bg-blue-50/10"
                 : "border-gray-200 bg-white"
-            }`}
+              }`}
           >
             <div className="flex gap-3">
               <div className="w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center shrink-0 border border-gray-100">

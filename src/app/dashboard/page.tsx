@@ -15,7 +15,7 @@ export default function DashboardPage() {
 
   const cohorts = [
     {
-      title: "AI/ML Mastery Cohort",
+      title: "Gen AI  Cohort",
       match: "BEST MATCH 98%",
       duration: "1 Year",
       rating: "4.9",
@@ -24,8 +24,10 @@ export default function DashboardPage() {
       mentor: "Alex Morgan",
       mentorTitle: "Ex-Google, Staff Eng",
       mentorAvatar: "A",
-      price: "$299",
-      originalPrice: "$408",
+      price: "₹35,000",
+      originalPrice: "₹40,000",
+      startDate: null,
+      disabled: false,
       gradient: "linear-gradient(170deg, #2B50EC 0%, #8B9EFF 100%)",
       badgeBg: "bg-white",
       badgeTextColor: "text-[#2B50EC]",
@@ -41,16 +43,18 @@ export default function DashboardPage() {
       mentor: "Priya Singh",
       mentorTitle: "Ex-Meta, Senior Staff",
       mentorAvatar: "P",
-      price: "$199",
-      originalPrice: "$349",
-      gradient: "linear-gradient(170deg, #1E293B 0%, #334155 100%)",
-      badgeBg: "bg-white/20 text-white backdrop-blur-[4px]",
+      price: "₹28,000",
+      originalPrice: "₹35,000",
+      startDate: "Sep 25, 2026",
+      disabled: true,
+      gradient: "linear-gradient(170deg, #0F172A 0%, #334155 100%)",
+      badgeBg: "bg-black/20 text-white backdrop-blur-[4px] outline outline-[1px] outline-white/20 -outline-offset-[1px]",
       badgeTextColor: "text-white",
       showSpark: false,
     },
     {
       title: "Full Stack Developer",
-      match: "89% MATCH",
+      match: "85% MATCH",
       duration: "1 Year",
       rating: "4.7",
       students: "120",
@@ -58,10 +62,12 @@ export default function DashboardPage() {
       mentor: "David Chen",
       mentorTitle: "Ex-Vercel, Design Eng",
       mentorAvatar: "D",
-      price: "$149",
-      originalPrice: "$249",
-      gradient: "linear-gradient(170deg, #EA580C 0%, #FB923C 100%)",
-      badgeBg: "bg-white/20 text-white backdrop-blur-[4px]",
+      price: "₹21,000",
+      originalPrice: "₹28,000",
+      startDate: "Oct 10, 2026",
+      disabled: true,
+      gradient: "linear-gradient(170deg, #F59E0B 0%, #EC4899 100%)",
+      badgeBg: "bg-black/20 text-white backdrop-blur-[4px] outline outline-[1px] outline-white/20 -outline-offset-[1px]",
       badgeTextColor: "text-white",
       showSpark: false,
     },
@@ -174,8 +180,9 @@ export default function DashboardPage() {
           <div className="flex flex-col gap-3">
             <div className="flex items-center justify-between">
               <h3 className="text-sm font-black text-gray-800 tracking-tight">Top Cohorts For You</h3>
-              <button className="text-[#2B50EC] hover:text-[#1E3BB3] text-[11px] font-black transition-all">
-                View all &gt;
+              <button className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#2B50EC] hover:text-[#1E3BB3] transition-colors">
+                <span>View all</span>
+                <Image src="/assets/images/figma-dashboard/arrow-right-14.svg" alt="Arrow" width={14} height={14} />
               </button>
             </div>
 
@@ -281,18 +288,36 @@ export default function DashboardPage() {
 
                   {/* Purchase price and enroll button */}
                   <div className="p-3 border-t border-[#F1F5F9] bg-[#F8FAFC] flex items-center justify-between gap-2 mt-auto">
-                    <div>
-                      <span className="text-[12px] font-bold text-[#0F172A]">{cohort.price}</span>
-                      <span className="text-[10px] font-medium text-[#94A3B8] line-through ml-1.5">
-                        {cohort.originalPrice}
-                      </span>
+                    <div className="flex flex-col gap-0.5">
+                      <div className="flex items-baseline gap-1.5">
+                        <span className="text-[18px] font-semibold leading-[27px] text-[#0F172A]">{cohort.price}</span>
+                        <span className="text-[11px] font-normal text-[#94A3B8] line-through leading-[16.5px]">{cohort.originalPrice}</span>
+                      </div>
+                      {cohort.startDate && (
+                        <div className="flex items-center gap-1">
+                          <svg className="h-3 w-3 shrink-0" viewBox="0 0 24 24" fill="none" stroke="#F26C6C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                            <rect x="3" y="4" width="18" height="18" rx="2" />
+                            <path d="M16 2v4M8 2v4M3 10h18" />
+                          </svg>
+                          <span className="text-[10.5px] font-normal leading-[15.75px] text-[#F26C6C]">Starts {cohort.startDate}</span>
+                        </div>
+                      )}
                     </div>
-                    <Link
-                      href="/cohort-enroll"
-                      className="bg-[#2B50EC] hover:bg-[#1E3BB3] text-white text-[10px] font-semibold py-1.5 px-3 rounded-lg shadow-sm transition-all active:scale-[0.98] inline-block"
-                    >
-                      Enroll
-                    </Link>
+                    {cohort.disabled ? (
+                      <button
+                        disabled
+                        className="opacity-50 bg-[#0F172A] text-white text-[12.5px] font-semibold py-[6px] px-4 rounded-full cursor-not-allowed select-none"
+                      >
+                        Enroll
+                      </button>
+                    ) : (
+                      <Link
+                        href="/cohort-enroll"
+                        className="bg-[#2B50EC] hover:bg-[#1E3BB3] text-white text-[12.5px] font-semibold py-[6px] px-4 rounded-full shadow-sm transition-all active:scale-[0.98] inline-block"
+                      >
+                        Enroll
+                      </Link>
+                    )}
                   </div>
                 </div>
               ))}
@@ -305,10 +330,12 @@ export default function DashboardPage() {
             <div className="flex w-full items-center justify-between">
               <div className="flex items-center gap-2">
                 <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#FEF3C7]">
-                  <svg className="h-3.5 w-3.5" viewBox="0 0 14 14" fill="none">
-                    <rect x="1.75" y="4.67" width="10.5" height="2.33" rx="0.5" stroke="#D97706" strokeWidth="1.17" />
-                    <rect x="2.91" y="7" width="8.17" height="5.25" rx="0.5" stroke="#D97706" strokeWidth="1.17" />
-                    <rect x="2.91" y="1.75" width="8.17" height="2.92" rx="0.5" stroke="#D97706" strokeWidth="1.17" />
+                  <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="#D97706" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M20 12V22H4V12" />
+                    <path d="M22 7H2v5h20V7z" />
+                    <path d="M12 22V7" />
+                    <path d="M12 7H7.5a2.5 2.5 0 010-5C11 2 12 7 12 7z" />
+                    <path d="M12 7h4.5a2.5 2.5 0 000-5C13 2 12 7 12 7z" />
                   </svg>
                 </div>
                 <h3 className="text-[14px] font-semibold leading-[21px] text-[#0F172A]">Upcoming Free Workshops</h3>
@@ -369,10 +396,10 @@ export default function DashboardPage() {
             </div>
           </div>
           {/* Card 4: Free vs Pro table */}
-          <div className="bg-white rounded-2xl p-4 sm:p-5 shadow-sm">
-            <div className="flex items-center justify-between border-b border-gray-100 pb-3 mb-3">
-              <h3 className="text-xs font-extrabold text-gray-800 tracking-tight">Free vs Pro – what changes after enrollment?</h3>
-              <button className="text-[#2B50EC] hover:text-[#1E3BB3] text-[11px] font-black transition-colors">
+          <div className="bg-white rounded-2xl p-5 sm:p-6 shadow-sm">
+            <div className="flex items-center justify-between pb-4 mb-1">
+              <h3 className="text-[15px] font-bold text-gray-900 tracking-tight">Free vs Pro – what changes after enrollment?</h3>
+              <button className="text-[#2B50EC] hover:text-[#1E3BB3] text-[13px] font-medium transition-colors whitespace-nowrap">
                 Upgrade anytime
               </button>
             </div>
@@ -380,43 +407,41 @@ export default function DashboardPage() {
             <div className="overflow-x-auto">
               <table className="w-full text-left">
                 <thead>
-                  <tr className="text-[9px] uppercase font-black text-gray-400 border-b border-gray-50">
-                    <th className="pb-2">Feature</th>
-                    <th className="pb-2">Free</th>
-                    <th className="pb-2">Pro</th>
+                  <tr className="text-[10px] uppercase font-bold tracking-widest text-gray-400">
+                    <th className="pb-3 w-full">Feature</th>
+                    <th className="pb-3 text-center px-6">Free</th>
+                    <th className="pb-3 text-center px-4">Pro</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody className="divide-y divide-gray-100">
                   {[
-                    { name: "Live Sessions", free: true, pro: true },
-                    { name: "Recorded Lectures", free: true, pro: true },
-                    { name: "1:1 Mentorship", free: false, pro: true },
-                    { name: "Mock Interviews", free: false, pro: true },
-                    { name: "Resume Review", free: false, pro: true },
+                    { name: "AI Learning Path", free: true, pro: true },
+                    { name: "Cohort Access (Live + Recorded)", free: false, pro: true },
+                    { name: "Mentor 1:1 Sessions", free: false, pro: true },
                   ].map((row, idx) => (
-                    <tr key={idx} className="text-[10px] border-b border-gray-50 last:border-none">
-                      <td className="py-2 font-bold text-gray-800">{row.name}</td>
-                      <td className="py-2">
+                    <tr key={idx} className="text-[13px]">
+                      <td className="py-3.5 font-normal text-gray-800">{row.name}</td>
+                      <td className="py-3.5 text-center px-6">
                         {row.free ? (
-                          <svg className="w-3.5 h-3.5 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                          </svg>
+                          <span className="inline-flex items-center justify-center w-7 h-7 rounded-full border-2 border-emerald-400">
+                            <svg className="w-3.5 h-3.5 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                            </svg>
+                          </span>
                         ) : (
-                          <svg className="w-3.5 h-3.5 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                          </svg>
+                          <span className="inline-flex items-center justify-center w-7 h-7 rounded-full border-2 border-gray-200">
+                            <svg className="w-3.5 h-3.5 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                          </span>
                         )}
                       </td>
-                      <td className="py-2">
-                        {row.pro ? (
-                          <svg className="w-3.5 h-3.5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                      <td className="py-3.5 text-center px-4">
+                        <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-[#2B50EC]">
+                          <svg className="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                             <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                           </svg>
-                        ) : (
-                          <svg className="w-3.5 h-3.5 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                          </svg>
-                        )}
+                        </span>
                       </td>
                     </tr>
                   ))}
@@ -564,10 +589,8 @@ export default function DashboardPage() {
 
               <div className="flex items-center gap-2 text-[11px] font-normal leading-[16.5px] text-white/60">
                 <svg viewBox="0 0 24 24" className="h-4 w-4 shrink-0" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <path d="M16 19v-1a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v1" />
-                  <circle cx="10" cy="7" r="3.5" />
-                  <path d="M19 18v-1a4 4 0 0 0-3-3.87" />
-                  <path d="M16 4.13a4 4 0 0 1 0 7.75" />
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                  <path d="M9 12l2 2 4-4" />
                 </svg>
                 <span>Trusted by engineers at Google, Meta, Amazon</span>
               </div>
@@ -579,10 +602,12 @@ export default function DashboardPage() {
             {/* Header */}
             <div className="flex w-full items-center gap-2">
               <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#EEF2FF]">
-                <svg className="h-4 w-4" viewBox="0 0 16 16" fill="none">
-                  <rect x="2" y="5.33" width="12" height="2.67" rx="0.5" stroke="#2B50EC" strokeWidth="1.33" />
-                  <rect x="3.34" y="8" width="9.33" height="6" rx="0.5" stroke="#2B50EC" strokeWidth="1.33" />
-                  <rect x="3.34" y="2" width="9.33" height="3.33" rx="0.5" stroke="#2B50EC" strokeWidth="1.33" />
+                <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="#2B50EC" strokeWidth="1.67" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M20 12V22H4V12" />
+                  <path d="M22 7H2v5h20V7z" />
+                  <path d="M12 22V7" />
+                  <path d="M12 7H7.5a2.5 2.5 0 010-5C11 2 12 7 12 7z" />
+                  <path d="M12 7h4.5a2.5 2.5 0 000-5C13 2 12 7 12 7z" />
                 </svg>
               </div>
               <h4 className="text-[13px] font-semibold leading-[19.5px] text-[#0F172A]">Have a coupon?</h4>
@@ -643,13 +668,15 @@ export default function DashboardPage() {
                 </p>
                 <button className="mt-3.5 inline-flex items-center gap-1.5 rounded-full bg-[#2B50EC] px-4 py-2 text-[12.5px] font-normal leading-[18.75px] text-white shadow-[0px_4px_12px_rgba(43,80,236,0.25)] cursor-pointer border-none hover:bg-[#1E3BB3] transition-colors">
                   Book free counseling
-                  <svg className="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="white" strokeWidth={1.33}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  <svg className="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="white" strokeWidth={1.67}>
+                    <rect x="3" y="4" width="18" height="18" rx="2" strokeLinecap="round" strokeLinejoin="round" />
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M16 2v4M8 2v4M3 10h18" />
                   </svg>
                 </button>
                 <div className="mt-3 flex items-center gap-1.5">
-                  <svg className="h-3 w-3 shrink-0 text-[#64748B]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  <svg className="h-3 w-3 shrink-0 text-[#64748B]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
+                    <polyline points="16 7 22 7 22 13" />
                   </svg>
                   <span className="text-[10.5px] font-normal leading-[15.75px] text-[#64748B]">Avg response 2h • No spam</span>
                 </div>
