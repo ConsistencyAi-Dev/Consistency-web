@@ -3,6 +3,12 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import {
+  signupAvatar1Png, signupAvatar2Png, signupAvatar3Png,
+  googleSvg, githubSvg,
+  userSvg, emailSvg, eyeSvg, lockSvg,
+  checkSvg, signupArrowRightSvg, shieldSvg,
+} from "@/assets";
 
 interface SignUpFormProps {
   onLogin: () => void;
@@ -43,27 +49,9 @@ export default function SignUpForm({
         <div className="mt-1 flex items-center gap-2">
           <p className="text-[14px] leading-5 text-[#64748B]">Join 12,000+ learners</p>
           <div className="flex items-center">
-            <Image
-              src="/assets/images/figma-signup/avatar-1.png"
-              alt="Learner avatar"
-              width={20}
-              height={20}
-              className="h-5 w-5 rounded-full border-2 border-[#F9FAFB] object-cover"
-            />
-            <Image
-              src="/assets/images/figma-signup/avatar-2.png"
-              alt="Learner avatar"
-              width={20}
-              height={20}
-              className="-ml-1.5 h-5 w-5 rounded-full border-2 border-[#F9FAFB] object-cover"
-            />
-            <Image
-              src="/assets/images/figma-signup/avatar-3.png"
-              alt="Learner avatar"
-              width={20}
-              height={20}
-              className="-ml-1.5 h-5 w-5 rounded-full border-2 border-[#F9FAFB] object-cover"
-            />
+            <Image src={signupAvatar1Png} alt="Learner avatar" width={20} height={20} className="h-5 w-5 rounded-full border-2 border-[#F9FAFB] object-cover" />
+            <Image src={signupAvatar2Png} alt="Learner avatar" width={20} height={20} className="-ml-1.5 h-5 w-5 rounded-full border-2 border-[#F9FAFB] object-cover" />
+            <Image src={signupAvatar3Png} alt="Learner avatar" width={20} height={20} className="-ml-1.5 h-5 w-5 rounded-full border-2 border-[#F9FAFB] object-cover" />
           </div>
         </div>
       </div>
@@ -80,7 +68,7 @@ export default function SignUpForm({
           disabled={isLoading}
           className="flex items-center justify-center gap-2 rounded-xl border border-[#E2E8F0] bg-white px-4 py-[9px] text-[14px] leading-5 text-[#1E293B] transition-colors hover:bg-[#F8FAFC] disabled:cursor-not-allowed disabled:opacity-70"
         >
-          <Image src="/assets/images/figma-signup/google.svg" alt="Google" width={20} height={20} />
+          <Image src={googleSvg} alt="Google" width={20} height={20} />
           Continue with Google
         </button>
         <button
@@ -88,7 +76,7 @@ export default function SignUpForm({
           disabled={isLoading}
           className="flex items-center justify-center gap-2 rounded-xl border border-[#E2E8F0] bg-white px-4 py-[9px] text-[14px] leading-5 text-[#1E293B] transition-colors hover:bg-[#F8FAFC] disabled:cursor-not-allowed disabled:opacity-70"
         >
-          <Image src="/assets/images/figma-signup/github.svg" alt="GitHub" width={20} height={20} />
+          <Image src={githubSvg} alt="GitHub" width={20} height={20} />
           GitHub
         </button>
       </div>
@@ -103,13 +91,7 @@ export default function SignUpForm({
         <div className="space-y-1">
           <label className="block text-[13px] leading-4 text-[#1E293B]">Full Name</label>
           <div className="relative">
-            <Image
-              src="/assets/images/figma-signup/user.svg"
-              alt="Full name"
-              width={18}
-              height={18}
-              className="pointer-events-none absolute left-[14px] top-1/2 -translate-y-1/2"
-            />
+            <Image src={userSvg} alt="Full name" width={18} height={18} className="pointer-events-none absolute left-[14px] top-1/2 -translate-y-1/2" />
             <input
               type="text"
               placeholder="Alex Morgan"
@@ -125,13 +107,7 @@ export default function SignUpForm({
         <div className="space-y-1">
           <label className="block text-[13px] leading-4 text-[#1E293B]">Email Address</label>
           <div className="relative">
-            <Image
-              src="/assets/images/figma-signup/email.svg"
-              alt="Email"
-              width={18}
-              height={18}
-              className="pointer-events-none absolute left-[14px] top-1/2 -translate-y-1/2"
-            />
+            <Image src={emailSvg} alt="Email" width={18} height={18} className="pointer-events-none absolute left-[14px] top-1/2 -translate-y-1/2" />
             <input
               type="email"
               placeholder="alex@university.edu"
@@ -153,7 +129,7 @@ export default function SignUpForm({
               onClick={() => setShowPassword(!showPassword)}
               className="absolute right-[14px] top-1/2 -translate-y-1/2 text-[#94A3B8] disabled:cursor-not-allowed"
             >
-              <Image src="/assets/images/figma-signup/eye.svg" alt="Toggle password visibility" width={18} height={18} />
+              <Image src={eyeSvg} alt="Toggle password visibility" width={18} height={18} />
             </button>
             <input
               type={showPassword ? "text" : "password"}
@@ -170,13 +146,7 @@ export default function SignUpForm({
         <div className="space-y-1">
           <label className="block text-[13px] leading-4 text-[#1E293B]">Confirm Password</label>
           <div className="relative">
-            <Image
-              src="/assets/images/figma-signup/lock.svg"
-              alt="Confirm password"
-              width={18}
-              height={18}
-              className="pointer-events-none absolute left-[14px] top-1/2 -translate-y-1/2"
-            />
+            <Image src={lockSvg} alt="Confirm password" width={18} height={18} className="pointer-events-none absolute left-[14px] top-1/2 -translate-y-1/2" />
             <input
               type="password"
               placeholder="••••••••"
@@ -200,7 +170,7 @@ export default function SignUpForm({
             />
             <span className="flex h-[18px] w-[18px] items-center justify-center rounded border border-[#4662F0] bg-[#4662F0] peer-checked:bg-[#4662F0] peer-focus-visible:ring-2 peer-focus-visible:ring-[#93C5FD]">
               {agreeToTerms && (
-                <Image src="/assets/images/figma-signup/check.svg" alt="Checked" width={16} height={16} />
+                <Image src={checkSvg} alt="Checked" width={16} height={16} />
               )}
             </span>
             <span className="ml-2">
@@ -232,7 +202,7 @@ export default function SignUpForm({
           ) : (
             <>
               <span>Create Account</span>
-              <Image src="/assets/images/figma-signup/arrow-right.svg" alt="Arrow right" width={18} height={18} />
+              <Image src={signupArrowRightSvg} alt="Arrow right" width={18} height={18} />
             </>
           )}
         </button>
@@ -251,7 +221,7 @@ export default function SignUpForm({
       </p>
 
       <div className="mx-auto mt-3.5 flex w-full max-w-[320px] items-center justify-center gap-2 rounded-full border border-dashed border-[#D1D5DB] bg-[rgba(255,255,255,0.5)] px-4 py-[6px] text-center text-[12px] leading-4 text-[#64748B]">
-        <Image src="/assets/images/figma-signup/shield.svg" alt="Security shield" width={14} height={14} />
+        <Image src={shieldSvg} alt="Security shield" width={14} height={14} />
         <span>No credit card required • Cancel anytime</span>
       </div>
     </div>

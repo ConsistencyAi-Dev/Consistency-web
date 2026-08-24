@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React from "react";
+import { logoPng, textPng } from "@/assets";
 
 export default function Navbar() {
   return (
@@ -7,8 +8,8 @@ export default function Navbar() {
       <nav className="bg-[#F7F7F7]/20 backdrop-blur-2xl border border-white rounded-full pl-4 pr-2 py-2 md:pl-6 md:pr-3 md:py-2.5 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center ml-1 md:ml-2">
-          <img src="/logo.png" alt="Consistency.AI Logo" className="h-7 md:h-8 w-auto object-contain" />
-          <img src="/text.png" alt="Consistency.AI" className="hidden sm:block h-6 md:h-8 w-auto object-contain ml-2" />
+          <img src={logoPng.src} alt="Consistency.AI Logo" className="h-7 md:h-8 w-auto object-contain" />
+          <img src={textPng.src} alt="Consistency.AI" className="hidden sm:block h-6 md:h-8 w-auto object-contain ml-2" />
         </Link>
 
        

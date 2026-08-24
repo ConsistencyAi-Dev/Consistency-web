@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { logoPng } from "@/assets";
 
 interface ResetLoadingTransitionProps {
   onComplete: () => void;
@@ -94,7 +95,7 @@ export default function ResetLoadingTransition({
             className="w-16 h-16 rounded-2xl bg-blue-50 flex items-center justify-center shadow-sm border border-blue-100/50"
           >
             <motion.img
-              src="/logo.png"
+              src={logoPng.src}
               alt="Consistency.AI Logo"
               className="w-10 h-10 object-contain"
               animate={

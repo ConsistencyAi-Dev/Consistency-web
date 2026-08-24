@@ -1,26 +1,32 @@
 "use client";
 
 import Image from "next/image";
+import type { StaticImageData } from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import OnboardingWizard from "./components/OnboardingWizard";
+import {
+  brandMarkSvg,
+  navHomeSvg, navAiToolsSvg, navProjectsSvg, navEventsSvg, navCommunitySvg, navSettingsSvg,
+  iconLockSvg, iconBoltSvg, iconSearchSvg, iconBellSvg,
+} from "@/assets";
 
 type NavItem = {
   name: string;
   href: string;
-  icon: string;
+  icon: StaticImageData;
   locked?: boolean;
 };
 
 const navItems: NavItem[] = [
-  { name: "Home", href: "/dashboard", icon: "/assets/images/figma-dashboard/nav-home.svg" },
-  { name: "AI Tools", href: "/dashboard/ai-tools", icon: "/assets/images/figma-dashboard/nav-ai-tools.svg", locked: true },
-  { name: "Projects", href: "/dashboard/projects", icon: "/assets/images/figma-dashboard/nav-projects.svg", locked: true },
-  { name: "Events", href: "/dashboard/events", icon: "/assets/images/figma-dashboard/nav-events.svg" },
-  { name: "Community", href: "#", icon: "/assets/images/figma-dashboard/nav-community.svg" },
-  { name: "Jobs", href: "/dashboard/jobs", icon: "/assets/images/figma-dashboard/nav-projects.svg", locked: true },
-  { name: "Settings", href: "#", icon: "/assets/images/figma-dashboard/nav-settings.svg", locked: true },
+  { name: "Home",      href: "/dashboard",          icon: navHomeSvg },
+  { name: "AI Tools", href: "/dashboard/ai-tools",  icon: navAiToolsSvg, locked: true },
+  { name: "Projects", href: "/dashboard/projects",  icon: navProjectsSvg, locked: true },
+  { name: "Events",   href: "/dashboard/events",    icon: navEventsSvg },
+  { name: "Community",href: "#",                    icon: navCommunitySvg },
+  { name: "Jobs",     href: "/dashboard/jobs",       icon: navProjectsSvg, locked: true },
+  { name: "Settings", href: "#",                    icon: navSettingsSvg, locked: true },
 ];
 
 export default function DashboardLayout({
@@ -58,13 +64,7 @@ export default function DashboardLayout({
           <div>
             <div className="flex items-center gap-2.5 px-5 py-4">
               <div className="relative h-[36px] w-[36px] rounded-[6px] bg-[linear-gradient(48.1deg,#2B50EC_27.45%,#61D3F9_94.96%)]">
-                <Image
-                  src="/assets/images/figma-dashboard/brand-mark.svg"
-                  alt="Consistency AI"
-                  width={20}
-                  height={20}
-                  className="absolute left-[8px] top-[8px]"
-                />
+                <Image src={brandMarkSvg} alt="Consistency AI" width={20} height={20} className="absolute left-[8px] top-[8px]" />
               </div>
               <div>
                 <p className="text-[15px] leading-6 tracking-tight text-[#0F172A]">Consistency AI</p>
@@ -97,7 +97,7 @@ export default function DashboardLayout({
                       <span className="text-[13px] leading-5">{item.name}</span>
                     </span>
                     {item.locked && !isActive && (
-                      <Image src="/assets/images/figma-dashboard/icon-lock.svg" alt="Locked" width={8} height={10} />
+                      <Image src={iconLockSvg} alt="Locked" width={8} height={10} />
                     )}
                   </Link>
                 );
@@ -110,7 +110,7 @@ export default function DashboardLayout({
               <div className="absolute -right-4 -top-4 h-12 w-12 rounded-full bg-[rgba(43,80,236,0.05)]" />
               <div className="relative z-10">
                 <div className="mb-[6px] flex h-7 w-7 items-center justify-center rounded-md bg-[rgba(43,80,236,0.1)]">
-                  <Image src="/assets/images/figma-dashboard/icon-bolt.svg" alt="Upgrade" width={10} height={12} />
+                  <Image src={iconBoltSvg} alt="Upgrade" width={10} height={12} />
                 </div>
                 <p className="pt-1.5 text-[12px] leading-4 text-[#0F172A]">Upgrade for More</p>
                 <p className="pb-2.5 text-[10px] leading-[15px] text-[#64748B]">
@@ -149,7 +149,7 @@ export default function DashboardLayout({
 
             <div className="hidden items-center gap-3 lg:flex">
               <div className="flex h-9 items-center gap-2 rounded-full border border-[#E2E8F0] bg-[#F1F5F9] px-[13px] py-px">
-                <Image src="/assets/images/figma-dashboard/icon-search.svg" alt="Search" width={16} height={16} />
+                <Image src={iconSearchSvg} alt="Search" width={16} height={16} />
                 <span className="pr-6 text-[13px] leading-[19.5px] text-[#64748B]">Search cohorts, topics...</span>
                 <kbd className="rounded border border-[#E5E7EB] bg-white px-[7px] py-[3px] text-[11px] leading-[16.5px] text-[#64748B]">
                   ⌘K
@@ -157,7 +157,7 @@ export default function DashboardLayout({
               </div>
 
               <button className="relative flex h-9 w-9 items-center justify-center rounded-full border border-[#E2E8F0] bg-white">
-                <Image src="/assets/images/figma-dashboard/icon-bell.svg" alt="Notifications" width={16} height={16} />
+                <Image src={iconBellSvg} alt="Notifications" width={16} height={16} />
                 <span className="absolute right-[10px] top-[8px] h-2 w-2 rounded-full border-2 border-white bg-[#EF4444]" />
               </button>
 

@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
+import { logoPng, textPng } from "@/assets";
 
 export default function SessionBookedPage() {
   return (
@@ -70,8 +71,8 @@ export default function SessionBookedPage() {
         <div className="max-w-md w-full text-left flex flex-col">
           {/* Logo */}
           <div className="flex items-center gap-2 mb-10">
-            <img src="/logo.png" alt="Logo" className="h-8 w-auto object-contain" />
-            <img src="/text.png" alt="Consistency.AI" className="h-7 w-auto object-contain ml-1" />
+            <img src={logoPng.src} alt="Logo" className="h-8 w-auto object-contain" />
+            <img src={textPng.src} alt="Consistency.AI" className="h-7 w-auto object-contain ml-1" />
           </div>
 
           <h3 className="text-xs font-bold text-indigo-600 tracking-widest uppercase mb-3">

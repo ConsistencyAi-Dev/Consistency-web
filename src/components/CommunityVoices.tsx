@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { globeGif } from '@/assets';
 
 export default function CommunityVoices() {
   return (
@@ -28,7 +29,7 @@ export default function CommunityVoices() {
 
         <div className="flex justify-center w-full mt-10">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/globe.gif" alt="Community voices globe" className="max-w-full h-auto" />
+          <img src={globeGif.src} alt="Community voices globe" className="max-w-full h-auto" />
         </div>
       </div>
     </section>

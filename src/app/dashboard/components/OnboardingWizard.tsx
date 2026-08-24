@@ -6,6 +6,7 @@ import WelcomeStep from "./WelcomeStep";
 import GoalsStep from "./GoalsStep";
 import ProfileStep from "./ProfileStep";
 import QuizStep from "./QuizStep";
+import { logoPng } from "@/assets";
 
 interface OnboardingWizardProps {
   onComplete: () => void;
@@ -163,7 +164,7 @@ export default function OnboardingWizard({ onComplete }: OnboardingWizardProps) 
         {/* Left Side: Brand Logo */}
         <div className="flex items-center gap-2">
           <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center">
-            <img src="/logo.png" alt="Consistency AI" className="w-5.5 h-5.5 object-contain" />
+            <img src={logoPng.src} alt="Consistency AI" className="w-5.5 h-5.5 object-contain" />
           </div>
           <div className="flex items-baseline gap-1.5">
             <span className="font-bold text-gray-900 tracking-tight text-base sm:text-lg">

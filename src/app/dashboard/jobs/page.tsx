@@ -1,7 +1,12 @@
 "use client";
 
 import Image from "next/image";
+import type { StaticImageData } from "next/image";
 import React, { useState } from "react";
+import {
+  search18Svg, featuredStarSvg, arrowRight12Svg, featuredRolePng,
+  logoDataAnalystPng, logoUxuiPng, logoFrontendGenericSvg, profileMatchIconSvg,
+} from "@/assets";
 
 type Job = {
   title: string;
@@ -9,7 +14,7 @@ type Job = {
   location: string;
   tags: string[];
   posted: string;
-  logo: string;
+  logo: StaticImageData;
   faded: boolean;
 };
 
@@ -25,7 +30,7 @@ export default function JobsPage() {
       location: "Remote",
       tags: ["Full-time", "Entry Level", "$70k - $90k"],
       posted: "Posted 2d ago",
-      logo: "/assets/images/figma-jobs/logo-data-analyst.png",
+      logo: logoDataAnalystPng,
       faded: false,
     },
     {
@@ -34,7 +39,7 @@ export default function JobsPage() {
       location: "New York, NY (On-site)",
       tags: ["Internship", "High Match"],
       posted: "Posted 5h ago",
-      logo: "/assets/images/figma-jobs/logo-uxui.png",
+      logo: logoUxuiPng,
       faded: false,
     },
     {
@@ -43,7 +48,7 @@ export default function JobsPage() {
       location: "Austin, TX (Hybrid)",
       tags: ["Full-time", "React / Tailwind"],
       posted: "Posted 1w ago",
-      logo: "/assets/images/figma-jobs/logo-frontend-generic.svg",
+      logo: logoFrontendGenericSvg,
       faded: true,
     },
   ];
@@ -59,13 +64,7 @@ export default function JobsPage() {
             placeholder="Search jobs, skills, or companies..."
             className="h-11 w-full rounded-lg border border-[#C4C5D8] bg-white py-3 pl-[33px] pr-4 text-[16px] leading-normal text-[#6B7280] outline-none"
           />
-          <Image
-            src="/assets/images/figma-jobs/search-18.svg"
-            alt="Search"
-            width={18}
-            height={18}
-            className="absolute left-2 top-1/2 -translate-y-1/2"
-          />
+          <Image src={search18Svg} alt="Search" width={18} height={18} className="absolute left-2 top-1/2 -translate-y-1/2" />
         </div>
 
         <div className="flex w-full items-center gap-1 overflow-auto md:w-auto">
@@ -96,7 +95,7 @@ export default function JobsPage() {
 
             <div className="flex-1">
               <div className="flex items-center gap-1">
-                <Image src="/assets/images/figma-jobs/featured-star.svg" alt="Featured" width={17} height={16} />
+                <Image src={featuredStarSvg} alt="Featured" width={17} height={16} />
                 <span className="text-[12px] uppercase tracking-[0.6px] text-[#0035CE]">FEATURED OPPORTUNITY</span>
               </div>
 
@@ -122,18 +121,12 @@ export default function JobsPage() {
 
               <button className="inline-flex h-11 items-center gap-1 rounded-lg bg-[#2B50EC] px-6 text-[14px] tracking-[0.14px] text-white transition-colors hover:bg-[#1E3BB3]">
                 Apply Now
-                <Image src="/assets/images/figma-jobs/arrow-right-12.svg" alt="Arrow" width={12} height={12} />
+                <Image src={arrowRight12Svg} alt="Arrow" width={12} height={12} />
               </button>
             </div>
 
             <div className="h-48 w-48 overflow-hidden rounded-lg border border-[#C4C5D8] bg-[#F7F9FB]">
-              <Image
-                src="/assets/images/figma-jobs/featured-role.png"
-                alt="Featured role"
-                width={192}
-                height={192}
-                className="h-full w-full object-cover"
-              />
+              <Image src={featuredRolePng} alt="Featured role" width={192} height={192} className="h-full w-full object-cover" />
             </div>
           </section>
 
@@ -229,7 +222,7 @@ export default function JobsPage() {
 
           <section className="rounded-2xl bg-white p-6">
             <div className="flex items-center gap-2">
-              <Image src="/assets/images/figma-jobs/profile-match-icon.svg" alt="Profile Match" width={22} height={22} />
+              <Image src={profileMatchIconSvg} alt="Profile Match" width={22} height={22} />
               <h4 className="text-[18px] leading-[27px] text-[#191C1E]">Profile Match</h4>
             </div>
 

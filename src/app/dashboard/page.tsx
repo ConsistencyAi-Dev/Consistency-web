@@ -3,6 +3,10 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
+import {
+  heroSparkSvg, heroStreakSvg, heroGoalSvg,
+  chipSparkSvg, arrowRight14Svg,
+} from "@/assets";
 
 export default function DashboardPage() {
   const learningPathSteps = [
@@ -85,7 +89,7 @@ export default function DashboardPage() {
         <div className="flex flex-col items-start justify-between gap-3.5 rounded-[15px] bg-[linear-gradient(90deg,#2B50EC_0%,#3B63FF_50%,#6D8AFF_100%)] px-5 py-3 text-white xl:flex-row xl:items-center">
           <div className="flex items-start gap-4">
             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[rgba(255,255,255,0.15)] backdrop-blur-[4px]">
-              <Image src="/assets/images/figma-dashboard/hero-spark.svg" alt="Spark" width={20} height={20} />
+              <Image src={heroSparkSvg} alt="Spark" width={20} height={20} />
             </div>
             <div>
               <h2 className="text-[16px] md:text-[17px] font-semibold leading-snug">Welcome, Rahul! Let&apos;s find your perfect learning path</h2>
@@ -98,11 +102,11 @@ export default function DashboardPage() {
 
           <div className="flex items-center gap-2">
             <span className="inline-flex items-center gap-1.5 rounded-full border border-[rgba(255,255,255,0.15)] bg-[rgba(255,255,255,0.15)] px-3.5 py-2 text-[11px] leading-[16px] backdrop-blur-[4px]">
-              <Image src="/assets/images/figma-dashboard/hero-streak.svg" alt="Streak" width={16} height={16} />
+              <Image src={heroStreakSvg} alt="Streak" width={16} height={16} />
               Streak 0 days
             </span>
             <span className="inline-flex items-center gap-1.5 rounded-full bg-white px-3.5 py-2 text-[11px] font-semibold leading-[16px] text-[#2B50EC] shadow-[0px_1px_1px_rgba(0,0,0,0.05)]">
-              <Image src="/assets/images/figma-dashboard/hero-goal.svg" alt="Goal" width={16} height={16} />
+              <Image src={heroGoalSvg} alt="Goal" width={16} height={16} />
               Goal: Get a Job in 6 months
             </span>
           </div>
@@ -119,7 +123,7 @@ export default function DashboardPage() {
               <div>
                 <div className="flex items-center gap-2">
                   <span className="inline-flex items-center gap-1.5 rounded-full border border-[#C7D2FE] bg-[#EEF2FF] px-[11px] py-[5px] text-[10px] font-semibold uppercase tracking-[0.275px] leading-[15px] text-[#2B50EC]">
-                    <Image src="/assets/images/figma-dashboard/chip-spark.svg" alt="AI" width={12} height={12} />
+                    <Image src={chipSparkSvg} alt="AI" width={12} height={12} />
                     AI GENERATED
                   </span>
                   <span className="text-[10px] leading-[15px] text-[#94A3B8]">Updated today</span>
@@ -170,7 +174,7 @@ export default function DashboardPage() {
                 </div>
                 <button className="inline-flex items-center gap-1 text-[11px] leading-[16.5px] text-[#2B50EC] transition-colors hover:text-[#1E3BB3]">
                   <span>View detailed roadmap</span>
-                  <Image src="/assets/images/figma-dashboard/arrow-right-14.svg" alt="Arrow" width={14} height={14} />
+                  <Image src={arrowRight14Svg} alt="Arrow" width={14} height={14} />
                 </button>
               </div>
             </div>
@@ -182,7 +186,7 @@ export default function DashboardPage() {
               <h3 className="text-sm font-black text-gray-800 tracking-tight">Top Cohorts For You</h3>
               <button className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#2B50EC] hover:text-[#1E3BB3] transition-colors">
                 <span>View all</span>
-                <Image src="/assets/images/figma-dashboard/arrow-right-14.svg" alt="Arrow" width={14} height={14} />
+                <Image src={arrowRight14Svg} alt="Arrow" width={14} height={14} />
               </button>
             </div>
 
@@ -202,7 +206,7 @@ export default function DashboardPage() {
                       <div className={`absolute left-[12px] top-[12px] inline-flex items-center gap-[4px] rounded-full px-[8px] py-[4px] shadow-[0px_1px_2px_rgba(0,0,0,0.05)] ${cohort.badgeBg}`}>
                         {cohort.showSpark && (
                           <Image
-                            src="/assets/images/figma-dashboard/chip-spark.svg"
+                            src={chipSparkSvg}
                             alt="Spark"
                             width={12}
                             height={12}
