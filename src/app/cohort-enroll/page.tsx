@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import { logoPng } from "@/assets";
 
 export default function CohortEnrollPage() {
   const [view, setView] = useState<"checkout" | "success" | "receipt" | "loading">("checkout");
@@ -88,7 +89,7 @@ export default function CohortEnrollPage() {
       <header className="bg-white border-b border-[#e5e7eb] px-6 sm:px-12 py-4 flex items-center justify-between shrink-0">
         <Link href="/dashboard" className="flex items-center gap-2">
           <div className="w-7 h-7 rounded-lg flex items-center justify-center shadow-md shadow-blue-500/20 bg-white p-1 overflow-hidden shrink-0">
-            <img src="/logo.png" alt="Consistency AI" className="w-full h-full object-contain" />
+            <img src={logoPng.src} alt="Consistency AI" className="w-full h-full object-contain" />
           </div>
           <div className="text-left">
             <span className="font-extrabold text-gray-900 text-sm tracking-tight block">Consistency AI</span>

@@ -1,7 +1,14 @@
 "use client";
 
 import Image from "next/image";
+import type { StaticImageData } from "next/image";
 import React, { useState } from "react";
+import {
+  avatarAlexChenPng, avatarSarahJenkinsPng,
+  iconFeaturedSvg, iconCalendarRangeSvg, iconPrizeSvg, iconRegisteredSvg,
+  hackathonHeroPng, avatarCommunity1Png, avatarCommunity2Png,
+  iconClockSmallSvg, iconSpeakerSvg,
+} from "@/assets";
 
 type EventCard = {
   title: string;
@@ -14,7 +21,7 @@ type EventCard = {
   speaker?: {
     name: string;
     role: string;
-    avatar: string;
+    avatar: StaticImageData;
   };
   community?: boolean;
 };
@@ -40,7 +47,7 @@ export default function EventsPage() {
       speaker: {
         name: "Alex Chen",
         role: "Senior Eng @ TechCorp",
-        avatar: "/assets/images/figma-events/avatar-alex-chen.png",
+        avatar: avatarAlexChenPng,
       },
       registerClass: "bg-[#2B50EC] text-white hover:bg-[#1E3BB3] border border-transparent",
     },
@@ -74,7 +81,7 @@ export default function EventsPage() {
       speaker: {
         name: "Sarah Jenkins",
         role: "AI Recruiter",
-        avatar: "/assets/images/figma-events/avatar-sarah-jenkins.png",
+        avatar: avatarSarahJenkinsPng,
       },
       registerClass: "bg-[#2B50EC] text-white hover:bg-[#1E3BB3] border border-transparent",
     },
@@ -90,7 +97,7 @@ export default function EventsPage() {
         <div className="relative flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-center">
           <div className="max-w-[760px]">
             <span className="inline-flex items-center gap-1 rounded bg-[rgba(255,255,255,0.2)] px-2 py-1 text-[12px] leading-4">
-              <Image src="/assets/images/figma-events/icon-featured.svg" alt="Featured" width={11} height={11} />
+              <Image src={iconFeaturedSvg} alt="Featured" width={11} height={11} />
               Featured Hackathon
             </span>
 
@@ -106,15 +113,15 @@ export default function EventsPage() {
 
             <div className="flex flex-wrap items-center gap-8 py-4 text-[14px] leading-4 tracking-[0.14px]">
               <span className="inline-flex items-center gap-2">
-                <Image src="/assets/images/figma-events/icon-calendar-range.svg" alt="Date" width={18} height={20} />
+                <Image src={iconCalendarRangeSvg} alt="Date" width={18} height={20} />
                 Oct 15 - Oct 22
               </span>
               <span className="inline-flex items-center gap-2">
-                <Image src="/assets/images/figma-events/icon-prize.svg" alt="Prize" width={22} height={16} />
+                <Image src={iconPrizeSvg} alt="Prize" width={22} height={16} />
                 $10,000 Prize Pool
               </span>
               <span className="inline-flex items-center gap-2">
-                <Image src="/assets/images/figma-events/icon-registered.svg" alt="Registered" width={22} height={16} />
+                <Image src={iconRegisteredSvg} alt="Registered" width={22} height={16} />
                 1.2k+ Registered
               </span>
             </div>
@@ -125,7 +132,7 @@ export default function EventsPage() {
           </div>
 
           <div className="relative h-64 w-64 shrink-0">
-            <Image src="/assets/images/figma-events/hackathon-hero.png" alt="Hackathon visual" fill className="object-contain" sizes="256px" />
+            <Image src={hackathonHeroPng} alt="Hackathon visual" fill className="object-contain" sizes="256px" />
           </div>
         </div>
       </section>
@@ -181,14 +188,14 @@ export default function EventsPage() {
                     <div className="flex items-center gap-3">
                       <div className="flex items-center">
                         <Image
-                          src="/assets/images/figma-events/avatar-community-1.png"
+                          src={avatarCommunity1Png}
                           alt="Community member"
                           width={32}
                           height={32}
                           className="rounded-full border-2 border-white"
                         />
                         <Image
-                          src="/assets/images/figma-events/avatar-community-2.png"
+                          src={avatarCommunity2Png}
                           alt="Community member"
                           width={32}
                           height={32}
@@ -290,7 +297,7 @@ export default function EventsPage() {
                   <div className="pt-[3px]">
                     <p className="text-[14px] leading-4 tracking-[0.14px] text-[#191C1E]">{item.title}</p>
                     <p className="mt-[3px] inline-flex items-center gap-1 text-[12px] leading-[18px] text-[#444655]">
-                      <Image src="/assets/images/figma-events/icon-clock-small.svg" alt="Time" width={12} height={12} />
+                      <Image src={iconClockSmallSvg} alt="Time" width={12} height={12} />
                       {item.time}
                     </p>
                   </div>
@@ -301,7 +308,7 @@ export default function EventsPage() {
 
           <section className="rounded-2xl border-2 border-dashed border-[#C4C5D8] bg-[#F2F4F6] px-[22px] pb-6 pt-[22px] text-center">
             <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-[#DEE1FF]">
-              <Image src="/assets/images/figma-events/icon-speaker.svg" alt="Speaker" width={20} height={16} />
+              <Image src={iconSpeakerSvg} alt="Speaker" width={20} height={16} />
             </div>
 
             <h4 className="pt-3 text-[14px] leading-4 tracking-[0.14px] text-[#191C1E]">Want to host an event?</h4>

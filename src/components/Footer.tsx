@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import { logoPng, textPng } from "@/assets";
 
 const PLATFORM_LINKS = ["AI Mentor", "Consistency Engine", "Roadmaps", "Cohorts", "Playground"];
 const COMPANY_LINKS = ["Home", "About", "Service", "Testimonials", "Career"];
@@ -93,8 +94,8 @@ export default function Footer() {
           {/* Left — logo, tagline, socials */}
           <div>
             <Link href="/" className="flex items-center mb-5">
-              <img src="/logo.png" alt="Consistency.AI Logo" className="h-8 w-auto object-contain" />
-              <img src="/text.png" alt="Consistency.AI" className="h-7 w-auto object-contain ml-2" />
+              <img src={logoPng.src} alt="Consistency.AI Logo" className="h-8 w-auto object-contain" />
+              <img src={textPng.src} alt="Consistency.AI" className="h-7 w-auto object-contain ml-2" />
             </Link>
             <p className="text-[#64748B] text-base leading-relaxed max-w-xs mb-6 font-sans">
               Talent gets you started.

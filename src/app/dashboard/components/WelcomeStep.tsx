@@ -2,6 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
+import { logoPng } from "@/assets";
 
 interface WelcomeStepProps {
   name: string;
@@ -32,7 +33,7 @@ export default function WelcomeStep({
       <div className="flex flex-col items-center">
         {/* Large Logo Block */}
         <div className="w-16 h-16 rounded-2xl bg-blue-50 border border-blue-100/50 flex items-center justify-center shadow-lg shadow-blue-500/5 mb-5">
-          <img src="/logo.png" alt="Consistency AI" className="w-10 h-10 object-contain" />
+          <img src={logoPng.src} alt="Consistency AI" className="w-10 h-10 object-contain" />
         </div>
 
         {/* Badge */}

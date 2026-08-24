@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { logoPng } from "@/assets";
 
 interface Question {
   id: number;
@@ -769,7 +770,7 @@ export default function QuizStep({
               >
                 {/* Code Symbol Logo */}
                 <div className="w-16 h-16 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/20 bg-white p-2.5 mb-6 mt-4 sm:mt-0 overflow-hidden">
-                  <img src="/logo.png" alt="Consistency AI" className="w-full h-full object-contain" />
+                  <img src={logoPng.src} alt="Consistency AI" className="w-full h-full object-contain" />
                 </div>
 
                 {/* Titles */}

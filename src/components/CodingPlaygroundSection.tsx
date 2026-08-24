@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
+import { logoPng } from '@/assets';
 
 type TaskStatus = 'done' | 'active' | 'todo';
 
@@ -534,7 +535,7 @@ export default function CodingPlaygroundSection() {
               <div className="flex items-center gap-6">
                 <div className="flex items-center gap-2">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/logo.png" alt="Consistency AI" className="h-7 w-7 object-contain" />
+                  <img src={logoPng.src} alt="Consistency AI" className="h-7 w-7 object-contain" />
                   <span className="text-white font-bold text-sm hidden sm:inline">Consistency AI</span>
                 </div>
                 <div>
