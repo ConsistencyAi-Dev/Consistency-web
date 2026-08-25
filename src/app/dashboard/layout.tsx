@@ -24,9 +24,10 @@ const navItems: NavItem[] = [
   { name: "AI Tools", href: "/dashboard/ai-tools",  icon: navAiToolsSvg, locked: true },
   { name: "Projects", href: "/dashboard/projects",  icon: navProjectsSvg, locked: true },
   { name: "Events",   href: "/dashboard/events",    icon: navEventsSvg },
-  { name: "Community",href: "#",                    icon: navCommunitySvg },
+  { name: "Community",href: "/dashboard/community", icon: navCommunitySvg },
+  { name: "Mentors",  href: "/dashboard/mentors",   icon: navProjectsSvg },
   { name: "Jobs",     href: "/dashboard/jobs",       icon: navProjectsSvg, locked: true },
-  { name: "Settings", href: "#",                    icon: navSettingsSvg, locked: true },
+  { name: "Settings", href: "/dashboard/settings",  icon: navSettingsSvg },
 ];
 
 export default function DashboardLayout({
