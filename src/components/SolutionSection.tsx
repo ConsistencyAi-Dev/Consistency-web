@@ -254,7 +254,7 @@ export default function SolutionSection() {
               <div className="w-full flex flex-col items-center">
                 {/* Skill tags — pop in one by one, left to right, instead of
                     all appearing together */}
-                <div className="w-full flex flex-nowrap justify-center gap-1.5 mb-6 relative z-10">
+                <div className="w-full flex flex-wrap justify-center gap-1.5 mb-6 relative z-10">
                   {["React", "Python", "ML", "DSA", "UI/UX"].map((skill, i) => (
                     <span
                       key={skill}

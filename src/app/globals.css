@@ -7,9 +7,9 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-stack-sans-headline);
+  --font-sans: var(--font-stack-sans-headline), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-staatliches: var(--font-staatliches);
-  --font-stack-sans-headline: var(--font-stack-sans-headline);
+  --font-stack-sans-headline: var(--font-stack-sans-headline), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -22,4 +22,5 @@
 body {
   background: var(--background);
   color: var(--foreground);
+  font-family: var(--font-stack-sans-headline), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }

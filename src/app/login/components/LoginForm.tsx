@@ -33,7 +33,7 @@ export default function LoginForm({
   return (
     <div>
       <div className="mb-5">
-        <h2 className="text-[26px] leading-[32px] font-extrabold text-gray-900 tracking-tight">Welcome back</h2>
+        <h2 className="text-[32px] leading-[40px] font-semibold text-[#111827] tracking-tight">Welcome back</h2>
         <p className="text-[#6B7280] text-[14px] mt-1 font-medium">Log in to continue your progress</p>
       </div>
 
@@ -58,7 +58,7 @@ export default function LoginForm({
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* Email Input */}
         <div>
-          <label className="block text-xs font-semibold text-[#4B5563] uppercase tracking-wider mb-2">
+          <label className="block text-[15px] font-normal text-[#374151] leading-[22.5px] break-words font-sans mb-2">
             Email Address
           </label>
           <div className="relative">
@@ -85,7 +85,7 @@ export default function LoginForm({
 
         {/* Password Input */}
         <div>
-          <label className="block text-xs font-semibold text-[#4B5563] uppercase tracking-wider mb-2">
+          <label className="block text-[15px] font-normal text-[#374151] leading-[22.5px] break-words font-sans mb-2">
             Password
           </label>
           <div className="relative">
