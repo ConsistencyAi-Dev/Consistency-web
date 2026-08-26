@@ -7,13 +7,14 @@ import GoalsStep from "./GoalsStep";
 import ProfileStep from "./ProfileStep";
 import QuizStep from "./QuizStep";
 import { logoPng } from "@/assets";
+import { updateProfileApi, submitQuizApi } from "@/lib/api";
 
 interface OnboardingWizardProps {
   onComplete: () => void;
 }
 
 export default function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
-  const [step, setStep] = useState<1 | 2 | 3 | 4>(4);
+  const [step, setStep] = useState<1 | 2 | 3 | 4>(1);
   const [name, setName] = useState("");
   const [source, setSource] = useState("");
 
@@ -41,6 +42,24 @@ export default function OnboardingWizard({ onComplete }: OnboardingWizardProps) 
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [quizAnswers, setQuizAnswers] = useState<Record<number, string>>({});
   const [quizLoadingText, setQuizLoadingText] = useState("Analyzing quiz performance...");
+
+  // Load registered user from localStorage
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem("auth_user");
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (parsed.name) setName(parsed.name);
+        if (parsed.email) setEmail(parsed.email);
+        if (parsed.mobile) setMobile(parsed.mobile);
+        if (parsed.location) setLocation(parsed.location);
+        if (parsed.bio) setBio(parsed.bio);
+      }
+    } catch (e) {
+      console.error("Error reading auth_user from localStorage", e);
+    }
+  }, []);
+
 
   // Profile strength calculation based on fields filled
   const getProfileStrength = () => {
@@ -154,6 +173,61 @@ export default function OnboardingWizard({ onComplete }: OnboardingWizardProps) 
   const handleBack = () => {
     if (step > 1) {
       setStep((step - 1) as 1 | 2 | 3 | 4);
+    }
+  };
+
+
+  const handleFinish = async () => {
+    try {
+      const stored = localStorage.getItem("auth_user");
+      const token = localStorage.getItem("auth_token") || undefined;
+      let userId = "usr_1";
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        userId = parsed.id || userId;
+      }
+
+      // 1. Update user profile in PostgreSQL DB
+      await updateProfileApi(
+        userId,
+        {
+          name: name || undefined,
+          mobile: mobile || undefined,
+          location: location || undefined,
+          bio: bio || undefined,
+          linkedinUrl: linkedinUrl || undefined,
+          resumeFile: resumeFile || undefined,
+        },
+        token
+      );
+
+      // Update local storage auth_user
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        const updated = {
+          ...parsed,
+          name: name || parsed.name,
+          mobile: mobile || parsed.mobile,
+          location: location || parsed.location,
+          bio: bio || parsed.bio,
+          linkedinUrl: linkedinUrl || parsed.linkedinUrl,
+          resumeFile: resumeFile || parsed.resumeFile,
+        };
+        localStorage.setItem("auth_user", JSON.stringify(updated));
+      }
+
+      // 2. Submit quiz assessment answers to DB
+      if (Object.keys(quizAnswers).length > 0) {
+        await submitQuizApi({
+          userId,
+          answers: quizAnswers,
+          timeSpentSeconds: 120,
+        });
+      }
+    } catch (err) {
+      console.error("Failed to sync onboarding data to backend DB:", err);
+    } finally {
+      onComplete();
     }
   };
 
@@ -292,7 +366,7 @@ export default function OnboardingWizard({ onComplete }: OnboardingWizardProps) 
               setQuizAnswers={setQuizAnswers}
               quizLoadingText={quizLoadingText}
               handleBack={handleBack}
-              onComplete={onComplete}
+              onComplete={handleFinish}
             />
           )}
         </AnimatePresence>
