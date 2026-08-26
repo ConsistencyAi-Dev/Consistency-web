@@ -36,6 +36,12 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const [isOnboarded, setIsOnboarded] = useState<boolean | null>(null);
+  const [currentUser, setCurrentUser] = useState<{
+    id?: string;
+    name?: string;
+    email?: string;
+    role?: string;
+  } | null>(null);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
@@ -44,11 +50,31 @@ export default function DashboardLayout({
     const onboarded = localStorage.getItem("isOnboarded") === "true";
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsOnboarded(onboarded);
+
+    try {
+      const stored = localStorage.getItem("auth_user");
+      if (stored) {
+        setCurrentUser(JSON.parse(stored));
+      }
+    } catch (e) {}
   }, []);
+
+  const getInitials = (name?: string) => {
+    if (!name) return "U";
+    const parts = name.trim().split(/\s+/);
+    if (parts.length === 1) return parts[0].substring(0, 2).toUpperCase();
+    return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+  };
 
   const handleOnboardingComplete = () => {
     localStorage.setItem("isOnboarded", "true");
     setIsOnboarded(true);
+    try {
+      const stored = localStorage.getItem("auth_user");
+      if (stored) {
+        setCurrentUser(JSON.parse(stored));
+      }
+    } catch (e) {}
   };
 
   if (isOnboarded === null) {
@@ -169,7 +195,9 @@ export default function DashboardLayout({
                 </svg>
               </button>
               <div>
-                <h1 className="text-[16px] md:text-[20px] leading-6 md:leading-7 text-[#0F172A] font-semibold">Good morning, Santhosh 👋</h1>
+                <h1 className="text-[16px] md:text-[20px] leading-6 md:leading-7 text-[#0F172A] font-semibold">
+                  Good morning, {currentUser?.name?.split(" ")[0] || "Learner"} 👋
+                </h1>
                 <p className="text-[12px] md:text-[14px] leading-4 md:leading-5 text-[#64748B]">Let&apos;s learn, build and grow together.</p>
               </div>
             </div>
@@ -191,12 +219,12 @@ export default function DashboardLayout({
               <div className="h-6 w-px bg-[#E2E8F0]" />
 
               <div className="flex items-center gap-[10px] pl-1">
-                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[linear-gradient(135deg,#8B5CF6_0%,#6366F1_100%)] text-[12px] leading-[18px] text-white">
-                  RK
+                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[linear-gradient(135deg,#8B5CF6_0%,#6366F1_100%)] text-[12px] leading-[18px] text-white font-bold">
+                  {getInitials(currentUser?.name)}
                 </div>
                 <div>
-                  <p className="text-[13px] leading-[13px] text-[#0F172A]">Rahul K</p>
-                  <p className="text-[11px] leading-[11px] text-[#64748B]">rahul.k@gmail.com</p>
+                  <p className="text-[13px] leading-[13px] text-[#0F172A] font-medium">{currentUser?.name || "Rahul K"}</p>
+                  <p className="text-[11px] leading-[11px] text-[#64748B]">{currentUser?.email || "rahul.k@gmail.com"}</p>
                 </div>
               </div>
             </div>

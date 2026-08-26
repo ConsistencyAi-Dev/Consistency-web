@@ -30,31 +30,33 @@ export default function WelcomeStep({
       transition={{ duration: 0.25 }}
       className="bg-white rounded-3xl border border-gray-100/60 shadow-xl shadow-gray-200/50 p-8 sm:p-10 max-w-[560px] w-full flex flex-col relative overflow-hidden"
     >
-      <div className="flex flex-col items-center">
+      {/* Top Centered Section: Logo & Step Badge */}
+      <div className="flex flex-col items-center mb-6">
         {/* Large Logo Block */}
-        <div className="w-16 h-16 rounded-2xl bg-blue-50 border border-blue-100/50 flex items-center justify-center shadow-lg shadow-blue-500/5 mb-5">
+        <div className="w-16 h-16 rounded-2xl bg-blue-50 border border-blue-100/50 flex items-center justify-center shadow-lg shadow-blue-500/5 mb-4">
           <img src={logoPng.src} alt="Consistency AI" className="w-10 h-10 object-contain" />
         </div>
 
         {/* Badge */}
-        <div className="flex items-center gap-1.5 px-3 py-1 bg-emerald-50 border border-emerald-100 text-[#10B981] text-[10px] font-extrabold uppercase tracking-wider rounded-full mb-5">
+        <div className="flex items-center gap-1.5 px-3 py-1 bg-emerald-50 border border-emerald-100 text-[#10B981] text-[10px] font-extrabold uppercase tracking-wider rounded-full">
           <span className="w-1.5 h-1.5 rounded-full bg-[#10B981] animate-pulse" />
-          Step 1 of 4 – Welcome
+          Step 1 of 3 – Welcome
         </div>
+      </div>
 
-        {/* Greeting & Title */}
-        <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight text-center leading-tight">
-          Welcome to Consistency AI, {name.split(" ")[0] || "there"}! 👋
+      {/* Left-Aligned Header: Welcome text & Nickname in a single line, with subtitle below */}
+      <div className="text-left w-full">
+        <h2 className="text-lg sm:text-[22px] md:text-2xl font-extrabold text-gray-900 tracking-tight whitespace-nowrap truncate sm:overflow-visible">
+          Welcome to Consistency AI, {name.trim().split(" ")[0] || "there"}! 👋
         </h2>
         <p className="text-gray-900 font-bold text-sm sm:text-base mt-2">
           Let&apos;s craft your perfect path
         </p>
-
-        {/* Social Proof details */}
-        <p className="text-gray-400 text-xs font-semibold mt-1 bg-gray-50 px-3 py-1 rounded-full border border-gray-100/50">
+        <p className="text-gray-400 text-xs font-semibold mt-1">
           2 min setup • AI-generated roadmap • Trusted by 12k+ engineers at{" "}
           <span className="text-gray-600 font-bold">Google, Meta, Amazon</span>
         </p>
+      </div>
 
         {/* Form fields */}
         <div className="w-full mt-8 space-y-6 text-left">
@@ -84,15 +86,15 @@ export default function WelcomeStep({
             <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-3">
               How did you hear about us?
             </label>
-            <div className="flex flex-wrap gap-2">
-              {["LinkedIn", "YouTube", "Friend", "Instagram", "Google"].map((item) => {
+            <div className="grid grid-cols-6 gap-1.5 sm:gap-2 w-full">
+              {["LinkedIn", "YouTube", "Friend", "Instagram", "Google", "Others"].map((item) => {
                 const isActive = source === item;
                 return (
                   <button
                     key={item}
                     type="button"
                     onClick={() => setSource(item)}
-                    className={`relative px-4 py-2 text-xs font-bold rounded-full border transition-all cursor-pointer ${
+                    className={`relative w-full py-2 px-1 sm:px-2 text-[11px] sm:text-xs font-bold rounded-full border transition-all text-center whitespace-nowrap cursor-pointer flex items-center justify-center ${
                       isActive
                         ? "bg-gray-900 border-gray-900 text-white shadow-sm"
                         : "bg-white border-gray-200 text-gray-600 hover:bg-gray-50"
@@ -140,7 +142,6 @@ export default function WelcomeStep({
             <span>12k+ students</span>
           </div>
         </div>
-      </div>
     </motion.div>
   );
 }
