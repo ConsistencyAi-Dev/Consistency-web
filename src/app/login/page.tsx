@@ -12,7 +12,8 @@ import studentLoginIllustration from "@/assets/login/student_login_illustration.
 import createNewPasswordIllustration from "@/assets/login/create_new_password_illustration.png";
 import studentLoginErrorIllustration from "@/assets/login/student_login_error_illustration.png";
 
-// Import Components
+// Import Services & Components
+import { authService } from "@/services/authService";
 import LoginForm from "./components/LoginForm";
 import SignUpForm from "./components/SignUpForm";
 import ForgotPasswordEmail from "./components/ForgotPasswordEmail";
@@ -74,19 +75,23 @@ export default function LoginPage() {
     }
   }, [mode]);
 
-  const handleLoginSubmit = (emailVal: string, passwordVal: string, remember: boolean) => {
+  const handleLoginSubmit = async (emailVal: string, passwordVal: string, remember: boolean) => {
     setError(null);
     setSuccessMsg(null);
     setIsLoading(true);
 
-    setTimeout(() => {
+    try {
+      await authService.login({ email: emailVal, password: passwordVal });
       setIsLoading(false);
       router.push("/dashboard");
-    }, 1800);
+    } catch (err: any) {
+      setIsLoading(false);
+      setError(err.message || "Invalid login credentials.");
+    }
   };
 
   // Sign up handler
-  const handleSignUpSubmit = (
+  const handleSignUpSubmit = async (
     fullName: string,
     emailVal: string,
     passwordVal: string,
@@ -106,10 +111,14 @@ export default function LoginPage() {
     }
 
     setIsLoading(true);
-    setTimeout(() => {
+    try {
+      await authService.register({ name: fullName, email: emailVal, password: passwordVal });
       setIsLoading(false);
       router.push("/dashboard");
-    }, 1800);
+    } catch (err: any) {
+      setIsLoading(false);
+      setError(err.message || "Registration failed.");
+    }
   };
 
   // Email forgot submit handler

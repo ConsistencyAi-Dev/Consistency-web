@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { logoPng } from "@/assets";
+import { quizApi, ScoreProfile } from "@/lib/api";
 
 interface Question {
   id: number;
@@ -128,6 +129,31 @@ export default function QuizStep({
   onComplete,
 }: QuizStepProps) {
   const [countdownSeconds, setCountdownSeconds] = useState(300); // 5 minutes
+  const [backendScoreProfile, setBackendScoreProfile] = useState<ScoreProfile | null>(null);
+  const [isEvaluating, setIsEvaluating] = useState(false);
+
+  // Submit answers to Backend Microservice on completion
+  useEffect(() => {
+    if (quizState === "loading" && !isEvaluating && !backendScoreProfile) {
+      setIsEvaluating(true);
+      quizApi
+        .submitQuiz({
+          userId: "usr_1",
+          answers: quizAnswers,
+          timeTakenSeconds: 300 - countdownSeconds,
+        })
+        .then((profile) => {
+          setBackendScoreProfile(profile);
+          setIsEvaluating(false);
+          setQuizState("results");
+        })
+        .catch((err) => {
+          console.error("Backend evaluation fallback:", err);
+          setIsEvaluating(false);
+          setQuizState("results");
+        });
+    }
+  }, [quizState, isEvaluating, backendScoreProfile, quizAnswers, countdownSeconds, setQuizState]);
 
   // Countdown timer logic
   useEffect(() => {
@@ -253,14 +279,14 @@ export default function QuizStep({
             <div className="flex items-start gap-4 mb-6">
               {/* Overall Score Badge */}
               <div className="w-16 h-16 rounded-2xl bg-[#2B50EC] text-white flex flex-col items-center justify-center font-bold shadow-md shadow-blue-500/10 text-xl shrink-0">
-                <span>{scorePercent}%</span>
+                <span>{backendScoreProfile ? backendScoreProfile.scorePercent : scorePercent}%</span>
               </div>
 
               <div className="flex-1">
                 {/* Quiz Completed Pill */}
                 <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#E6F4EA] text-[#137333] text-[10px] font-black rounded-full uppercase tracking-wider mb-2">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#10B981]" />
-                  Quiz Completed • {answeredCount}/{totalQuestions} attempted
+                  Quiz Completed • {backendScoreProfile ? backendScoreProfile.attemptedCount : answeredCount}/{backendScoreProfile ? backendScoreProfile.totalQuestions : totalQuestions} attempted
                 </span>
 
                 <h2 className="text-xl sm:text-2xl font-black text-gray-900 tracking-tight leading-tight">
@@ -268,7 +294,7 @@ export default function QuizStep({
                 </h2>
 
                 <p className="text-gray-500 text-sm font-semibold mt-1">
-                  Score {correctCount}/{totalQuestions} • {scorePercent}% — We&apos;ve mapped your strengths and gaps. Your roadmap is now calibrated for the next 8 weeks.
+                  Score {backendScoreProfile ? backendScoreProfile.correctCount : correctCount}/{backendScoreProfile ? backendScoreProfile.totalQuestions : totalQuestions} • {backendScoreProfile ? backendScoreProfile.scorePercent : scorePercent}% — We&apos;ve mapped your strengths and gaps. Your roadmap is now calibrated for the next 8 weeks.
                 </p>
               </div>
             </div>
@@ -279,11 +305,11 @@ export default function QuizStep({
               <div className="p-5 rounded-2xl bg-gray-50/50 border border-gray-100 flex flex-col justify-between min-h-[110px]">
                 <div>
                   <h4 className="text-[10px] font-black text-gray-400 uppercase tracking-wider mb-1">Overall level</h4>
-                  <span className="text-base font-black text-gray-800">Beginner</span>
-                  <span className="text-xs text-gray-400 font-bold ml-1.5">{scorePercent}% score</span>
+                  <span className="text-base font-black text-gray-800">{backendScoreProfile ? backendScoreProfile.overallLevel : "Beginner"}</span>
+                  <span className="text-xs text-gray-400 font-bold ml-1.5">{backendScoreProfile ? backendScoreProfile.scorePercent : scorePercent}% score</span>
                 </div>
                 <div className="h-1.5 w-full bg-gray-100 rounded-full overflow-hidden mt-3 shadow-inner">
-                  <div className="h-full bg-gray-800 rounded-full" style={{ width: `${scorePercent}%` }} />
+                  <div className="h-full bg-gray-800 rounded-full" style={{ width: `${backendScoreProfile ? backendScoreProfile.scorePercent : scorePercent}%` }} />
                 </div>
               </div>
 
@@ -292,7 +318,7 @@ export default function QuizStep({
                 <div>
                   <h4 className="text-[10px] font-black text-gray-400 uppercase tracking-wider mb-1">Strengths</h4>
                   <p className="text-xs font-semibold text-gray-400 mt-1 leading-snug">
-                    {correctCount > 0 ? "DSA & Time Complexity" : "Keep going – strengths will appear here"}
+                    {backendScoreProfile && backendScoreProfile.strengths.length > 0 ? backendScoreProfile.strengths.join(", ") : (correctCount > 0 ? "DSA & Time Complexity" : "Keep going – strengths will appear here")}
                   </p>
                 </div>
                 {correctCount > 0 && (

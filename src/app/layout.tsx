@@ -6,12 +6,14 @@ const staatliches = Staatliches({
   weight: "400",
   variable: "--font-staatliches",
   subsets: ["latin"],
+  display: "swap",
 });
 
 const stackSansHeadline = Stack_Sans_Headline({
   weight: "400",
   variable: "--font-stack-sans-headline",
   subsets: ["latin"],
+  display: "swap",
   adjustFontFallback: false,
 });
 

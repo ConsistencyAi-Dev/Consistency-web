@@ -2,6 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
+import { userApi } from "@/lib/api";
 
 interface ProfileStepProps {
   name: string;
@@ -264,7 +265,12 @@ export default function ProfileStep({
         {/* Continue to Quiz button */}
         <button
           type="button"
-          onClick={onNext}
+          onClick={() => {
+            userApi.updateProfile({ name, email, mobile, location, bio, linkedinUrl }).catch((err) => {
+              console.warn("Backend profile update fallback:", err);
+            });
+            onNext();
+          }}
           className="w-full bg-[#0055FF] hover:bg-[#0044EE] text-white py-4 px-6 rounded-2xl font-bold transition-all shadow-lg shadow-blue-500/25 active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer"
         >
           Continue to Quiz →
