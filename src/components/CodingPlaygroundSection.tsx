@@ -505,22 +505,22 @@ export default function CodingPlaygroundSection() {
         </div>
 
         <div className="rounded-3xl bg-[#0B0F1A] border border-white/10 shadow-2xl p-3.5 sm:p-5 relative overflow-hidden">
-          {/* Inner Dashboard Canvas with Auto-Dragging Camera Zoom */}
+          {/* Inner Dashboard Canvas */}
           <motion.div
             animate={{
-              scale: showcaseIndex !== null ? 1.1 : 1,
-              x: showcaseIndex === 0 ? "5%"
+              scale: (typeof window !== 'undefined' && window.innerWidth < 768) ? 1 : (showcaseIndex !== null ? 1.05 : 1),
+              x: (typeof window !== 'undefined' && window.innerWidth < 768) ? "0%" : (showcaseIndex === 0 ? "3%"
                : showcaseIndex === 1 ? "0%"
-               : showcaseIndex === 2 ? "-5%"
-               : showcaseIndex === 3 ? "3%"
-               : showcaseIndex === 4 ? "-3%"
-               : "0%",
-              y: showcaseIndex === 0 ? "4%"
-               : showcaseIndex === 1 ? "4%"
-               : showcaseIndex === 2 ? "4%"
-               : showcaseIndex === 3 ? "-4%"
-               : showcaseIndex === 4 ? "-4%"
-               : "0%",
+               : showcaseIndex === 2 ? "-3%"
+               : showcaseIndex === 3 ? "2%"
+               : showcaseIndex === 4 ? "-2%"
+               : "0%"),
+              y: (typeof window !== 'undefined' && window.innerWidth < 768) ? "0%" : (showcaseIndex === 0 ? "2%"
+               : showcaseIndex === 1 ? "2%"
+               : showcaseIndex === 2 ? "2%"
+               : showcaseIndex === 3 ? "-2%"
+               : showcaseIndex === 4 ? "-2%"
+               : "0%"),
             }}
             transition={{
               type: "spring",
@@ -528,7 +528,7 @@ export default function CodingPlaygroundSection() {
               damping: 18,
               mass: 1.2
             }}
-            className="w-full h-full origin-center"
+            className="w-full h-full origin-center overflow-x-auto"
           >
             {/* Top bar */}
             <div className="flex items-center justify-between mb-6 flex-wrap gap-4 relative z-20">

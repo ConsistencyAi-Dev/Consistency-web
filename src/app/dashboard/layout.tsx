@@ -36,6 +36,7 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const [isOnboarded, setIsOnboarded] = useState<boolean | null>(null);
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
 
@@ -61,18 +62,31 @@ export default function DashboardLayout({
   return (
     <div className="min-h-screen bg-[#F9FBFF] text-[#0F172A]">
       <div className="flex min-h-screen md:h-screen flex-col md:flex-row md:overflow-hidden">
-        <aside className="w-full border-r border-[#E2E8F0] bg-[#F9FBFF] md:fixed md:top-0 md:bottom-0 md:left-0 md:z-30 md:w-64 md:h-screen md:overflow-y-auto md:overflow-x-hidden md:flex md:flex-col md:justify-between">
+        {/* Sidebar */}
+        <aside
+          className={`w-full border-r border-[#E2E8F0] bg-[#F9FBFF] md:fixed md:top-0 md:bottom-0 md:left-0 md:z-30 md:w-64 md:h-screen md:overflow-y-auto md:overflow-x-hidden md:flex md:flex-col md:justify-between ${
+            isMobileSidebarOpen ? "block" : "hidden md:flex"
+          }`}
+        >
           <div>
-            <div className="flex items-center gap-2.5 px-5 py-4">
-              <div className="relative h-[36px] w-[36px] rounded-[6px] bg-[linear-gradient(48.1deg,#2B50EC_27.45%,#61D3F9_94.96%)]">
-                <Image src={brandMarkSvg} alt="Consistency AI" width={20} height={20} className="absolute left-[8px] top-[8px]" />
+            <div className="flex items-center justify-between px-5 py-4">
+              <div className="flex items-center gap-2.5">
+                <div className="relative h-[36px] w-[36px] rounded-[6px] bg-[linear-gradient(48.1deg,#2B50EC_27.45%,#61D3F9_94.96%)]">
+                  <Image src={brandMarkSvg} alt="Consistency AI" width={20} height={20} className="absolute left-[8px] top-[8px]" />
+                </div>
+                <div>
+                  <p className="text-[15px] leading-6 tracking-tight text-[#0F172A]">Consistency AI</p>
+                  <span className="inline-flex rounded-full bg-[rgba(43,80,236,0.1)] px-2 py-0.5 text-[9px] uppercase leading-[12px] text-[#2B50EC]">
+                    FREE ACCESS
+                  </span>
+                </div>
               </div>
-              <div>
-                <p className="text-[15px] leading-6 tracking-tight text-[#0F172A]">Consistency AI</p>
-                <span className="inline-flex rounded-full bg-[rgba(43,80,236,0.1)] px-2 py-0.5 text-[9px] uppercase leading-[12px] text-[#2B50EC]">
-                  FREE ACCESS
-                </span>
-              </div>
+              <button
+                onClick={() => setIsMobileSidebarOpen(false)}
+                className="md:hidden p-1 rounded-lg text-gray-500 hover:bg-gray-200/50"
+              >
+                ✕
+              </button>
             </div>
 
             <nav className="flex flex-col gap-1 px-3 pb-3 pt-1">
@@ -83,6 +97,7 @@ export default function DashboardLayout({
                   <Link
                     key={item.name}
                     href={item.href}
+                    onClick={() => setIsMobileSidebarOpen(false)}
                     className={`flex h-9 w-full items-center justify-between rounded-lg px-2.5 py-1.5 transition-colors ${
                       isActive ? "bg-[#2B50EC] text-white" : "text-[#64748B] hover:bg-[#EEF2FF]"
                     } ${!isActive && item.locked ? "opacity-60" : ""}`}
@@ -142,10 +157,21 @@ export default function DashboardLayout({
         </aside>
 
         <div className="flex min-h-screen md:h-screen flex-1 flex-col bg-[#F9FBFF] md:ml-64 md:overflow-hidden">
-          <header className="flex min-h-[76px] items-center justify-between border-b border-[#E2E8F0] bg-white px-6 py-3.5 md:px-8">
-            <div>
-              <h1 className="text-[18px] md:text-[20px] leading-7 text-[#0F172A]">Good morning, Santhosh 👋</h1>
-              <p className="text-[13px] md:text-[14px] leading-5 text-[#64748B]">Let&apos;s learn, build and grow together.</p>
+          <header className="flex min-h-[64px] md:min-h-[76px] items-center justify-between border-b border-[#E2E8F0] bg-white px-4 md:px-8 py-3.5">
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => setIsMobileSidebarOpen(!isMobileSidebarOpen)}
+                className="md:hidden p-1.5 rounded-lg border border-[#E2E8F0] text-[#0F172A]"
+                aria-label="Toggle sidebar menu"
+              >
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              </button>
+              <div>
+                <h1 className="text-[16px] md:text-[20px] leading-6 md:leading-7 text-[#0F172A] font-semibold">Good morning, Santhosh 👋</h1>
+                <p className="text-[12px] md:text-[14px] leading-4 md:leading-5 text-[#64748B]">Let&apos;s learn, build and grow together.</p>
+              </div>
             </div>
 
             <div className="hidden items-center gap-3 lg:flex">

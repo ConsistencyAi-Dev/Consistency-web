@@ -148,22 +148,38 @@ export default function DashboardPage() {
             <div className="mx-[7px] mb-2 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] p-3.5">
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-5">
                 {learningPathSteps.map((step, idx) => (
-                  <div key={step.num} className="relative flex flex-col items-center text-center">
-                    {idx < learningPathSteps.length - 1 && (
-                      <div className="absolute left-[calc(50%+28px)] top-[18px] hidden h-px w-[calc(100%-56px)] bg-gradient-to-r from-[#E2E8F0] to-[#CBD5E1] sm:block" />
-                    )}
-                    <div
-                      className={`z-10 flex h-9 w-9 items-center justify-center rounded-full border text-[12px] font-semibold leading-[18px] ${
-                        idx === 0
-                          ? "border-[#2B50EC] bg-[#2B50EC] text-white shadow-[0px_4px_6px_rgba(43,80,236,0.3)]"
-                          : "border-[#E2E8F0] bg-white text-[#64748B]"
-                      }`}
-                    >
-                      {step.num}
+                  <React.Fragment key={step.num}>
+                    <div className="relative flex flex-col items-center text-center">
+                      {idx < learningPathSteps.length - 1 && (
+                        <div className="absolute left-[calc(50%+24px)] top-[17px] hidden w-[calc(100%-48px)] items-center justify-center gap-1.5 sm:flex z-0">
+                          <div className="h-[1.5px] w-6 sm:w-10 max-w-[40px] bg-[#CBD5E1]" />
+                          <svg className="h-3.5 w-3.5 text-[#CBD5E1] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M9 5l7 7-7 7" />
+                          </svg>
+                        </div>
+                      )}
+                      <div
+                        className={`z-10 flex h-9 w-9 items-center justify-center rounded-full border text-[12px] font-semibold leading-[18px] ${
+                          idx === 0
+                            ? "border-[#2B50EC] bg-[#2B50EC] text-white shadow-[0px_4px_6px_rgba(43,80,236,0.3)]"
+                            : "border-[#E2E8F0] bg-white text-[#64748B]"
+                        }`}
+                      >
+                        {step.num}
+                      </div>
+                      <p className="pt-1.5 text-[11px] leading-[14px] text-[#1E293B]">{step.name}</p>
+                      <p className="text-[10px] leading-[14px] text-[#94A3B8]">{step.duration}</p>
                     </div>
-                    <p className="pt-1.5 text-[11px] leading-[14px] text-[#1E293B]">{step.name}</p>
-                    <p className="text-[10px] leading-[14px] text-[#94A3B8]">{step.duration}</p>
-                  </div>
+
+                    {idx < learningPathSteps.length - 1 && (
+                      <div className="my-2 flex flex-col items-center justify-center sm:hidden text-[#CBD5E1] gap-1">
+                        <div className="w-[1.5px] h-5 bg-[#CBD5E1]" />
+                        <svg className="h-3.5 w-3.5 text-[#CBD5E1] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M19 9l-7 7-7-7" />
+                        </svg>
+                      </div>
+                    )}
+                  </React.Fragment>
                 ))}
               </div>
 
