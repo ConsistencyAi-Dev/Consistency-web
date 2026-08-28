@@ -1,60 +1,191 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { iconClockSmallSvg } from "@/assets";
 import { MENTORS_DATA } from "./dashboardData";
+import { getProfileStrengthApi } from "@/lib/api";
 
 export default function DashboardSidebarWidgets() {
+  const [strength, setStrength] = useState<number>(60);
+  const [hasGoals, setHasGoals] = useState<boolean>(true);
+  const [hasBasicProfile, setHasBasicProfile] = useState<boolean>(true);
+  const [hasResumeOrLinkedIn, setHasResumeOrLinkedIn] = useState<boolean>(false);
+  const [hasQuiz, setHasQuiz] = useState<boolean>(false);
+
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem("auth_user");
+      const token = localStorage.getItem("auth_token") || undefined;
+      if (stored) {
+        const user = JSON.parse(stored);
+        
+        const goalsCompleted = Boolean(user.goals || localStorage.getItem("isOnboarded") === "true");
+        const basicCompleted = Boolean(user.name && user.email);
+        const resumeOrLiCompleted = Boolean(user.linkedinUrl || user.resumeFile);
+        const quizCompleted = Boolean(user.quizAttempted || (user.profileStrength && user.profileStrength > 60));
+
+        setHasGoals(goalsCompleted);
+        setHasBasicProfile(basicCompleted);
+        setHasResumeOrLinkedIn(resumeOrLiCompleted);
+        setHasQuiz(quizCompleted);
+
+        // Calculate fallback strength from fields
+        let computed = 20;
+        if (goalsCompleted) computed += 10;
+        if (basicCompleted) computed += 10;
+        if (user.mobile || user.location) computed += 10;
+        if (resumeOrLiCompleted) computed += 15;
+        if (quizCompleted) computed += 35;
+        computed = Math.min(100, user.profileStrength || computed);
+
+        setStrength(computed);
+
+        // Fetch real backend strength analytics
+        if (user.id) {
+          getProfileStrengthApi(user.id, token)
+            .then((res) => {
+              if (res.data?.overallStrength) {
+                setStrength(res.data.overallStrength);
+                if (res.data.fieldStatus) {
+                  const resumeStatus = res.data.fieldStatus.find((f) => f.field === "Resume Upload" || f.field === "LinkedIn Profile");
+                  if (resumeStatus?.completed) setHasResumeOrLinkedIn(true);
+                }
+                if (res.data.breakdown?.isQuizCompleted) {
+                  setHasQuiz(true);
+                }
+              }
+            })
+            .catch(() => {});
+        }
+      }
+    } catch (e) {}
+  }, []);
+
+  const getStrengthBadge = () => {
+    if (strength >= 80) return { text: `${strength}%`, color: "bg-[#ECFDF5] text-[#047857] outline-[#A7F3D0]" };
+    if (strength >= 50) return { text: `${strength}%`, color: "bg-[#EFF6FF] text-[#1D4ED8] outline-[#BFDBFE]" };
+    return { text: `${strength}%`, color: "bg-[#FFFBEB] text-[#B45309] outline-[#FDE68A]" };
+  };
+
+  const getGradient = () => {
+    if (strength >= 80) return "from-[#10B981] to-[#059669]";
+    if (strength >= 50) return "from-[#2B50EC] to-[#6366F1]";
+    return "from-[#FBBF24] to-[#F97316]";
+  };
+
+  const badge = getStrengthBadge();
+
   return (
     <div className="flex flex-col gap-4 lg:col-span-1">
       {/* Widget 1: Profile Strength indicator card */}
       <div className="inline-flex w-full flex-col items-start gap-3 rounded-2xl bg-white p-5 shadow-[0px_1px_2px_rgba(0,0,0,0.05)] outline outline-[1px] outline-[#E2E8F0] -outline-offset-[1px]">
         <div className="flex w-full items-center justify-between">
           <h4 className="text-[13.5px] font-semibold leading-[20.25px] text-[#0F172A]">Profile Strength</h4>
-          <span className="rounded-full bg-[#FFFBEB] px-2 py-1 text-[11px] font-semibold leading-[16.5px] text-[#B45309] outline outline-[1px] outline-[#FDE68A] -outline-offset-[1px]">60%</span>
+          <span className={`rounded-full px-2 py-1 text-[11px] font-semibold leading-[16.5px] outline outline-[1px] -outline-offset-[1px] ${badge.color}`}>
+            {badge.text}
+          </span>
         </div>
 
         <div className="flex w-full flex-col gap-[7px]">
           <div className="relative h-2 w-full overflow-hidden rounded-full bg-[#F1F5F9]">
             <div
-              className="absolute left-0 top-0 h-2 rounded-full bg-gradient-to-r from-[#FBBF24] to-[#F97316]"
-              style={{ width: "60%" }}
+              className={`absolute left-0 top-0 h-2 rounded-full bg-gradient-to-r ${getGradient()} transition-all duration-700 ease-out`}
+              style={{ width: `${strength}%` }}
             />
           </div>
           <p className="text-[11.5px] font-normal leading-[17.25px] text-[#64748B]">
-            Complete your profile to get better matches.
+            {strength >= 80
+              ? "All-star profile! Your visibility to mentors is maximized."
+              : "Complete your profile to get better matches and mentor feedback."}
           </p>
         </div>
 
         {/* Checklist */}
         <div className="flex w-full flex-col gap-[10px] pt-1">
+          {/* Goals assessment */}
           <div className="flex w-full items-center gap-[10px]">
-            <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#2B50EC] outline outline-[1px] outline-[#2B50EC] -outline-offset-[1px]">
-              <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="white" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-              </svg>
-            </div>
-            <span className="text-[12.5px] font-normal leading-[18.75px] text-[#334155] line-through">Goals assessment</span>
+            {hasGoals ? (
+              <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#2B50EC] outline outline-[1px] outline-[#2B50EC] -outline-offset-[1px]">
+                <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="white" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+            ) : (
+              <div className="h-5 w-5 shrink-0 rounded-full bg-white outline outline-[1px] outline-[#E2E8F0] -outline-offset-[1px]" />
+            )}
+            <span className={`text-[12.5px] font-normal leading-[18.75px] text-[#334155] ${hasGoals ? "line-through text-[#64748B]" : ""}`}>
+              Goals assessment
+            </span>
+            {!hasGoals && (
+              <Link href="/dashboard/settings" className="ml-auto text-[10px] font-semibold leading-[15px] text-[#2B50EC] hover:text-[#1E3BB3]">
+                Complete
+              </Link>
+            )}
           </div>
 
+          {/* Basic profile */}
           <div className="flex w-full items-center gap-[10px]">
-            <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#2B50EC] outline outline-[1px] outline-[#2B50EC] -outline-offset-[1px]">
-              <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="white" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-              </svg>
-            </div>
-            <span className="text-[12.5px] font-normal leading-[18.75px] text-[#334155] line-through">Basic profile</span>
+            {hasBasicProfile ? (
+              <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#2B50EC] outline outline-[1px] outline-[#2B50EC] -outline-offset-[1px]">
+                <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="white" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+            ) : (
+              <div className="h-5 w-5 shrink-0 rounded-full bg-white outline outline-[1px] outline-[#E2E8F0] -outline-offset-[1px]" />
+            )}
+            <span className={`text-[12.5px] font-normal leading-[18.75px] text-[#334155] ${hasBasicProfile ? "line-through text-[#64748B]" : ""}`}>
+              Basic profile
+            </span>
+            {!hasBasicProfile && (
+              <Link href="/dashboard/settings" className="ml-auto text-[10px] font-semibold leading-[15px] text-[#2B50EC] hover:text-[#1E3BB3]">
+                Complete
+              </Link>
+            )}
           </div>
 
+          {/* Add resume / LinkedIn */}
           <div className="flex w-full items-center gap-[10px]">
-            <div className="h-5 w-5 shrink-0 rounded-full bg-white outline outline-[1px] outline-[#E2E8F0] -outline-offset-[1px]" />
-            <span className="text-[12.5px] font-normal leading-[18.75px] text-[#334155]">Add resume / LinkedIn</span>
-            <button className="ml-auto text-[10px] font-normal leading-[15px] text-[#2B50EC] hover:text-[#1E3BB3] cursor-pointer">Complete</button>
+            {hasResumeOrLinkedIn ? (
+              <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#2B50EC] outline outline-[1px] outline-[#2B50EC] -outline-offset-[1px]">
+                <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="white" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+            ) : (
+              <div className="h-5 w-5 shrink-0 rounded-full bg-white outline outline-[1px] outline-[#E2E8F0] -outline-offset-[1px]" />
+            )}
+            <span className={`text-[12.5px] font-normal leading-[18.75px] text-[#334155] ${hasResumeOrLinkedIn ? "line-through text-[#64748B]" : ""}`}>
+              Add resume / LinkedIn
+            </span>
+            {!hasResumeOrLinkedIn && (
+              <Link href="/dashboard/settings" className="ml-auto text-[10px] font-semibold leading-[15px] text-[#2B50EC] hover:text-[#1E3BB3]">
+                Complete
+              </Link>
+            )}
           </div>
 
+          {/* Skill assessment quiz */}
           <div className="flex w-full items-center gap-[10px]">
-            <div className="h-5 w-5 shrink-0 rounded-full bg-white outline outline-[1px] outline-[#E2E8F0] -outline-offset-[1px]" />
-            <span className="text-[12.5px] font-normal leading-[18.75px] text-[#334155]">Skill assessment quiz (5 min)</span>
-            <button className="ml-auto text-[10px] font-normal leading-[15px] text-[#2B50EC] hover:text-[#1E3BB3] cursor-pointer">Complete</button>
+            {hasQuiz ? (
+              <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#2B50EC] outline outline-[1px] outline-[#2B50EC] -outline-offset-[1px]">
+                <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="white" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+            ) : (
+              <div className="h-5 w-5 shrink-0 rounded-full bg-white outline outline-[1px] outline-[#E2E8F0] -outline-offset-[1px]" />
+            )}
+            <span className={`text-[12.5px] font-normal leading-[18.75px] text-[#334155] ${hasQuiz ? "line-through text-[#64748B]" : ""}`}>
+              Skill assessment quiz (5 min)
+            </span>
+            {!hasQuiz && (
+              <Link href="/dashboard/settings" className="ml-auto text-[10px] font-semibold leading-[15px] text-[#2B50EC] hover:text-[#1E3BB3]">
+                Complete
+              </Link>
+            )}
           </div>
         </div>
       </div>
@@ -114,7 +245,7 @@ export default function DashboardSidebarWidgets() {
               { stat: "4.9", label: "rating", star: true },
             ].map(({ stat, label, star }) => (
               <div key={label} className="rounded-[10px] border border-white/10 bg-white/10 p-3 text-left">
-                <div className="flex items-center gap-1 text-[18px] font-semibold leading-[18px] text-white">
+                <div className="flex items-center gap-1 text-[18px] font-bold leading-[18px] text-white">
                   <span>{stat}</span>
                   {star && (
                     <svg viewBox="0 0 24 24" className="h-3 w-3 fill-[#FACC15]" aria-hidden="true">
@@ -122,23 +253,25 @@ export default function DashboardSidebarWidgets() {
                     </svg>
                   )}
                 </div>
-                <div className="mt-px text-[10.5px] font-normal leading-[15.75px] text-white/70">{label}</div>
+                <div className="mt-px text-[10.5px] font-semibold leading-[15.75px] text-white/80">{label}</div>
               </div>
             ))}
           </div>
 
-          <div className="flex items-center gap-2 text-[11px] font-normal leading-[16.5px] text-white/60">
+          <div className="flex items-center gap-2 text-[11px] font-normal leading-[16.5px] text-white/70">
             <svg viewBox="0 0 24 24" className="h-4 w-4 shrink-0" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
               <path d="M9 12l2 2 4-4" />
             </svg>
-            <span>Trusted by engineers at Google, Meta, Amazon</span>
+            <span>
+              Trusted by engineers at <strong className="font-bold text-black">Google, Meta, Amazon</strong>
+            </span>
           </div>
         </div>
       </div>
 
       {/* Widget 4: Have a coupon + Invite Friends */}
-      <div className="inline-flex w-full flex-col items-start gap-3 rounded-2xl bg-white p-5 shadow-[0px_1px_2px_rgba(0,0,0,0.05)] outline outline-[1px] outline-[#E2E8F0] -outline-offset-[1px]">
+      <div className="relative inline-flex w-full flex-col items-start gap-3 overflow-hidden rounded-2xl bg-white p-5 shadow-[0px_1px_2px_rgba(0,0,0,0.05)] outline outline-[1px] outline-[#E2E8F0] -outline-offset-[1px]">
         <div className="flex w-full items-center gap-2">
           <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#EEF2FF]">
             <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="#2B50EC" strokeWidth={1.67} strokeLinecap="round" strokeLinejoin="round">
@@ -181,6 +314,13 @@ export default function DashboardSidebarWidgets() {
           <button className="text-[11px] font-semibold leading-[16.5px] text-[#2B50EC] hover:text-[#1E3BB3] cursor-pointer">
             Invite
           </button>
+        </div>
+
+        <div className="absolute inset-0 z-10 flex items-center justify-center rounded-2xl bg-[rgba(255,255,255,0.5)] backdrop-blur-[6px]">
+          <div className="flex items-center justify-center gap-2 rounded-full border border-[#E2E8F0] bg-[#0F172A] px-3.5 py-2 text-white shadow-[0px_6px_8px_rgba(0,0,0,0.08)]">
+            <Image src={iconClockSmallSvg} alt="" width={14} height={14} className="brightness-0 invert" />
+            <span className="text-xs font-bold leading-4">Coming Soon</span>
+          </div>
         </div>
       </div>
 

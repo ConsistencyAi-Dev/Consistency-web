@@ -19,302 +19,79 @@ interface GoalsStepProps {
   getTimelineWeeksPill: () => string;
 }
 
-export default function GoalsStep({
-  mainGoal,
-  setMainGoal,
-  timeline,
-  setTimeline,
-  currentStatus,
-  setCurrentStatus,
-  yearsCoding,
-  setYearsCoding,
-  targetRoles,
-  toggleTargetRole,
-  onNext,
-  onBack,
-  getTimelineWeeksPill,
-}: GoalsStepProps) {
+const goalOptions = [
+  { id: "Engineering", title: "Engineering", desc: "Transition to dev role", emoji: "🎓" },
+  { id: "Get a Job in 6 months", title: "Get a Job in 6 months", desc: "First dev job", emoji: "💼" },
+  { id: "Upskill to Senior Engineer", title: "Upskill to Senior Engineer", desc: "Grow your career", emoji: "📈" },
+  { id: "Crack FAANG in 90 days", title: "Crack FAANG in 90 days", desc: "Top companies prep", emoji: "⭐" },
+];
+
+const roleOptions = [
+  { id: "Frontend", label: "Frontend", emoji: "🎨" },
+  { id: "Gen AI", label: "Gen AI", emoji: "⚙️" },
+  { id: "Python Full-Stack developer", label: "Python Full-Stack developer", emoji: "🚀" },
+  { id: "AI/ML", label: "AI/ML", emoji: "🤖" },
+  { id: "Data Analyst", label: "Data Analyst", emoji: "📊" },
+  { id: "Java Full-Stack developer", label: "Java Full-Stack developer", emoji: "🚀" },
+];
+
+function CheckIcon({ className = "h-3 w-3" }: { className?: string }) {
   return (
-    <motion.div
-      key="step-2"
-      initial={{ opacity: 0, y: 15, scale: 0.98 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }}
-      exit={{ opacity: 0, y: -15, scale: 0.98 }}
-      transition={{ duration: 0.25 }}
-      className="bg-white rounded-3xl border border-gray-100/60 shadow-xl shadow-gray-200/50 p-8 sm:p-10 max-w-[620px] w-full flex flex-col relative overflow-hidden"
-    >
-      <div className="flex flex-col items-center">
-        {/* Header Badge */}
-        <div className="flex items-center gap-1.5 text-blue-500 text-[10px] font-extrabold uppercase tracking-wider mb-2 mt-4 sm:mt-0 self-start">
-          Step 2 of 4 – Goals Assessment
-        </div>
+    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3.5}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+    </svg>
+  );
+}
 
-        <div className="flex justify-between items-center w-full mb-1">
-          <h2 className="text-2xl font-extrabold text-gray-900 tracking-tight leading-tight">
-            What do you want to achieve? 🎯
-          </h2>
-          
-          {/* Back button replica in header matches screenshot style */}
-          <button
-            type="button"
-            onClick={onBack}
-            className="border border-gray-250 bg-white hover:bg-gray-50 text-gray-700 px-3.5 py-1.5 rounded-lg text-xs font-bold cursor-pointer transition-colors shadow-sm flex items-center gap-1"
-          >
-            ← Back
-          </button>
-        </div>
-        
-        <p className="text-gray-500 text-sm font-medium self-start mb-6">
-          AI will craft roadmap based on this
-        </p>
+export default function GoalsStep({
+  mainGoal, setMainGoal, timeline, setTimeline, currentStatus, setCurrentStatus,
+  yearsCoding, setYearsCoding, targetRoles, toggleTargetRole, onNext, onBack, getTimelineWeeksPill,
+}: GoalsStepProps) {
+  const timelineProgress = ((timeline - 3) / 9) * 100;
 
-        {/* Grid Form Sections */}
-        <div className="w-full text-left space-y-6">
-          
-          {/* Q1: MAIN GOAL */}
-          <div>
-            <h4 className="text-[10px] tracking-wider font-extrabold text-gray-500 uppercase mb-3">
-              Q1 • MAIN GOAL
-            </h4>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {[
-                {
-                  id: "Engineering",
-                  title: "Engineering",
-                  desc: "Transition to dev role",
-                  emoji: "🎓",
-                },
-                {
-                  id: "Get a Job in 6 months",
-                  title: "Get a Job in 6 months",
-                  desc: "First dev job",
-                  emoji: "💼",
-                },
-                {
-                  id: "Upskill to Senior Engineer",
-                  title: "Upskill to Senior Engineer",
-                  desc: "Grow your career",
-                  emoji: "📈",
-                },
-                {
-                  id: "Crack FAANG in 90 days",
-                  title: "Crack FAANG in 90 days",
-                  desc: "Top companies prep",
-                  emoji: "⭐",
-                },
-              ].map((item) => {
-                const isActive = mainGoal === item.id;
-                return (
-                  <button
-                    key={item.id}
-                    type="button"
-                    onClick={() => setMainGoal(item.id)}
-                    className={`p-4 rounded-xl border-2 transition-all flex items-center justify-between text-left cursor-pointer hover:bg-gray-50/50 ${
-                      isActive
-                        ? "border-[#0055FF] bg-blue-50/10 shadow-sm"
-                        : "border-gray-150"
-                    }`}
-                  >
-                    <div>
-                      <div className="flex items-center gap-1.5 font-bold text-sm text-gray-900">
-                        <span>{item.emoji}</span>
-                        <span>{item.title}</span>
-                      </div>
-                      <p className="text-xs text-gray-400 mt-1 font-semibold">
-                        {item.desc}
-                      </p>
-                    </div>
-                    
-                    {/* Checkmark or radio circle */}
-                    <div
-                      className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 transition-colors ${
-                        isActive
-                          ? "bg-[#0055FF] border-[#0055FF]"
-                          : "border-gray-200 bg-white"
-                      }`}
-                    >
-                      {isActive && (
-                        <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={4}>
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                        </svg>
-                      )}
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
+  return (
+    <motion.div key="step-2" initial={{ opacity: 0, y: 15, scale: 0.98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: -15, scale: 0.98 }} transition={{ duration: 0.25 }} className="w-full max-w-[720px] overflow-hidden rounded-2xl border border-[#e2e8f0] bg-white px-6 py-8 shadow-[0px_1px_1px_rgba(0,0,0,0.05)] sm:px-8">
+      <div className="flex flex-col gap-8">
+        <header className="flex items-start justify-between gap-4 border-b border-[#f1f5f9] pb-8">
+          <div className="flex flex-col gap-2">
+            <span className="text-xs font-bold uppercase tracking-[0.6px] text-[#2563eb]">Step 2 of 3 — Goals Assessment</span>
+            <h2 className="flex items-center gap-2 text-2xl font-bold leading-9 text-[#1e293b] sm:text-[30px]">What do you want to achieve? <span aria-hidden="true">🎯</span></h2>
+            <p className="text-base leading-6 text-[#64748b]">AI will craft roadmap based on this</p>
           </div>
+          <button type="button" onClick={onBack} className="shrink-0 rounded-full border border-[#e2e8f0] px-4 py-2 text-sm font-medium text-[#1e293b] transition-colors hover:bg-[#f8fafc]">← Back</button>
+        </header>
 
-          {/* Q2: TIMELINE */}
-          <div>
-            <div className="flex items-center justify-between mb-3">
-              <h4 className="text-[10px] tracking-wider font-extrabold text-gray-500 uppercase">
-                Q2 • TIMELINE
-              </h4>
-              {/* Black pill target description */}
-              <span className="bg-gray-900 text-white text-[9px] font-bold py-1 px-2.5 rounded-full">
-                Goal: Switch to Software Engineering in {timeline} months
-              </span>
-            </div>
-
-            {/* Slider Control */}
-            <div className="relative pt-2 pb-1.5">
-              <input
-                type="range"
-                min="3"
-                max="12"
-                step="1"
-                value={timeline}
-                onChange={(e) => setTimeline(parseInt(e.target.value))}
-                className="w-full h-1.5 bg-gray-200 rounded-full appearance-none cursor-pointer accent-[#0055FF]"
-                style={{
-                  background: `linear-gradient(to right, #0055FF 0%, #0055FF ${
-                    ((timeline - 3) / 9) * 100
-                  }%, #E5E7EB ${((timeline - 3) / 9) * 100}%, #E5E7EB 100%)`,
-                }}
-              />
-              <div className="flex justify-between text-[10px] font-bold text-gray-400 mt-1.5">
-                <span>3m</span>
-                <span>12m</span>
-              </div>
-            </div>
-
-            {/* Quick Timeline buttons */}
-            <div className="grid grid-cols-4 gap-2 mt-2">
-              {[3, 6, 9, 12].map((time) => {
-                const isActive = timeline === time;
-                return (
-                  <button
-                    key={time}
-                    type="button"
-                    onClick={() => setTimeline(time)}
-                    className={`py-2 px-3 text-xs font-bold rounded-xl border text-center transition-colors cursor-pointer ${
-                      isActive
-                        ? "bg-[#0055FF] border-[#0055FF] text-white"
-                        : "bg-white border-gray-200 text-gray-600 hover:bg-gray-50"
-                    }`}
-                  >
-                    {time}m
-                  </button>
-                );
-              })}
-            </div>
-
-            {/* Weeks conversion pill */}
-            <div className="flex justify-center mt-3">
-              <span className="bg-gray-50 border border-gray-100 text-gray-500 text-[10px] font-extrabold py-1 px-3 rounded-full uppercase tracking-wider">
-                {getTimelineWeeksPill()}
-              </span>
-            </div>
+        <section className="flex flex-col gap-4">
+          <h3 className="text-base font-bold tracking-[0.6px] text-[#1e293b]">Q1 • MAIN GOAL</h3>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            {goalOptions.map((goal) => {
+              const isActive = mainGoal === goal.id;
+              return <button key={goal.id} type="button" onClick={() => setMainGoal(goal.id)} className={`flex min-h-[92px] flex-col gap-2 rounded-xl border p-4 text-left transition-colors ${isActive ? "border-2 border-[#2b50ec] bg-[#eff6ff]/50" : "border-[#e5e7eb] hover:bg-[#f8fafc]"}`}>
+                <span className="flex items-center justify-between gap-3"><span className="flex items-center gap-2 text-base font-semibold text-[#111827]"><span aria-hidden="true">{goal.emoji}</span>{goal.title}</span><span className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full ${isActive ? "bg-[#2b50ec] text-white" : "border-2 border-[#e5e7eb]"}`}>{isActive && <CheckIcon />}</span></span>
+                <span className="text-sm leading-5 text-[#6b7280]">{goal.desc}</span>
+              </button>;
+            })}
           </div>
+        </section>
 
-          {/* Q3: CURRENT STATUS & YEARS OF CODING */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {/* CURRENT STATUS */}
-            <div>
-              <h4 className="text-[10px] tracking-wider font-extrabold text-gray-500 uppercase mb-2.5">
-                Q3 • CURRENT STATUS
-              </h4>
-              <div className="flex gap-1.5">
-                {["Student", "Working Professional"].map((status) => {
-                  const isActive = currentStatus === status;
-                  return (
-                    <button
-                      key={status}
-                      type="button"
-                      onClick={() => setCurrentStatus(status as "Student" | "Working Professional")}
-                      className={`flex-1 py-2 px-3 text-xs font-bold rounded-full border text-center transition-colors cursor-pointer ${
-                        isActive
-                          ? "bg-gray-900 border-gray-900 text-white"
-                          : "bg-white border-gray-200 text-gray-600 hover:bg-gray-50"
-                      }`}
-                    >
-                      {status}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* YEARS OF CODING */}
-            <div>
-              <h4 className="text-[10px] tracking-wider font-extrabold text-gray-500 uppercase mb-2.5">
-                YEARS OF CODING
-              </h4>
-              <div className="relative">
-                <select
-                  value={yearsCoding}
-                  onChange={(e) => setYearsCoding(e.target.value)}
-                  className="w-full py-2 pl-3 pr-10 border border-gray-200 rounded-xl bg-white text-xs font-bold text-gray-700 appearance-none focus:outline-none focus:ring-1 focus:ring-[#0055FF] focus:border-[#0055FF] shadow-sm"
-                >
-                  <option value="0-1y">0-1y</option>
-                  <option value="1-2y">1-2y</option>
-                  <option value="2-5y">2-5y</option>
-                  <option value="5y+">5y+</option>
-                </select>
-                <div className="absolute inset-y-0 right-3 flex items-center pointer-events-none text-gray-400">
-                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
-                </div>
-              </div>
-            </div>
+        <section className="flex flex-col gap-6">
+          <div className="flex items-center justify-between gap-3"><h3 className="text-base font-bold tracking-[0.6px] text-[#1e293b]">Q2 • TIMELINE</h3><span className="rounded-full bg-[#0f172a] px-3 py-1 text-xs font-medium text-white">Goal: {mainGoal} in {timeline} months</span></div>
+          <div className="flex flex-col gap-4">
+            <div className="flex justify-between px-2 text-xs text-[#64748b]"><span>3m</span><span>12m</span></div>
+            <div className="relative h-2 rounded-full bg-[#f1f5f9]"><div className="absolute inset-y-0 left-0 rounded-full bg-[#2b50ec]" style={{ width: `${timelineProgress}%` }} /><input aria-label="Timeline in months" type="range" min="3" max="12" step="1" value={timeline} onChange={(event) => setTimeline(Number(event.target.value))} className="absolute inset-0 h-2 w-full cursor-pointer appearance-none bg-transparent accent-[#2b50ec]" /></div>
+            <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">{[3, 6, 9, 12].map((month) => <button key={month} type="button" onClick={() => setTimeline(month)} className={`rounded-full border px-1 py-2 text-sm font-medium transition-colors ${timeline === month ? "border-[#2b50ec] bg-[#2b50ec] text-white shadow-sm" : "border-[#e2e8f0] text-[#475569] hover:bg-[#f8fafc]"}`}>{month}m</button>)}</div>
+            <div className="flex justify-center"><span className="rounded-full border border-[#e2e8f0] bg-[#f8fafc] px-4 py-1.5 text-xs font-medium text-[#475569]">{getTimelineWeeksPill()}</span></div>
           </div>
+        </section>
 
-          {/* Q4: TARGET ROLE */}
-          <div>
-            <h4 className="text-[10px] tracking-wider font-extrabold text-gray-500 uppercase mb-2.5">
-              Q4 • TARGET ROLE
-            </h4>
-            <div className="flex flex-wrap gap-2">
-              {[
-                { id: "Frontend", label: "Frontend", emoji: "🎨" },
-                { id: "Backend", label: "Backend", emoji: "⚙️" },
-                { id: "Full-Stack", label: "Full-Stack", emoji: "🚀" },
-                { id: "AI/ML", label: "AI/ML", emoji: "💻" },
-                { id: "DevOps", label: "DevOps", emoji: "📝" },
-                { id: "Data", label: "Data", emoji: "📊" },
-              ].map((role) => {
-                const isSelected = targetRoles.includes(role.id);
-                return (
-                  <button
-                    key={role.id}
-                    type="button"
-                    onClick={() => toggleTargetRole(role.id)}
-                    className={`flex items-center gap-1.5 py-2 px-3.5 text-xs font-bold rounded-xl border transition-all cursor-pointer ${
-                      isSelected
-                        ? "bg-blue-50/20 border-[#0055FF] text-[#0055FF] shadow-sm"
-                        : "bg-white border-gray-200 text-gray-600 hover:bg-gray-50"
-                    }`}
-                  >
-                    <span>{role.emoji}</span>
-                    <span>{role.label}</span>
-                    {isSelected && (
-                      <svg className="w-3.5 h-3.5 text-[#0055FF] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3.5}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                      </svg>
-                    )}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
+        <section className="grid grid-cols-1 gap-8 sm:grid-cols-2">
+          <div className="flex flex-col gap-4"><h3 className="text-base font-bold tracking-[0.6px] text-[#1e293b]">Q3 • CURRENT STATUS</h3><div className="flex flex-wrap gap-2">{(["Student", "Working Professional"] as const).map((status) => <button key={status} type="button" onClick={() => setCurrentStatus(status)} className={`rounded-full border px-4 py-2 text-sm font-medium transition-colors ${currentStatus === status ? "border-[#0f172a] bg-[#0f172a] text-white" : "border-[#e2e8f0] text-[#475569] hover:bg-[#f8fafc]"}`}>{status}</button>)}</div></div>
+          <label className="flex flex-col gap-4 text-xs font-bold tracking-[0.6px] text-[#1e293b]">YEARS OF CODING<span className="relative"><select value={yearsCoding} onChange={(event) => setYearsCoding(event.target.value)} className="w-full appearance-none rounded-lg border border-[#e2e8f0] bg-white px-3 py-2.5 text-sm font-normal tracking-normal text-[#1e293b] outline-none focus:border-[#2b50ec]"><option value="0-1y">0-1y</option><option value="1-2y">1-2y</option><option value="2-5y">2-5y</option><option value="5y+">5y+</option></select><span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[#64748b]">⌄</span></span></label>
+        </section>
 
-        </div>
+        <section className="flex flex-col gap-4"><h3 className="text-sm font-bold tracking-[0.7px] text-[#111827]">Q4 • TARGET ROLE</h3><div className="flex flex-wrap gap-3">{roleOptions.map((role) => { const isSelected = targetRoles.includes(role.id); return <button key={role.id} type="button" onClick={() => toggleTargetRole(role.id)} className={`flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition-colors ${isSelected ? "border-[#2b50ec] bg-[#2b50ec]/10 text-[#2b50ec]" : "border-[#e5e7eb] text-[#374151] hover:bg-[#f8fafc]"}`}><span aria-hidden="true">{role.emoji}</span><span>{role.label}</span>{isSelected && <span className="flex h-4 w-4 items-center justify-center rounded-full bg-[#2b50ec] text-white"><CheckIcon className="h-2.5 w-2.5" /></span>}</button>; })}</div></section>
 
-        {/* Continue button */}
-        <button
-          type="button"
-          onClick={onNext}
-          disabled={targetRoles.length === 0}
-          className="w-full bg-[#0055FF] hover:bg-[#0044EE] text-white py-4 px-6 rounded-2xl font-bold transition-all shadow-lg shadow-blue-500/25 active:scale-[0.98] mt-8 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          Continue to Profile Strength →
-        </button>
-
-        <p className="text-[10px] font-semibold text-gray-400 mt-3.5">
-          You can change this anytime in settings
-        </p>
+        <div className="flex flex-col gap-4 pt-2"><button type="button" onClick={onNext} disabled={targetRoles.length === 0} className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#2b50ec] py-4 text-base font-medium text-white shadow-[0px_4px_6px_-1px_rgba(0,0,0,0.1)] transition-colors hover:bg-[#1e3bb3] disabled:cursor-not-allowed disabled:opacity-50">Continue to Profile Strength <span aria-hidden="true">→</span></button><p className="text-center text-xs text-[#94a3b8]">You can change this anytime in settings</p></div>
       </div>
     </motion.div>
   );

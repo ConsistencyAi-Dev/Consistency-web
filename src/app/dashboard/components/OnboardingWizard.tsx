@@ -6,7 +6,8 @@ import WelcomeStep from "./WelcomeStep";
 import GoalsStep from "./GoalsStep";
 import ProfileStep from "./ProfileStep";
 import QuizStep from "./QuizStep";
-import { logoPng } from "@/assets";
+import OnboardingHeader from "./OnboardingHeader";
+import OnboardingTransition from "./OnboardingTransition";
 import { updateProfileApi, submitQuizApi } from "@/lib/api";
 
 interface OnboardingWizardProps {
@@ -15,6 +16,7 @@ interface OnboardingWizardProps {
 
 export default function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
   const [step, setStep] = useState<1 | 2 | 3 | 4>(1);
+  const [isFinishing, setIsFinishing] = useState(false);
   const [name, setName] = useState("");
   const [source, setSource] = useState("");
 
@@ -178,17 +180,31 @@ export default function OnboardingWizard({ onComplete }: OnboardingWizardProps) 
 
 
   const handleFinish = async () => {
+    setIsFinishing(true);
+
     try {
       const stored = localStorage.getItem("auth_user");
       const token = localStorage.getItem("auth_token") || undefined;
       let userId = "usr_1";
+      let parsedUser: any = {};
       if (stored) {
-        const parsed = JSON.parse(stored);
-        userId = parsed.id || userId;
+        parsedUser = JSON.parse(stored);
+        userId = parsedUser.id || userId;
       }
 
-      // 1. Update user profile in PostgreSQL DB
-      await updateProfileApi(
+      // Calculate final profile strength
+      const calculatedStrength = getProfileStrength();
+
+      const onboardingGoals = {
+        mainGoal,
+        timeline,
+        currentStatus,
+        yearsCoding,
+        targetRoles,
+      };
+
+      // 1. Update user profile, source, goals, and isOnboarded in PostgreSQL DB
+      const updateRes = await updateProfileApi(
         userId,
         {
           name: name || undefined,
@@ -197,100 +213,81 @@ export default function OnboardingWizard({ onComplete }: OnboardingWizardProps) 
           bio: bio || undefined,
           linkedinUrl: linkedinUrl || undefined,
           resumeFile: resumeFile || undefined,
+          profileStrength: calculatedStrength,
+          isOnboarded: true,
+          source: source || undefined,
+          goals: onboardingGoals,
         },
         token
       );
 
-      // Update local storage auth_user
-      if (stored) {
-        const parsed = JSON.parse(stored);
-        const updated = {
-          ...parsed,
-          name: name || parsed.name,
-          mobile: mobile || parsed.mobile,
-          location: location || parsed.location,
-          bio: bio || parsed.bio,
-          linkedinUrl: linkedinUrl || parsed.linkedinUrl,
-          resumeFile: resumeFile || parsed.resumeFile,
-        };
-        localStorage.setItem("auth_user", JSON.stringify(updated));
-      }
-
       // 2. Submit quiz assessment answers to DB
       if (Object.keys(quizAnswers).length > 0) {
-        await submitQuizApi({
-          userId,
-          answers: quizAnswers,
-          timeSpentSeconds: 120,
-        });
+        try {
+          await submitQuizApi({
+            userId,
+            answers: quizAnswers,
+            timeSpentSeconds: 120,
+          });
+        } catch (quizErr) {
+          console.error("Quiz submission error:", quizErr);
+        }
       }
+
+      // 3. Update local storage auth_user with completed profile, goals, and strength
+      const finalStrength = updateRes?.data?.profileStrength || calculatedStrength;
+      const updated = {
+        ...parsedUser,
+        name: name || parsedUser.name,
+        email: email || parsedUser.email,
+        mobile: mobile || parsedUser.mobile,
+        location: location || parsedUser.location,
+        bio: bio || parsedUser.bio,
+        linkedinUrl: linkedinUrl || parsedUser.linkedinUrl,
+        resumeFile: resumeFile || parsedUser.resumeFile,
+        profileStrength: finalStrength,
+        isOnboarded: true,
+        source: source || parsedUser.source,
+        quizAttempted: Object.keys(quizAnswers).length > 0,
+        goals: onboardingGoals,
+      };
+      localStorage.setItem("auth_user", JSON.stringify(updated));
+      localStorage.setItem("isOnboarded", "true");
     } catch (err) {
       console.error("Failed to sync onboarding data to backend DB:", err);
-    } finally {
-      onComplete();
+      // Fallback update to localStorage
+      try {
+        const stored = localStorage.getItem("auth_user");
+        const parsed = stored ? JSON.parse(stored) : {};
+        localStorage.setItem(
+          "auth_user",
+          JSON.stringify({
+            ...parsed,
+            name: name || parsed.name,
+            mobile,
+            location,
+            bio,
+            linkedinUrl,
+            resumeFile,
+            isOnboarded: true,
+            source,
+            profileStrength: getProfileStrength(),
+            goals: { mainGoal, timeline, currentStatus, yearsCoding, targetRoles },
+          })
+        );
+        localStorage.setItem("isOnboarded", "true");
+      } catch (e) {}
     }
   };
+
+  if (isFinishing) {
+    return <OnboardingTransition userName={name} onComplete={onComplete} />;
+  }
 
   return (
     <div className="min-h-screen bg-[#F8F9FC] flex flex-col">
       {/* Onboarding Header */}
-      <header className="sticky top-0 z-50 h-16 bg-white border-b border-gray-100 px-6 sm:px-12 flex items-center justify-between shrink-0 shadow-sm">
-        {/* Left Side: Brand Logo */}
-        <div className="flex items-center gap-2">
-          <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center">
-            <img src={logoPng.src} alt="Consistency AI" className="w-5.5 h-5.5 object-contain" />
-          </div>
-          <div className="flex items-baseline gap-1.5">
-            <span className="font-bold text-gray-900 tracking-tight text-base sm:text-lg">
-              Consistency AI
-            </span>
-            <span className="text-[9px] tracking-widest font-extrabold text-[#0055FF] uppercase">
-              Onboarding
-            </span>
-          </div>
-        </div>
-
-        {/* Right Side: Step Progress */}
-        <div className="flex items-center gap-3 sm:gap-6">
-          <div className="hidden sm:flex items-center gap-4 text-xs font-semibold">
-            <span className={step === 1 ? "text-[#0055FF]" : "text-gray-400 transition-colors"}>
-              Welcome
-            </span>
-            <span className="text-gray-300">/</span>
-            <span className={step === 2 ? "text-[#0055FF]" : "text-gray-400 transition-colors"}>
-              Goals
-            </span>
-            <span className="text-gray-300">/</span>
-            <span className={step === 3 ? "text-[#0055FF]" : "text-gray-400 transition-colors"}>
-              Profile
-            </span>
-            <span className="text-gray-300">/</span>
-            <span className={step === 4 ? "text-[#0055FF]" : "text-gray-400 transition-colors"}>
-              Quiz
-            </span>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <div className="h-1.5 w-16 sm:w-24 bg-gray-100 rounded-full overflow-hidden border border-gray-100/20 shadow-inner">
-              <motion.div
-                className="h-full bg-gray-900"
-                animate={{
-                  width: `${step === 4 && quizState === "quiz"
-                      ? 90
-                      : step === 4 && quizState === "loading"
-                        ? 100
-                        : ((step - 0.2) / 4) * 100
-                    }%`,
-                }}
-                transition={{ type: "spring", stiffness: 120, damping: 15 }}
-              />
-            </div>
-            <span className="text-xs font-bold text-gray-500 tabular-nums">
-              Step {step} of 4
-            </span>
-          </div>
-        </div>
-      </header>
+      <OnboardingHeader step={step} quizState={quizState} />
 
       {/* Main Content Area */}
       <main className="flex-1 flex items-center justify-center p-6 bg-[#F8F9FC]">

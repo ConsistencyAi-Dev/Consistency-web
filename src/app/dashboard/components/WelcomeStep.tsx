@@ -133,13 +133,15 @@ export default function WelcomeStep({
               <div className="w-5 h-5 rounded-full ring-2 ring-white bg-emerald-500 text-white flex items-center justify-center text-[7px] font-black">SM</div>
               <div className="w-5 h-5 rounded-full ring-2 ring-white bg-yellow-500 text-white flex items-center justify-center text-[7px] font-black">JT</div>
             </div>
-            <span>Trusted by engineers at Google • Meta • Amazon</span>
+            <span>
+              Trusted by engineers at <strong className="font-bold text-gray-800">Google • Meta • Amazon</strong>
+            </span>
           </div>
-          <div className="flex items-center gap-1 text-gray-500 font-bold shrink-0">
+          <div className="flex items-center gap-1 text-gray-700 font-bold shrink-0">
             <span className="text-yellow-500 text-sm leading-none">★</span>
-            <span>4.9</span>
-            <span className="text-gray-300">•</span>
-            <span>12k+ students</span>
+            <strong className="font-bold text-gray-900">4.9</strong>
+            <span className="text-gray-400 font-bold">•</span>
+            <strong className="font-bold text-gray-900">12k+ students</strong>
           </div>
         </div>
     </motion.div>

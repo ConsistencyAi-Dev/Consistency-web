@@ -84,8 +84,8 @@ export default function WhyConsistencySection() {
             <div className="flex h-[16px] w-[16px] items-center justify-center text-white/60">
               <TrustIcon />
             </div>
-            <div className="font-['Stack_Sans_Headline:Regular'] whitespace-nowrap text-[11px] font-normal leading-[16.5px] text-white/60">
-              Trusted by engineers at Google, Meta, Amazon
+            <div className="font-['Stack_Sans_Headline:Regular'] whitespace-nowrap text-[11px] font-normal leading-[16.5px] text-white/70">
+              Trusted by engineers at <strong className="font-bold text-white">Google, Meta, Amazon</strong>
             </div>
           </div>
         </div>
