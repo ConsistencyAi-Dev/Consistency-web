@@ -47,16 +47,20 @@ export default function DashboardLayout({
   const router = useRouter();
 
   useEffect(() => {
-    const onboarded = localStorage.getItem("isOnboarded") === "true";
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setIsOnboarded(onboarded);
-
     try {
       const stored = localStorage.getItem("auth_user");
       if (stored) {
-        setCurrentUser(JSON.parse(stored));
+        const user = JSON.parse(stored);
+        setCurrentUser(user);
+        const onboarded = user.isOnboarded === true || localStorage.getItem("isOnboarded") === "true";
+        setIsOnboarded(onboarded);
+      } else {
+        const onboarded = localStorage.getItem("isOnboarded") === "true";
+        setIsOnboarded(onboarded);
       }
-    } catch (e) {}
+    } catch (e) {
+      setIsOnboarded(false);
+    }
   }, []);
 
   const getInitials = (name?: string) => {
@@ -72,7 +76,10 @@ export default function DashboardLayout({
     try {
       const stored = localStorage.getItem("auth_user");
       if (stored) {
-        setCurrentUser(JSON.parse(stored));
+        const user = JSON.parse(stored);
+        user.isOnboarded = true;
+        localStorage.setItem("auth_user", JSON.stringify(user));
+        setCurrentUser(user);
       }
     } catch (e) {}
   };

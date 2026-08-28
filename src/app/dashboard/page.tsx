@@ -13,6 +13,7 @@ import DashboardSidebarWidgets from "./components/home/DashboardSidebarWidgets";
 
 export default function DashboardPage() {
   const [userName, setUserName] = useState("Rahul");
+  const [userGoal, setUserGoal] = useState("Get a Job in 6 months");
 
   useEffect(() => {
     try {
@@ -22,6 +23,9 @@ export default function DashboardPage() {
         if (parsed.name) {
           setUserName(parsed.name.split(" ")[0]);
         }
+        if (parsed.goals?.mainGoal) {
+          setUserGoal(parsed.goals.mainGoal);
+        }
       }
     } catch (e) {}
   }, []);
@@ -29,7 +33,7 @@ export default function DashboardPage() {
   return (
     <div className="w-full flex flex-col gap-4 text-left">
       {/* Top Welcome Banner */}
-      <DashboardHeroBanner userName={userName} />
+      <DashboardHeroBanner userName={userName} userGoal={userGoal} />
 
       {/* Main Grid: Left content (2 cols), Right sidebar (1 col) */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 w-full items-start">

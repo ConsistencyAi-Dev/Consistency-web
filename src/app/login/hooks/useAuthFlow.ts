@@ -41,6 +41,7 @@ export function useAuthFlow() {
       const params = new URLSearchParams(window.location.search);
       const token = params.get("token");
       const userStr = params.get("user");
+      const isNewUserParam = params.get("isNewUser");
       const err = params.get("error");
 
       if (err) {
@@ -48,21 +49,29 @@ export function useAuthFlow() {
         window.history.replaceState({}, document.title, window.location.pathname);
       } else if (token) {
         localStorage.setItem("auth_token", token);
+        let parsedUser: any = null;
         if (userStr) {
           try {
-            localStorage.setItem("auth_user", decodeURIComponent(userStr));
+            parsedUser = JSON.parse(decodeURIComponent(userStr));
+            localStorage.setItem("auth_user", JSON.stringify(parsedUser));
           } catch (e) {
             localStorage.setItem("auth_user", userStr);
           }
         }
-        if (localStorage.getItem("isOnboarded") === null) {
+
+        // If user is new (via isNewUser param or missing onboarding details), show OnboardingWizard!
+        const isNew = isNewUserParam === "true" || parsedUser?.isNewUser === true || (!parsedUser?.mobile && !parsedUser?.location && !parsedUser?.isOnboarded);
+        if (isNew) {
+          localStorage.removeItem("isOnboarded");
+        } else {
           localStorage.setItem("isOnboarded", "true");
         }
+
         window.history.replaceState({}, document.title, window.location.pathname);
-        setMode("reset-loading");
+        router.push("/dashboard");
       }
     }
-  }, []);
+  }, [router]);
 
   // Reset notifications on mode transition
   useEffect(() => {
@@ -102,12 +111,23 @@ export function useAuthFlow() {
       if (res.data?.token) {
         localStorage.setItem("auth_token", res.data.token);
         localStorage.setItem("auth_user", JSON.stringify(res.data.user));
-        if (localStorage.getItem("isOnboarded") === null) {
+        
+        // If user has completed onboarding in DB or has full profile, set isOnboarded
+        const hasCompletedProfile = Boolean(
+          res.data.user?.isOnboarded ||
+          res.data.user?.mobile ||
+          res.data.user?.location ||
+          (res.data.user?.profileStrength && res.data.user?.profileStrength > 20)
+        );
+
+        if (hasCompletedProfile) {
           localStorage.setItem("isOnboarded", "true");
+        } else {
+          localStorage.removeItem("isOnboarded");
         }
       }
       setIsLoading(false);
-      setMode("reset-loading");
+      router.push("/dashboard");
     } catch (err: any) {
       setIsLoading(false);
       setError(err.message || "Invalid email or password. Please try again.");
@@ -146,7 +166,7 @@ export function useAuthFlow() {
         localStorage.removeItem("isOnboarded");
       }
       setIsLoading(false);
-      setMode("reset-loading");
+      router.push("/dashboard");
     } catch (err: any) {
       setIsLoading(false);
       setError(err.message || "Registration failed. Please try again.");

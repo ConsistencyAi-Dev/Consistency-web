@@ -10,6 +10,8 @@ interface EnrollCheckoutViewProps {
 export default function EnrollCheckoutView({ onPay }: EnrollCheckoutViewProps) {
   const [expandedCurriculum, setExpandedCurriculum] = useState<number | null>(1);
   const [paymentTab, setPaymentTab] = useState<"Card" | "UPI" | "EMI">("Card");
+  const [selectedUpiApp, setSelectedUpiApp] = useState<string | null>(null);
+  const [selectedEmi, setSelectedEmi] = useState("3 Months @ 12%");
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
@@ -147,6 +149,7 @@ export default function EnrollCheckoutView({ onPay }: EnrollCheckoutViewProps) {
                       : "text-gray-400 hover:text-gray-600"
                   }`}
                 >
+                  <span className="mr-1.5 text-[11px]">{tab === "Card" ? "▣" : tab === "UPI" ? "U" : "▣"}</span>
                   {tab}
                 </button>
               );
@@ -222,9 +225,64 @@ export default function EnrollCheckoutView({ onPay }: EnrollCheckoutViewProps) {
                 🔒 Your card is encrypted end-to-end. We never store full card numbers.
               </div>
             </div>
+          ) : paymentTab === "UPI" ? (
+            <div className="space-y-5">
+              <div>
+                <h4 className="text-base font-black text-gray-800">Pay with UPI</h4>
+                <p className="mt-1 text-xs font-semibold text-[#64748B]">Fastest · No fees · Instant confirmation</p>
+              </div>
+
+              <div className="rounded-2xl border border-[#E2E8F0] border-l-4 border-l-[#3B82F6] p-4 shadow-sm">
+                <div className="flex items-center gap-2">
+                  <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#2B50EC] text-[11px] font-black text-white">A</span>
+                  <h5 className="text-sm font-black text-gray-800">Enter UPI ID</h5>
+                </div>
+                <div className="mt-3 flex gap-2">
+                  <input type="text" defaultValue="rahul@okaxis" className="min-w-0 flex-1 rounded-xl border border-[#CBD5E1] px-3.5 py-3 text-xs font-semibold text-[#0F172A] focus:border-[#2B50EC] focus:outline-none" />
+                  <button type="button" className="rounded-xl bg-[#0F172A] px-5 text-xs font-black text-white">Verify</button>
+                </div>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {["@okicici", "@okaxis", "@okhdfcbank", "@ybl", "@paytm"].map((handle) => (
+                    <span key={handle} className={`rounded-full border px-3 py-1.5 text-[10px] font-bold ${handle === "@okaxis" ? "border-[#BFDBFE] bg-[#EFF6FF] text-[#2563EB]" : "border-[#E2E8F0] bg-[#F1F5F9] text-[#64748B]"}`}>
+                      {handle}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="rounded-2xl border border-[#E2E8F0] border-l-4 border-l-[#A855F7] p-4 shadow-sm">
+                <div className="flex items-center gap-2">
+                  <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#9333EA] text-[11px] font-black text-white">B</span>
+                  <h5 className="text-sm font-black text-gray-800">UPI Apps &amp; QR</h5>
+                </div>
+                <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4">
+                  {[{ name: "Google Pay", short: "Go", color: "bg-[#4285F4]" }, { name: "PhonePe", short: "Ph", color: "bg-[#7E22CE]" }, { name: "Paytm", short: "Pa", color: "bg-[#06B6D4]" }, { name: "BHIM", short: "BH", color: "bg-[#15803D]" }].map((app) => (
+                    <button key={app.name} type="button" onClick={() => setSelectedUpiApp(app.name)} className={`flex flex-col items-center rounded-xl border p-3 transition-colors ${selectedUpiApp === app.name ? "border-[#2B50EC] bg-[#F8FAFF] ring-1 ring-[#2B50EC]" : "border-[#E2E8F0] bg-white hover:border-[#93C5FD]"}`}>
+                      <span className={`flex h-12 w-12 items-center justify-center rounded-full ${app.color} text-sm font-black text-white`}>{app.short}</span>
+                      <span className="mt-2 text-[10px] font-bold text-[#334155]">{app.name}</span>
+                    </button>
+                  ))}
+                </div>
+                {selectedUpiApp && (
+                  <div className="mt-4 flex flex-col gap-3 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] p-3 sm:flex-row sm:items-center">
+                    <div className="grid h-28 w-28 shrink-0 grid-cols-7 gap-0.5 rounded-lg border-4 border-white bg-white p-1 shadow-sm" aria-label="UPI QR code">
+                      {Array.from({ length: 49 }, (_, index) => <span key={index} className={(index * 17 + index * index) % 7 < 3 || [0, 1, 2, 7, 9, 14, 42, 43, 44, 35, 37, 28, 29, 30].includes(index) ? "bg-[#0F172A]" : "bg-white"} />)}
+                    </div>
+                    <div className="text-xs text-[#475569]"><strong className="block text-sm text-[#0F172A]">Scan &amp; Pay $529.82</strong><span className="mt-1 block">UPI ID: consistency@razorpay · Order CAI-8842</span><span className="mt-2 inline-block rounded-full border border-[#FDBA74] bg-[#FFF7ED] px-2.5 py-1 text-[10px] font-bold text-[#EA580C]">Expires in 04:55</span></div>
+                  </div>
+                )}
+              </div>
+            </div>
           ) : (
-            <div className="text-center py-6 text-xs text-gray-400 font-semibold">
-              {paymentTab} billing method integration active.
+            <div className="space-y-4">
+              <h4 className="text-base font-black text-gray-800">EMI Options</h4>
+              {[{ label: "3 Months @ 12%", monthly: "$184.21/mo", total: "$552.63" }, { label: "6 Months @ 13.5%", monthly: "$95.12/mo", total: "$570.72" }, { label: "9 Months @ 14%", monthly: "$65.18/mo", total: "$586.62" }].map((plan) => (
+                <button key={plan.label} type="button" onClick={() => setSelectedEmi(plan.label)} className={`flex w-full flex-col gap-1 rounded-xl border p-4 text-left transition-colors ${selectedEmi === plan.label ? "border-[#3B82F6] bg-[#F5F8FF] ring-1 ring-[#3B82F6]" : "border-[#E2E8F0] bg-white hover:border-[#93C5FD]"}`}>
+                  <span className="flex items-center justify-between text-sm font-black text-[#1E293B]"><span>{plan.label}</span><span>{plan.monthly}</span></span>
+                  <span className="text-xs font-semibold text-[#64748B]">Total {plan.total} · Includes interest · No prepayment fees</span>
+                </button>
+              ))}
+              <div className="rounded-xl bg-[#F8FAFC] p-3 text-center text-[11px] font-semibold text-[#64748B]">EMI processed by Razorpay · Instant approval · Cards + Cardless EMI supported</div>
             </div>
           )}
 

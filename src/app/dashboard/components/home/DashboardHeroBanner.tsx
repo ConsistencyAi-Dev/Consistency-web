@@ -6,9 +6,10 @@ import { heroSparkSvg, heroStreakSvg, heroGoalSvg } from "@/assets";
 
 interface DashboardHeroBannerProps {
   userName: string;
+  userGoal?: string;
 }
 
-export default function DashboardHeroBanner({ userName }: DashboardHeroBannerProps) {
+export default function DashboardHeroBanner({ userName, userGoal }: DashboardHeroBannerProps) {
   return (
     <div className="rounded-2xl bg-[linear-gradient(90deg,#2B50EC_0%,#3B63FF_50%,#6D8AFF_100%)] p-px shadow-[0px_1px_2px_0px_rgba(0,0,0,0.08)]">
       <div className="flex flex-col items-start justify-between gap-3.5 rounded-[15px] bg-[linear-gradient(90deg,#2B50EC_0%,#3B63FF_50%,#6D8AFF_100%)] px-5 py-3 text-white xl:flex-row xl:items-center">
@@ -34,7 +35,7 @@ export default function DashboardHeroBanner({ userName }: DashboardHeroBannerPro
           </span>
           <span className="inline-flex items-center gap-1.5 rounded-full bg-white px-3.5 py-2 text-[11px] font-semibold leading-[16px] text-[#2B50EC] shadow-[0px_1px_1px_rgba(0,0,0,0.05)]">
             <Image src={heroGoalSvg} alt="Goal" width={16} height={16} />
-            Goal: Get a Job in 6 months
+            Goal: {userGoal || "Get a Job in 6 months"}
           </span>
         </div>
       </div>
