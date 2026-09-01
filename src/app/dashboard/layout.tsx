@@ -20,14 +20,14 @@ type NavItem = {
 };
 
 const navItems: NavItem[] = [
-  { name: "Home",      href: "/dashboard",          icon: navHomeSvg },
-  { name: "AI Tools", href: "/dashboard/ai-tools",  icon: navAiToolsSvg, locked: true },
-  { name: "Projects", href: "/dashboard/projects",  icon: navProjectsSvg, locked: true },
-  { name: "Events",   href: "/dashboard/events",    icon: navEventsSvg },
-  { name: "Community",href: "/dashboard/community", icon: navCommunitySvg },
-  { name: "Mentors",  href: "/dashboard/mentors",   icon: navProjectsSvg },
-  { name: "Jobs",     href: "/dashboard/jobs",       icon: navProjectsSvg, locked: true },
-  { name: "Settings", href: "/dashboard/settings",  icon: navSettingsSvg },
+  { name: "Home", href: "/dashboard", icon: navHomeSvg },
+  { name: "AI Tools", href: "/dashboard/ai-tools", icon: navAiToolsSvg, locked: true },
+  { name: "Projects", href: "/dashboard/projects", icon: navProjectsSvg, locked: true },
+  { name: "Events", href: "/dashboard/events", icon: navEventsSvg },
+  { name: "Community", href: "/dashboard/community", icon: navCommunitySvg },
+  { name: "Mentors", href: "/dashboard/mentors", icon: navProjectsSvg },
+  { name: "Jobs", href: "/dashboard/jobs", icon: navProjectsSvg, locked: true },
+  { name: "Settings", href: "/dashboard/settings", icon: navSettingsSvg },
 ];
 
 export default function DashboardLayout({
@@ -81,7 +81,7 @@ export default function DashboardLayout({
         localStorage.setItem("auth_user", JSON.stringify(user));
         setCurrentUser(user);
       }
-    } catch (e) {}
+    } catch (e) { }
   };
 
   if (isOnboarded === null) {
@@ -97,9 +97,8 @@ export default function DashboardLayout({
       <div className="flex min-h-screen md:h-screen flex-col md:flex-row md:overflow-hidden">
         {/* Sidebar */}
         <aside
-          className={`w-full border-r border-[#E2E8F0] bg-[#F9FBFF] md:fixed md:top-0 md:bottom-0 md:left-0 md:z-30 md:w-64 md:h-screen md:overflow-y-auto md:overflow-x-hidden md:flex md:flex-col md:justify-between ${
-            isMobileSidebarOpen ? "block" : "hidden md:flex"
-          }`}
+          className={`w-full border-r border-[#E2E8F0] bg-[#F9FBFF] md:fixed md:top-0 md:bottom-0 md:left-0 md:z-30 md:w-64 md:h-screen md:overflow-y-auto md:overflow-x-hidden md:flex md:flex-col md:justify-between ${isMobileSidebarOpen ? "block" : "hidden md:flex"
+            }`}
         >
           <div>
             <div className="flex items-center justify-between px-5 py-4">
@@ -131,9 +130,8 @@ export default function DashboardLayout({
                     key={item.name}
                     href={item.href}
                     onClick={() => setIsMobileSidebarOpen(false)}
-                    className={`flex h-9 w-full items-center justify-between rounded-lg px-2.5 py-1.5 transition-colors ${
-                      isActive ? "bg-[#2B50EC] text-white" : "text-[#64748B] hover:bg-[#EEF2FF]"
-                    } ${!isActive && item.locked ? "opacity-60" : ""}`}
+                    className={`flex h-9 w-full items-center justify-between rounded-lg px-2.5 py-1.5 transition-colors ${isActive ? "bg-[#2B50EC] text-white" : "text-[#64748B] hover:bg-[#EEF2FF]"
+                      } ${!isActive && item.locked ? "opacity-60" : ""}`}
                   >
                     <span className="flex items-center gap-2.5">
                       <Image
@@ -230,8 +228,8 @@ export default function DashboardLayout({
                   {getInitials(currentUser?.name)}
                 </div>
                 <div>
-                  <p className="text-[13px] leading-[13px] text-[#0F172A] font-medium">{currentUser?.name || "Rahul K"}</p>
-                  <p className="text-[11px] leading-[11px] text-[#64748B]">{currentUser?.email || "rahul.k@gmail.com"}</p>
+                  <p className="text-[13px] leading-[13px] text-[#0F172A] font-medium">{currentUser?.name || "John Doe"}</p>
+                  <p className="text-[11px] leading-[11px] text-[#64748B]">{currentUser?.email || "john.doe@gmail.com"}</p>
                 </div>
               </div>
             </div>

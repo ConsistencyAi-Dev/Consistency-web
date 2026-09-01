@@ -36,7 +36,7 @@ export default function SettingsSocialLinksTab() {
           </div>
           <div>
             <h4 className="font-bold text-xs text-[#0F172A]">GitHub</h4>
-            <p className="text-[11px] text-[#059669] font-medium">Connected @rahul-kumar / 48 repos</p>
+            <p className="text-[11px] text-[#059669] font-medium">Connected @john-doe / 48 repos</p>
           </div>
         </div>
         <button className="rounded-xl border border-[#E2E8F0] bg-white px-4 py-1.5 text-xs font-semibold text-[#0F172A] hover:bg-[#F8FAFC] transition-colors cursor-pointer">

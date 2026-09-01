@@ -216,9 +216,9 @@ export default function CodingPlaygroundSection() {
                   <span className="absolute top-1 right-1.5 w-1.5 h-1.5 rounded-full bg-red-500" />
                 </span>
                 <div className="flex items-center gap-2">
-                  <img src="https://i.pravatar.cc/100?img=68" alt="Rahul" className="w-8 h-8 rounded-full object-cover" />
+                  <img src="https://i.pravatar.cc/100?img=68" alt="John" className="w-8 h-8 rounded-full object-cover" />
                   <div className="hidden sm:block">
-                    <p className="text-white text-xs font-semibold leading-tight">Rahul</p>
+                    <p className="text-white text-xs font-semibold leading-tight">John</p>
                     <p className="text-gray-400 text-[10px] leading-tight">AI/ML Engineer</p>
                   </div>
                   <svg className="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">

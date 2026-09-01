@@ -39,7 +39,7 @@ export default function EnrollSuccessView({ onViewReceipt }: EnrollSuccessViewPr
         </div>
 
         <h2 className="text-2xl sm:text-4xl font-black text-[#0f172a] tracking-tight leading-tight">
-          Welcome Rahul – You&apos;re in! 🎉
+          Welcome John – You&apos;re in! 🎉
         </h2>
 
         <p className="text-[#475569] text-sm sm:text-lg font-semibold mt-2.5 max-w-[672px] mx-auto leading-7">
@@ -97,12 +97,12 @@ export default function EnrollSuccessView({ onViewReceipt }: EnrollSuccessViewPr
 
             {isLeetCodeConnected ? (
               <div className="border-t border-[#fed7aa] pt-3 text-[9px] font-bold text-[#475569] flex items-center justify-between">
-                <span>@rahul_coder · 120 problems synced · Contest 1642 · Streak 12 days</span>
+                <span>@john_coder · 120 problems synced · Contest 1642 · Streak 12 days</span>
                 <span className="w-4 h-4 rounded-full bg-[#10b981] text-white flex items-center justify-center">✓</span>
               </div>
             ) : (
               <div className="flex items-center gap-2 shrink-0 w-full sm:w-auto">
-                <input type="text" defaultValue="rahul_coder" className="flex-1 sm:w-36 bg-gray-50 border border-gray-100 rounded-xl py-2 px-3.5 text-xs font-semibold focus:outline-none" />
+                <input type="text" defaultValue="john_coder" className="flex-1 sm:w-36 bg-gray-50 border border-gray-100 rounded-xl py-2 px-3.5 text-xs font-semibold focus:outline-none" />
                 <button type="button" onClick={handleConnectLeetCode} className="text-[10px] font-black py-2.5 px-5 rounded-xl shadow-sm transition-all active:scale-[0.98] shrink-0 bg-gray-900 hover:bg-black text-white cursor-pointer">Connect</button>
               </div>
             )}
@@ -141,13 +141,13 @@ export default function EnrollSuccessView({ onViewReceipt }: EnrollSuccessViewPr
 
             {isGitHubConnected ? (
               <div className="border-t border-[#1e293b] pt-3 text-[9px] font-bold text-slate-300">
-                @rahul_kumar · 24 repos · 342 contributions this year
+                @john_doe · 24 repos · 342 contributions this year
               </div>
             ) : (
               <div className="flex items-center gap-2 shrink-0 w-full sm:w-auto">
                 <input
                   type="text"
-                  defaultValue="rahul_coder"
+                  defaultValue="john_coder"
                   className="flex-1 sm:w-36 bg-gray-50 border border-gray-100 rounded-xl py-2 px-3.5 text-xs font-semibold focus:outline-none"
                 />
                 <button
@@ -183,14 +183,14 @@ export default function EnrollSuccessView({ onViewReceipt }: EnrollSuccessViewPr
 
             {isLinkedInConnected ? (
               <div className="border-t border-[#c7d8ff] pt-3 text-[9px] font-bold text-[#334155] flex items-center justify-between">
-                <span>RK · Rahul Kumar · 500+ connections · Profile strength 78%</span>
+                <span>JD · John Doe · 500+ connections · Profile strength 78%</span>
                 <span className="text-[#2563eb]">♙</span>
               </div>
             ) : (
               <div className="flex items-center gap-2 shrink-0 w-full sm:w-auto">
                 <input
                   type="text"
-                  defaultValue="rahul_coder"
+                  defaultValue="john_coder"
                   className="flex-1 sm:w-36 bg-gray-50 border border-gray-100 rounded-xl py-2 px-3.5 text-xs font-semibold focus:outline-none"
                 />
                 <button

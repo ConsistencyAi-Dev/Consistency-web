@@ -12,7 +12,7 @@ import FreeVsProCard from "./components/home/FreeVsProCard";
 import DashboardSidebarWidgets from "./components/home/DashboardSidebarWidgets";
 
 export default function DashboardPage() {
-  const [userName, setUserName] = useState("Rahul");
+  const [userName, setUserName] = useState("John");
   const [userGoal, setUserGoal] = useState("Get a Job in 6 months");
 
   useEffect(() => {

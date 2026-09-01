@@ -13,8 +13,8 @@ export default function SettingsPage() {
   const [saveToast, setSaveToast] = useState(false);
 
   // Form States
-  const [fullName, setFullName] = useState("Rahul Kumar");
-  const [email, setEmail] = useState("rahul.k@gmail.com");
+  const [fullName, setFullName] = useState("John Doe");
+  const [email, setEmail] = useState("john.doe@gmail.com");
   const [phone, setPhone] = useState("+91 98765 43210");
   const [location, setLocation] = useState("Bengaluru, India");
   const [bio, setBio] = useState(

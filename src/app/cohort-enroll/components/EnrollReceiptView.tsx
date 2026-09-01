@@ -38,7 +38,7 @@ export default function EnrollReceiptView({ onBackToSuccess }: EnrollReceiptView
               </p>
               <p>
                 <span className="text-[#94a3b8] inline-block w-12">To:</span>
-                <strong>rahul@example.com</strong>
+                <strong>john.doe@example.com</strong>
               </p>
             </div>
             <h1 className="break-words text-lg sm:text-xl font-black text-[#0f172a]">
@@ -70,7 +70,7 @@ export default function EnrollReceiptView({ onBackToSuccess }: EnrollReceiptView
 
             <div>
               <h2 className="text-2xl sm:text-3xl font-black text-[#0f172a]">
-                Hello Rahul, You&apos;re enrolled! 🎉
+                Hello John, You&apos;re enrolled! 🎉
               </h2>
               <p className="mt-3 text-sm leading-6 text-[#475569]">
                 Thank you for joining the{" "}
