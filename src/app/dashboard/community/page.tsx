@@ -7,7 +7,7 @@ import CreatePostModal from "./components/CreatePostModal";
 const initialPosts: Post[] = [
   {
     id: "post-1",
-    name: "Rahul Kumar",
+    name: "John Doe",
     avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
     badge: "Pro Member",
     meta: "AI/ML Mastery Cohort · 3 hours ago",
@@ -29,7 +29,7 @@ const initialPosts: Post[] = [
         name: "Vikram Singh",
         avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80",
         timeAgo: "2h ago",
-        text: "Awesome work Rahul! How did you handle document chunking for long PDFs?",
+        text: "Awesome work John! How did you handle document chunking for long PDFs?",
         likes: 5,
       },
     ],
@@ -120,7 +120,7 @@ const sidebarSections = [
 ];
 
 const contributors = [
-  ["Rahul Kumar", "2,480 pts", "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80"],
+  ["John Doe", "2,480 pts", "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80"],
   ["Priya Sharma", "2,120 pts", "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop&q=80"],
   ["Sneha Reddy", "1,890 pts", "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&auto=format&fit=crop&q=80"],
   ["Amit Verma", "1,670 pts", "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80"],

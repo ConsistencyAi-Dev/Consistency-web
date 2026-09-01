@@ -205,7 +205,7 @@ export default function EnrollCheckoutView({ onPay }: EnrollCheckoutViewProps) {
                 </label>
                 <input
                   type="text"
-                  defaultValue="Rahul Kumar"
+                  defaultValue="John Doe"
                   className="w-full bg-gray-50 rounded-xl py-3 px-4 text-xs font-semibold focus:outline-none focus:border-blue-300 focus:bg-white transition-all shadow-inner border border-gray-100"
                 />
               </div>
@@ -238,7 +238,7 @@ export default function EnrollCheckoutView({ onPay }: EnrollCheckoutViewProps) {
                   <h5 className="text-sm font-black text-gray-800">Enter UPI ID</h5>
                 </div>
                 <div className="mt-3 flex gap-2">
-                  <input type="text" defaultValue="rahul@okaxis" className="min-w-0 flex-1 rounded-xl border border-[#CBD5E1] px-3.5 py-3 text-xs font-semibold text-[#0F172A] focus:border-[#2B50EC] focus:outline-none" />
+                  <input type="text" defaultValue="john@okaxis" className="min-w-0 flex-1 rounded-xl border border-[#CBD5E1] px-3.5 py-3 text-xs font-semibold text-[#0F172A] focus:border-[#2B50EC] focus:outline-none" />
                   <button type="button" className="rounded-xl bg-[#0F172A] px-5 text-xs font-black text-white">Verify</button>
                 </div>
                 <div className="mt-3 flex flex-wrap gap-2">

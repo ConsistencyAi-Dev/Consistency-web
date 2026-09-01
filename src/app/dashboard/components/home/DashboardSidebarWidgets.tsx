@@ -340,13 +340,13 @@ export default function DashboardSidebarWidgets() {
             <p className="mt-1 text-xs font-normal leading-[19.5px] text-[#475569]">
               Not sure which cohort fits your goals? Talk to our learning advisor — free 15 min.
             </p>
-            <button className="mt-3.5 inline-flex items-center gap-1.5 rounded-full bg-[#2B50EC] px-4 py-2 text-[12.5px] font-normal leading-[18.75px] text-white shadow-[0px_4px_12px_rgba(43,80,236,0.25)] cursor-pointer border-none hover:bg-[#1E3BB3] transition-colors">
+            <Link href="/dashboard/counselling" className="mt-3.5 inline-flex items-center gap-1.5 rounded-full bg-[#2B50EC] px-4 py-2 text-[12.5px] font-normal leading-[18.75px] text-white shadow-[0px_4px_12px_rgba(43,80,236,0.25)] cursor-pointer border-none hover:bg-[#1E3BB3] transition-colors">
               Book free counseling
               <svg className="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="white" strokeWidth={1.67}>
                 <rect x="3" y="4" width="18" height="18" rx="2" strokeLinecap="round" strokeLinejoin="round" />
                 <path strokeLinecap="round" strokeLinejoin="round" d="M16 2v4M8 2v4M3 10h18" />
               </svg>
-            </button>
+            </Link>
             <div className="mt-3 flex items-center gap-1.5">
               <svg className="h-3 w-3 shrink-0 text-[#64748B]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
                 <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />

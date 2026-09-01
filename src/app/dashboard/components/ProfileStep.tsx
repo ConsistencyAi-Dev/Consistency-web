@@ -29,6 +29,7 @@ interface ProfileStepProps {
   getInitials: (name: string) => string;
   onNext: () => void;
   onBack: () => void;
+  hasAttemptedContinue?: boolean;
 }
 
 export default function ProfileStep({
@@ -57,7 +58,16 @@ export default function ProfileStep({
   getInitials,
   onNext,
   onBack,
+  hasAttemptedContinue = false,
 }: ProfileStepProps) {
+  const isNameEmpty = !name.trim();
+  const isEmailEmpty = !email.trim();
+  const isMobileEmpty = !mobile.trim();
+  const isLocationEmpty = !location.trim();
+  const isBioEmpty = !bio.trim();
+
+  const isStepValid = !isNameEmpty && !isEmailEmpty && !isMobileEmpty && !isLocationEmpty && !isBioEmpty;
+
   return (
     <motion.div
       key="step-3"
@@ -113,54 +123,89 @@ export default function ProfileStep({
         {/* Basic details inputs */}
         <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
           <div>
+            <label className="block text-[11px] font-bold text-gray-700 mb-1">
+              Full Name <span className="text-red-500">*</span>
+            </label>
             <input
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="Full Name"
-              className="w-full px-4 py-3 border border-gray-200 focus:border-[#0055FF] focus:ring-1 focus:ring-[#0055FF] rounded-2xl text-[14px] font-semibold text-black bg-white transition-all outline-none shadow-sm placeholder-gray-400"
+              placeholder="e.g. Alex Morgan"
+              className={`w-full px-4 py-3 border rounded-2xl text-[14px] font-semibold text-black bg-white transition-all outline-none shadow-sm placeholder-gray-400 ${
+                hasAttemptedContinue && isNameEmpty
+                  ? "border-red-400 focus:border-red-500 focus:ring-1 focus:ring-red-500 bg-red-50/10"
+                  : "border-gray-200 focus:border-[#0055FF] focus:ring-1 focus:ring-[#0055FF]"
+              }`}
             />
           </div>
 
           <div>
+            <label className="block text-[11px] font-bold text-gray-700 mb-1">
+              Email Address <span className="text-red-500">*</span>
+            </label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="Email Address"
-              className="w-full px-4 py-3 border border-gray-200 focus:border-[#0055FF] focus:ring-1 focus:ring-[#0055FF] rounded-2xl text-[14px] font-semibold text-black bg-white transition-all outline-none shadow-sm placeholder-gray-400"
+              placeholder="alex.morgan@email.com"
+              className={`w-full px-4 py-3 border rounded-2xl text-[14px] font-semibold text-black bg-white transition-all outline-none shadow-sm placeholder-gray-400 ${
+                hasAttemptedContinue && isEmailEmpty
+                  ? "border-red-400 focus:border-red-500 focus:ring-1 focus:ring-red-500 bg-red-50/10"
+                  : "border-gray-200 focus:border-[#0055FF] focus:ring-1 focus:ring-[#0055FF]"
+              }`}
             />
           </div>
 
           <div>
+            <label className="block text-[11px] font-bold text-gray-700 mb-1">
+              Mobile Number <span className="text-red-500">*</span>
+            </label>
             <input
               type="text"
               value={mobile}
               onChange={(e) => setMobile(e.target.value)}
-              placeholder="Mobile number"
-              className="w-full px-4 py-3 border border-gray-200 focus:border-[#0055FF] focus:ring-1 focus:ring-[#0055FF] rounded-2xl text-[14px] font-semibold text-black bg-white transition-all outline-none shadow-sm placeholder-gray-400"
+              placeholder="+91 98765 43210"
+              className={`w-full px-4 py-3 border rounded-2xl text-[14px] font-semibold text-black bg-white transition-all outline-none shadow-sm placeholder-gray-400 ${
+                hasAttemptedContinue && isMobileEmpty
+                  ? "border-red-400 focus:border-red-500 focus:ring-1 focus:ring-red-500 bg-red-50/10"
+                  : "border-gray-200 focus:border-[#0055FF] focus:ring-1 focus:ring-[#0055FF]"
+              }`}
             />
           </div>
 
           <div>
+            <label className="block text-[11px] font-bold text-gray-700 mb-1">
+              Location / City <span className="text-red-500">*</span>
+            </label>
             <input
               type="text"
               value={location}
               onChange={(e) => setLocation(e.target.value)}
-              placeholder="Location"
-              className="w-full px-4 py-3 border border-gray-200 focus:border-[#0055FF] focus:ring-1 focus:ring-[#0055FF] rounded-2xl text-[14px] font-semibold text-black bg-white transition-all outline-none shadow-sm placeholder-gray-400"
+              placeholder="Bengaluru, India"
+              className={`w-full px-4 py-3 border rounded-2xl text-[14px] font-semibold text-black bg-white transition-all outline-none shadow-sm placeholder-gray-400 ${
+                hasAttemptedContinue && isLocationEmpty
+                  ? "border-red-400 focus:border-red-500 focus:ring-1 focus:ring-red-500 bg-red-50/10"
+                  : "border-gray-200 focus:border-[#0055FF] focus:ring-1 focus:ring-[#0055FF]"
+              }`}
             />
           </div>
         </div>
 
         {/* Bio text field */}
         <div className="w-full mb-6">
+          <label className="block text-[11px] font-bold text-gray-700 mb-1">
+            Professional Bio <span className="text-red-500">*</span>
+          </label>
           <textarea
             value={bio}
             onChange={(e) => setBio(e.target.value)}
-            placeholder="Bio - e.g. Aspiring Full-Stack dev, 1-2y coding, love building..."
+            placeholder="Bio - e.g. Aspiring Full-Stack dev with 1-2 years coding experience, passionate about AI and web development..."
             rows={3}
-            className="w-full px-4 py-3 border border-gray-200 focus:border-[#0055FF] focus:ring-1 focus:ring-[#0055FF] rounded-2xl text-[14px] font-semibold text-black bg-white transition-all outline-none shadow-sm resize-none placeholder-gray-400"
+            className={`w-full px-4 py-3 border rounded-2xl text-[14px] font-semibold text-black bg-white transition-all outline-none shadow-sm resize-none placeholder-gray-400 ${
+              hasAttemptedContinue && isBioEmpty
+                ? "border-red-400 focus:border-red-500 focus:ring-1 focus:ring-red-500 bg-red-50/10"
+                : "border-gray-200 focus:border-[#0055FF] focus:ring-1 focus:ring-[#0055FF]"
+            }`}
           />
         </div>
 
@@ -170,7 +215,7 @@ export default function ProfileStep({
             3
           </div>
           <h3 className="font-extrabold text-xs text-gray-800 tracking-tight uppercase">
-            Resume / LinkedIn
+            Resume / LinkedIn (Optional)
           </h3>
         </div>
 
@@ -181,10 +226,9 @@ export default function ProfileStep({
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}
-            className={`p-5 rounded-2xl border-2 border-dashed flex flex-col justify-between transition-all ${isDragging
-                ? "border-[#0055FF] bg-blue-50/10"
-                : "border-gray-200 bg-white"
-              }`}
+            className={`p-5 rounded-2xl border-2 border-dashed flex flex-col justify-between transition-all ${
+              isDragging ? "border-[#0055FF] bg-blue-50/10" : "border-gray-200 bg-white"
+            }`}
           >
             <div className="flex gap-3">
               <div className="w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center shrink-0 border border-gray-100">
@@ -236,7 +280,7 @@ export default function ProfileStep({
                   type="text"
                   value={linkedinUrl}
                   onChange={(e) => setLinkedinUrl(e.target.value)}
-                  placeholder="linkedin.com/in/rahulkumar"
+                  placeholder="linkedin.com/in/johndoe"
                   className="w-full mt-2 border-b border-gray-200 focus:border-[#0055FF] text-[11px] font-semibold text-black bg-white transition-all outline-none py-1 placeholder-gray-400"
                 />
               </div>
@@ -265,7 +309,11 @@ export default function ProfileStep({
         <button
           type="button"
           onClick={onNext}
-          className="w-full bg-[#0055FF] hover:bg-[#0044EE] text-white py-4 px-6 rounded-2xl font-bold transition-all shadow-lg shadow-blue-500/25 active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer"
+          className={`w-full py-4 px-6 rounded-2xl font-bold transition-all shadow-lg active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer ${
+            isStepValid
+              ? "bg-[#0055FF] hover:bg-[#0044EE] text-white shadow-blue-500/25 cursor-pointer"
+              : "bg-[#0055FF]/70 hover:bg-[#0055FF] text-white/90 shadow-none"
+          }`}
         >
           Continue to Quiz →
         </button>

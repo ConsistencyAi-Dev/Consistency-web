@@ -41,10 +41,10 @@ export default function PlaygroundRightColumn({
 
       <div className="flex items-center gap-2 mb-3">
         <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center text-white font-bold text-xs shrink-0">
-          RK
+          JD
         </div>
         <div>
-          <p className="text-white text-xs font-semibold">Rahul Kumar</p>
+          <p className="text-white text-xs font-semibold">John Doe</p>
           <p className="text-gray-400 text-[9px]">Aspiring AI/ML Engineer · 2h ago</p>
         </div>
       </div>
