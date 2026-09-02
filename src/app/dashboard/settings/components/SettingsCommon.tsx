@@ -36,11 +36,21 @@ export function InputField({
   value,
   onChange,
   badge,
+  type = "text",
+  inputMode,
+  pattern,
+  maxLength,
+  placeholder,
 }: {
   label: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   badge?: string;
+  type?: string;
+  inputMode?: "search" | "text" | "email" | "tel" | "url" | "numeric" | "none" | "decimal";
+  pattern?: string;
+  maxLength?: number;
+  placeholder?: string;
 }) {
   return (
     <label className="block text-xs text-[#475569]">
@@ -53,7 +63,11 @@ export function InputField({
         )}
       </span>
       <input
-        type="text"
+        type={type}
+        inputMode={inputMode}
+        pattern={pattern}
+        maxLength={maxLength}
+        placeholder={placeholder}
         value={value}
         onChange={onChange}
         className="w-full rounded-xl border border-[#E2E8F0] px-4 py-3 text-xs font-normal text-[#0F172A] bg-white focus:outline-none focus:border-[#2B50EC] transition-colors"

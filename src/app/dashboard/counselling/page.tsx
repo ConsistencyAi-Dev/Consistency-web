@@ -1,5 +1,13 @@
 "use client";
 
+import React from "react";
+import ComingSoon from "../components/ComingSoon";
+
+export default function CounsellingPage() {
+  return <ComingSoon title="Career Counseling & Advisory" description="1:1 career guidance, roadmap planning, and cohort advisory are coming soon." />;
+}
+
+/*
 import { useState } from "react";
 
 const timeSlots = [
@@ -11,7 +19,7 @@ const timeSlots = [
   "Sat, 1:00 PM",
 ];
 
-export default function CounsellingPage() {
+export function OriginalCounsellingPage() {
   const [selectedSlot, setSelectedSlot] = useState(timeSlots[2]);
   const [submitted, setSubmitted] = useState(false);
 
@@ -138,3 +146,4 @@ export default function CounsellingPage() {
     </div>
   );
 }
+*/

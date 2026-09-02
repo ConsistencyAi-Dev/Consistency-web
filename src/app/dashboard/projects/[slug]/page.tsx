@@ -1,13 +1,22 @@
-import Image from "next/image";
-import Link from "next/link";
-import { notFound } from "next/navigation";
-import { getProject, projects } from "../data";
+import React from "react";
+import ComingSoon from "../../components/ComingSoon";
+import { projects } from "../data";
 
 export function generateStaticParams() {
   return projects.map((project) => ({ slug: project.slug }));
 }
 
-export default async function ProjectDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function ProjectDetailPage() {
+  return <ComingSoon title="Project Details" description="Project details and interactive deep dives are coming soon." />;
+}
+
+/*
+import Image from "next/image";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { getProject } from "../data";
+
+export async function OriginalProjectDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const project = getProject(slug);
   if (!project) notFound();
@@ -26,3 +35,4 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
     </div>
   );
 }
+*/

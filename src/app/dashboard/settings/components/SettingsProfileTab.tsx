@@ -70,8 +70,13 @@ export default function SettingsProfileTab({
         />
         <InputField
           label="Phone"
+          type="tel"
+          inputMode="numeric"
+          pattern="[0-9]*"
+          maxLength={15}
+          placeholder="9876543210"
           value={phone}
-          onChange={(e) => setPhone(e.target.value)}
+          onChange={(e) => setPhone(e.target.value.replace(/\D/g, ""))}
         />
         <InputField
           label="Location"

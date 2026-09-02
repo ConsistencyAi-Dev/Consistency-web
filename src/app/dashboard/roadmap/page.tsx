@@ -1,3 +1,11 @@
+import React from "react";
+import ComingSoon from "../components/ComingSoon";
+
+export default function RoadmapPage() {
+  return <ComingSoon title="Learning Roadmap" description="Detailed career roadmaps, structured phase milestones, and progress tracking are coming soon." />;
+}
+
+/*
 import Link from "next/link";
 
 const roadmapPhases = [
@@ -68,7 +76,7 @@ const roadmapPhases = [
   },
 ];
 
-export default function RoadmapPage() {
+export function OriginalRoadmapPage() {
   return (
     <div className="w-full max-w-[1180px]">
       <div className="mb-5 flex items-center justify-between gap-3">
@@ -143,3 +151,4 @@ export default function RoadmapPage() {
     </div>
   );
 }
+*/
