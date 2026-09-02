@@ -161,10 +161,13 @@ export default function ProfileStep({
               Mobile Number <span className="text-red-500">*</span>
             </label>
             <input
-              type="text"
+              type="tel"
+              inputMode="numeric"
+              pattern="[0-9]*"
+              maxLength={15}
               value={mobile}
-              onChange={(e) => setMobile(e.target.value)}
-              placeholder="+91 98765 43210"
+              onChange={(e) => setMobile(e.target.value.replace(/\D/g, ""))}
+              placeholder="e.g. 9876543210"
               className={`w-full px-4 py-3 border rounded-2xl text-[14px] font-semibold text-black bg-white transition-all outline-none shadow-sm placeholder-gray-400 ${
                 hasAttemptedContinue && isMobileEmpty
                   ? "border-red-400 focus:border-red-500 focus:ring-1 focus:ring-red-500 bg-red-50/10"

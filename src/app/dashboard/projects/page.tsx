@@ -1,12 +1,20 @@
 "use client";
 
+import React from "react";
+import ComingSoon from "../components/ComingSoon";
+
+export default function ProjectsPage() {
+  return <ComingSoon title="Projects" description="Explore student projects, mobile and web applications, and innovative dashboards coming soon." />;
+}
+
+/*
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { projects } from "./data";
 import { avatarNeeleshPng, fireIconSvg, projectSupplyChainPng } from "@/assets";
 
-export default function ProjectsPage() {
+export function OriginalProjectsPage() {
   const [activeFilter, setActiveFilter] = useState("All Projects");
   const visibleProjects = projects.filter((_, index) => activeFilter === "All Projects" || (activeFilter === "Trending" ? index % 2 === 0 : index > 1));
 
@@ -21,3 +29,4 @@ export default function ProjectsPage() {
     </div>
   );
 }
+*/

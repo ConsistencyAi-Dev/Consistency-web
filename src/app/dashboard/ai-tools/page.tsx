@@ -1,6 +1,13 @@
 "use client";
 
 import React from "react";
+import ComingSoon from "../components/ComingSoon";
+
+export default function AIToolsPage() {
+  return <ComingSoon title="AI Tools" description="AI Tools to upskill, grow and prepare your career are coming soon." />;
+}
+
+/*
 import Image from "next/image";
 
 // Import images from assets/tools folder
@@ -8,7 +15,7 @@ import resumeImg from "@/assets/tools/resume.png";
 import mockImg from "@/assets/tools/mock.png";
 import chatbotImg from "@/assets/tools/chatbot.png";
 
-export default function AIToolsPage() {
+export function OriginalAIToolsPage() {
   const tools = [
     {
       title: "Resume Builder",
@@ -44,8 +51,7 @@ export default function AIToolsPage() {
 
   return (
     <div className="w-full flex flex-col gap-6 text-left">
-      {/* Title Header Section */}
-      <div className="p-8 flex flex-col items-center justify-center gap-3  text-center">
+      <div className="p-8 flex flex-col items-center justify-center gap-3 text-center">
         <h2 className="text-2xl font-black text-gray-900 tracking-tight leading-tight">
           AI Tools
         </h2>
@@ -57,7 +63,6 @@ export default function AIToolsPage() {
         </button>
       </div>
 
-      {/* Grid List */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 w-full mt-2">
         {tools.map((tool, idx) => (
           <div
@@ -65,7 +70,6 @@ export default function AIToolsPage() {
             className="bg-white rounded-3xl p-6 flex flex-col justify-between shadow-sm transition-all hover:shadow-md"
           >
             <div>
-              {/* Illustration Image Area matching mockup exactly */}
               <div className="w-full h-36 rounded-2xl bg-gray-50/30 flex items-center justify-center mb-6 overflow-hidden relative">
                 <Image
                   src={tool.image}
@@ -76,12 +80,10 @@ export default function AIToolsPage() {
                 />
               </div>
 
-              {/* Title & Description */}
               <h3 className="text-base font-black text-gray-800 tracking-tight mb-2">
                 {tool.title}
               </h3>
               
-              {/* Bullet Features */}
               <ul className="space-y-3.5 text-xs font-bold text-gray-600 border-t border-gray-50 pt-5 mt-4">
                 {tool.bullets.map((bullet, bIdx) => (
                   <li key={bIdx} className="flex items-start gap-2.5">
@@ -103,3 +105,4 @@ export default function AIToolsPage() {
     </div>
   );
 }
+*/

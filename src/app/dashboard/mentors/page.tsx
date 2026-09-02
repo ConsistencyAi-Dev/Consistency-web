@@ -1,6 +1,14 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
+import ComingSoon from "../components/ComingSoon";
+
+export default function MentorsPage() {
+  return <ComingSoon title="Mentorship & Career Advisory" description="1:1 sessions with verified industry mentors and mock interviewers are coming soon." />;
+}
+
+/*
+import { useState } from "react";
 
 interface Mentor {
   id: string;
@@ -128,17 +136,14 @@ const mentorsList: Mentor[] = [
 function MentorCard({ mentor }: { mentor: Mentor }) {
   return (
     <article className="relative overflow-hidden rounded-[20px] border border-[#E2E8F0] bg-white shadow-sm flex flex-col justify-between">
-      {/* Mentor Profile Header Banner */}
       <div className="h-16 bg-gradient-to-r from-[#2B50EC] to-[#8B9EFF] p-3 flex items-start justify-between">
         <span className="rounded-full bg-white/20 px-2 py-1 text-[10px] font-semibold text-white">
           ✓ PRO MENTOR
         </span>
       </div>
 
-      {/* Profile Details */}
       <div className="flex flex-col gap-4 p-4 flex-1">
         <div className="-mt-10 flex items-end gap-3">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={mentor.avatar}
             alt={mentor.name}
@@ -157,7 +162,6 @@ function MentorCard({ mentor }: { mentor: Mentor }) {
           <p className="mt-2 text-xs leading-5 text-[#475569]">{mentor.bio}</p>
         </div>
 
-        {/* Tags */}
         <div className="flex flex-wrap gap-1.5">
           {mentor.tags.map((tag) => (
             <span
@@ -169,7 +173,6 @@ function MentorCard({ mentor }: { mentor: Mentor }) {
           ))}
         </div>
 
-        {/* Stats Grid */}
         <div className="grid grid-cols-3 gap-2 text-center">
           <div className="rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] p-2">
             <strong className="block text-sm text-[#0F172A]">{mentor.experience}</strong>
@@ -185,7 +188,6 @@ function MentorCard({ mentor }: { mentor: Mentor }) {
           </div>
         </div>
 
-        {/* Pricing Options */}
         <div className="space-y-2 text-xs">
           <div className="flex items-center justify-between rounded-lg border border-[#E2E8F0] p-3">
             <span>
@@ -203,16 +205,13 @@ function MentorCard({ mentor }: { mentor: Mentor }) {
           </div>
         </div>
 
-        {/* Action Button */}
         <button className="w-full rounded-full bg-[#2B50EC] py-3 text-xs font-semibold text-white hover:bg-[#1E40AF] transition-colors">
           Book a Trial Session
         </button>
       </div>
 
-      {/* GLASSMORPHISM OVERLAY FOR LOCKED CARDS (EXACT STYLES FROM USER HTML) */}
       {mentor.isLocked && (
         <div className="absolute inset-0 z-10 w-full h-full p-6 bg-[rgba(255,255,255,0.55)] shadow-[0px_10px_24px_-8px_rgba(0,0,0,0.08)] overflow-hidden rounded-[20px] border border-[#E2E8F0] backdrop-blur-[12px] flex flex-col justify-center items-center gap-4 text-center">
-          {/* Lock Icon Circle (56x56px, #EEF2FF bg, #C7D2FE border) */}
           <div className="w-[56px] h-[56px] bg-[#EEF2FF] rounded-full border border-[#C7D2FE] flex flex-col justify-center items-center flex-shrink-0">
             <div className="w-6 h-6 relative overflow-hidden flex items-center justify-center">
               <svg className="w-5 h-5 text-[#2B50EC]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2}>
@@ -221,7 +220,6 @@ function MentorCard({ mentor }: { mentor: Mentor }) {
             </div>
           </div>
 
-          {/* Text Block */}
           <div className="self-stretch flex flex-col justify-start items-center gap-2">
             <div className="self-stretch text-center text-[#0F172A] text-[18px] font-bold tracking-tight">
               Upgrade to Unlock
@@ -231,7 +229,6 @@ function MentorCard({ mentor }: { mentor: Mentor }) {
             </div>
           </div>
 
-          {/* Upgrade Button (44px height, 18px px, #2B50EC bg, 9999px rounded) */}
           <button className="h-[44px] px-[18px] bg-[#2B50EC] shadow-[0px_6px_14px_-4px_rgba(43,80,236,0.20)] rounded-full justify-center items-center inline-flex cursor-pointer hover:bg-[#1E40AF] transition-colors">
             <span className="text-white text-[14px] font-bold">
               Upgrade Now
@@ -243,7 +240,7 @@ function MentorCard({ mentor }: { mentor: Mentor }) {
   );
 }
 
-export default function MentorsPage() {
+export function OriginalMentorsPage() {
   const [filters, setFilters] = useState([
     "Tech / SaaS",
     "System Design & SWE",
@@ -253,7 +250,6 @@ export default function MentorsPage() {
 
   return (
     <div className="flex w-full flex-col gap-6 text-left pb-10">
-      {/* Banner */}
       <section className="flex flex-col items-start justify-between gap-4 rounded-2xl bg-gradient-to-r from-[#2B50EC] via-[#3B63FF] to-[#6D8AFF] px-6 py-5 text-white sm:flex-row sm:items-center sm:px-8 shadow-sm">
         <div>
           <span className="rounded-full bg-white/15 px-2.5 py-1 text-[10px] font-semibold uppercase">
@@ -271,7 +267,6 @@ export default function MentorsPage() {
         </span>
       </section>
 
-      {/* Filter Section */}
       <div className="flex flex-col gap-3">
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-semibold text-[#0F172A]">Explore Mentors</h2>
@@ -314,7 +309,6 @@ export default function MentorsPage() {
         </div>
       </div>
 
-      {/* Mentors Grid */}
       <div className="grid items-start gap-6 md:grid-cols-2 xl:grid-cols-3">
         {mentorsList.map((mentor) => (
           <MentorCard key={mentor.id} mentor={mentor} />
@@ -323,3 +317,4 @@ export default function MentorsPage() {
     </div>
   );
 }
+*/
