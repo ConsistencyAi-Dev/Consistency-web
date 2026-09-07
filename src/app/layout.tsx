@@ -6,12 +6,14 @@ const staatliches = Staatliches({
   weight: "400",
   variable: "--font-staatliches",
   subsets: ["latin"],
+  display: "swap",
 });
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
   variable: "--font-stack-sans-headline",
   display: "swap",
+  adjustFontFallback: false,
 });
 
 export const metadata: Metadata = {

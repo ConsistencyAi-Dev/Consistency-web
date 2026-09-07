@@ -1,3 +1,14 @@
+/**
+ * Central Barrel Export for API Client, Services, Types, and Configuration
+ */
+
+export * from "@/types";
+export * from "@/config/site";
+export * from "@/lib/httpClient";
+export { authService as authApi } from "@/services/authService";
+export { userService as userApi } from "@/services/userService";
+export { quizService as quizApi } from "@/services/quizService";
+
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api/v1';
 
 export interface SendOtpPayload {
@@ -251,5 +262,3 @@ export async function getScoreProfileApi(userId: string): Promise<ApiResponse<an
   }
   return data;
 }
-
-
