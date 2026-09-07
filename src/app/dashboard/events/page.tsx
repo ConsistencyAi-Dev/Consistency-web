@@ -1,8 +1,16 @@
 "use client";
 
+import React from "react";
+import ComingSoon from "../components/ComingSoon";
+
+export default function EventsPage() {
+  return <ComingSoon title="Events & Hackathons" description="Upcoming workshops, meetups, hackathons and speaker sessions are coming soon." />;
+}
+
+/*
 import Image from "next/image";
 import type { StaticImageData } from "next/image";
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   avatarAlexChenPng, avatarSarahJenkinsPng,
   iconFeaturedSvg, iconCalendarRangeSvg, iconPrizeSvg, iconRegisteredSvg,
@@ -26,7 +34,7 @@ type EventCard = {
   community?: boolean;
 };
 
-export default function EventsPage() {
+export function OriginalEventsPage() {
   const [activeFilter, setActiveFilter] = useState("All Events");
 
   const filters = ["All Events", "Workshops", "Meetups", "Career"];
@@ -326,3 +334,4 @@ export default function EventsPage() {
     </div>
   );
 }
+*/

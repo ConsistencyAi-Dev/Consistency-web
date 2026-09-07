@@ -1,8 +1,16 @@
 "use client";
 
+import React from "react";
+import ComingSoon from "../components/ComingSoon";
+
+export default function JobsPage() {
+  return <ComingSoon title="Jobs & Opportunities" description="Personalized job recommendations, application tracking, and internships are coming soon." />;
+}
+
+/*
 import Image from "next/image";
 import type { StaticImageData } from "next/image";
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   search18Svg, featuredStarSvg, arrowRight12Svg, featuredRolePng,
   logoDataAnalystPng, logoUxuiPng, logoFrontendGenericSvg, profileMatchIconSvg,
@@ -18,7 +26,7 @@ type Job = {
   faded: boolean;
 };
 
-export default function JobsPage() {
+export function OriginalJobsPage() {
   const [activeFilter, setActiveFilter] = useState("All Roles");
 
   const filters = ["All Roles", "Remote", "Full-time", "Internship"];
@@ -265,3 +273,4 @@ export default function JobsPage() {
     </div>
   );
 }
+*/

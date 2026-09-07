@@ -12,6 +12,7 @@ interface ForgotPasswordCodeProps {
   countdown: number;
   isResending: boolean;
   verificationError: boolean;
+  email?: string;
 }
 
 export default function ForgotPasswordCode({
@@ -24,6 +25,7 @@ export default function ForgotPasswordCode({
   countdown,
   isResending,
   verificationError,
+  email,
 }: ForgotPasswordCodeProps) {
   const [codeDigits, setCodeDigits] = useState<string[]>(Array(6).fill(""));
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
@@ -86,10 +88,7 @@ export default function ForgotPasswordCode({
         </div>
         <h2 className="text-2xl font-bold text-gray-900">Check your email</h2>
         <p className="text-gray-500 text-sm mt-2">
-          We've sent a 6-digit verification code to your email address.
-        </p>
-        <p className="text-xs text-blue-500 font-bold mt-2 bg-blue-50 inline-block px-2.5 py-1 rounded-full">
-          🔑 Demo tip: Enter code 123456 to succeed
+          We've sent a 6-digit verification code to {email ? <strong className="text-gray-800">{email}</strong> : "your email address"}.
         </p>
       </div>
 

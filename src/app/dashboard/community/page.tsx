@@ -1,13 +1,21 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
+import ComingSoon from "../components/ComingSoon";
+
+export default function CommunityPage() {
+  return <ComingSoon title="Consistency AI Community" description="Connect with 12,000+ learners, share progress, join study groups, and grow together coming soon." />;
+}
+
+/*
+import { useState } from "react";
 import CommunityPostCard, { Post } from "./components/CommunityPostCard";
 import CreatePostModal from "./components/CreatePostModal";
 
 const initialPosts: Post[] = [
   {
     id: "post-1",
-    name: "Rahul Kumar",
+    name: "John Doe",
     avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
     badge: "Pro Member",
     meta: "AI/ML Mastery Cohort · 3 hours ago",
@@ -29,7 +37,7 @@ const initialPosts: Post[] = [
         name: "Vikram Singh",
         avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80",
         timeAgo: "2h ago",
-        text: "Awesome work Rahul! How did you handle document chunking for long PDFs?",
+        text: "Awesome work John! How did you handle document chunking for long PDFs?",
         likes: 5,
       },
     ],
@@ -120,14 +128,14 @@ const sidebarSections = [
 ];
 
 const contributors = [
-  ["Rahul Kumar", "2,480 pts", "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80"],
+  ["John Doe", "2,480 pts", "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80"],
   ["Priya Sharma", "2,120 pts", "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop&q=80"],
   ["Sneha Reddy", "1,890 pts", "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&auto=format&fit=crop&q=80"],
   ["Amit Verma", "1,670 pts", "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80"],
   ["Vikram Singh", "1,450 pts", "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80"],
 ] as const;
 
-export default function CommunityPage() {
+export function OriginalCommunityPage() {
   const [activeTab, setActiveTab] = useState("All Posts");
   const [posts, setPosts] = useState<Post[]>(initialPosts);
   const [searchQuery, setSearchQuery] = useState("");
@@ -155,7 +163,6 @@ export default function CommunityPage() {
 
   return (
     <div className="flex w-full flex-col gap-6 text-left pb-10">
-      {/* Banner */}
       <section className="flex flex-col items-start justify-between gap-4 rounded-2xl bg-gradient-to-r from-[#2B50EC] via-[#3B82F6] to-[#5174FF] px-6 py-6 text-white sm:flex-row sm:items-center sm:px-8 shadow-sm">
         <div>
           <h2 className="text-2xl font-bold tracking-tight">Consistency AI Community</h2>
@@ -171,11 +178,8 @@ export default function CommunityPage() {
         </button>
       </section>
 
-      {/* Main Grid */}
       <div className="grid items-start gap-8 xl:grid-cols-[minmax(0,1fr)_320px]">
-        {/* Posts Feed Column */}
         <div className="flex flex-col gap-5">
-          {/* Navigation Filter Tabs & Search */}
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
             <div className="flex flex-wrap gap-2">
               {["All Posts", "Discussions", "Show & Tell", "Help Needed", "Study Groups"].map(
@@ -195,7 +199,6 @@ export default function CommunityPage() {
               )}
             </div>
 
-            {/* Filter Search Input */}
             <div className="relative min-w-[200px]">
               <input
                 type="text"
@@ -220,7 +223,6 @@ export default function CommunityPage() {
             </div>
           </div>
 
-          {/* Posts List */}
           {filteredPosts.length > 0 ? (
             filteredPosts.map((post) => (
               <CommunityPostCard key={post.id} post={post} />
@@ -241,7 +243,6 @@ export default function CommunityPage() {
           )}
         </div>
 
-        {/* Sidebar Widgets */}
         <aside className="flex flex-col gap-4">
           {sidebarSections.map((section) => (
             <section
@@ -273,7 +274,6 @@ export default function CommunityPage() {
                 <div key={name} className="flex items-center justify-between gap-3">
                   <div className="flex items-center gap-2">
                     <span className="w-3 text-xs font-semibold text-[#475569]">{index + 1}</span>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={avatar} alt={name} width={28} height={28} className="h-7 w-7 rounded-full object-cover" />
                     <span className="text-[13px] font-medium text-[#0F172A]">{name}</span>
                   </div>
@@ -295,7 +295,6 @@ export default function CommunityPage() {
         </aside>
       </div>
 
-      {/* Modal for creating a post */}
       <CreatePostModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
@@ -304,3 +303,4 @@ export default function CommunityPage() {
     </div>
   );
 }
+*/
