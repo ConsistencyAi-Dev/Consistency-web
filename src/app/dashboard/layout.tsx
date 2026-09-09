@@ -17,16 +17,17 @@ type NavItem = {
   href: string;
   icon: StaticImageData;
   locked?: boolean;
+  comingSoon?: boolean;
 };
 
 const navItems: NavItem[] = [
   { name: "Home", href: "/dashboard", icon: navHomeSvg },
-  // { name: "AI Tools", href: "/dashboard/ai-tools", icon: navAiToolsSvg, locked: true },
-  // { name: "Projects", href: "/dashboard/projects", icon: navProjectsSvg, locked: true },
-  // { name: "Events", href: "/dashboard/events", icon: navEventsSvg },
-  // { name: "Community", href: "/dashboard/community", icon: navCommunitySvg },
-  // { name: "Mentors", href: "/dashboard/mentors", icon: navProjectsSvg },
-  // { name: "Jobs", href: "/dashboard/jobs", icon: navProjectsSvg, locked: true },
+  { name: "AI Tools", href: "/dashboard/ai-tools", icon: navAiToolsSvg, comingSoon: true },
+  { name: "Projects", href: "/dashboard/projects", icon: navProjectsSvg, comingSoon: true },
+  { name: "Events", href: "/dashboard/events", icon: navEventsSvg, comingSoon: true },
+  { name: "Community", href: "/dashboard/community", icon: navCommunitySvg, comingSoon: true },
+  { name: "Mentors", href: "/dashboard/mentors", icon: navProjectsSvg, comingSoon: true },
+  { name: "Jobs", href: "/dashboard/jobs", icon: navProjectsSvg, comingSoon: true },
   { name: "Settings", href: "/dashboard/settings", icon: navSettingsSvg },
 ];
 
@@ -130,10 +131,11 @@ export default function DashboardLayout({
                     key={item.name}
                     href={item.href}
                     onClick={() => setIsMobileSidebarOpen(false)}
-                    className={`flex h-9 w-full items-center justify-between rounded-lg px-2.5 py-1.5 transition-colors ${isActive ? "bg-[#2B50EC] text-white" : "text-[#64748B] hover:bg-[#EEF2FF]"
-                      } ${!isActive && item.locked ? "opacity-60" : ""}`}
+                    className={`flex h-9 w-full items-center justify-between rounded-lg px-2.5 py-1.5 transition-colors ${
+                      isActive ? "bg-[#2B50EC] text-white" : "text-[#64748B] hover:bg-[#EEF2FF]"
+                    } ${!isActive && (item.locked || item.comingSoon) ? "opacity-80 hover:opacity-100" : ""}`}
                   >
-                    <span className="flex items-center gap-2.5">
+                    <span className="flex items-center gap-2">
                       <Image
                         src={item.icon}
                         alt=""
@@ -142,8 +144,19 @@ export default function DashboardLayout({
                         className={isActive ? "brightness-0 invert" : ""}
                       />
                       <span className="text-[13px] leading-5">{item.name}</span>
+                      {item.comingSoon && (
+                        <span
+                          className={`rounded px-1.5 py-0.5 text-[8.5px] font-semibold leading-none tracking-tight whitespace-nowrap ${
+                            isActive
+                              ? "bg-white/20 text-white"
+                              : "bg-[#2B50EC]/10 text-[#2B50EC] border border-[#2B50EC]/20"
+                          }`}
+                        >
+                          Coming Soon
+                        </span>
+                      )}
                     </span>
-                    {item.locked && !isActive && (
+                    {item.locked && !isActive && !item.comingSoon && (
                       <Image src={iconLockSvg} alt="Locked" width={8} height={10} />
                     )}
                   </Link>
