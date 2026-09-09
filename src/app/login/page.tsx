@@ -35,7 +35,17 @@ export default function LoginPage() {
     handleResetPasswordSubmit,
   } = useAuthFlow();
 
-  const isCenterCardMode = ["forgot-email", "forgot-code", "forgot-success", "reset-loading"].includes(mode);
+  const isCenterCardMode = ["forgot-email", "forgot-code", "forgot-success"].includes(mode);
+
+  if (mode === "reset-loading") {
+    return (
+      <ResetLoadingTransition
+        onComplete={() => {
+          router.push("/dashboard");
+        }}
+      />
+    );
+  }
 
   return (
     <div className="h-screen w-full flex items-center justify-center bg-[#F3F4F6] font-sans overflow-hidden relative">
@@ -153,22 +163,6 @@ export default function LoginPage() {
                     onSubmit={handleResetPasswordSubmit}
                     isLoading={isLoading}
                     error={error}
-                  />
-                </motion.div>
-              )}
-
-              {mode === "reset-loading" && (
-                <motion.div
-                  key="reset-loading"
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <ResetLoadingTransition
-                    onComplete={() => {
-                      router.push("/dashboard");
-                    }}
                   />
                 </motion.div>
               )}

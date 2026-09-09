@@ -28,13 +28,20 @@ export default function SettingsProfileTab({
   bio,
   setBio,
 }: SettingsProfileTabProps) {
+  const getInitials = (name?: string) => {
+    if (!name || !name.trim()) return "U";
+    const parts = name.trim().split(/\s+/);
+    if (parts.length === 1) return parts[0].substring(0, 2).toUpperCase();
+    return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+  };
+
   return (
     <div className="space-y-6">
       {/* Avatar Upload Row */}
       <div className="flex items-center gap-4">
         <div className="relative">
-          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#8B5CF6] text-xl font-bold text-white shadow-md">
-            RK
+          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[linear-gradient(135deg,#8B5CF6_0%,#6366F1_100%)] text-xl font-bold text-white shadow-md">
+            {getInitials(fullName)}
           </div>
           <div className="absolute bottom-0 right-0 flex h-5 w-5 items-center justify-center rounded-full bg-white border border-[#E2E8F0] shadow-sm">
             <svg className="w-3 h-3 text-[#475569]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -43,7 +50,7 @@ export default function SettingsProfileTab({
           </div>
         </div>
         <div>
-          <h3 className="font-bold text-[#0F172A] text-base">{fullName}</h3>
+          <h3 className="font-bold text-[#0F172A] text-base">{fullName || "Learner"}</h3>
           <p className="text-xs text-[#64748B]">PNG · Recommended 400x400</p>
           <div className="flex items-center gap-2.5 mt-2">
             <button className="rounded-full bg-[#0F172A] px-4 py-1.5 text-xs font-semibold text-white hover:bg-black transition-colors cursor-pointer">
