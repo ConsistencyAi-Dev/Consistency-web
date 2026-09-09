@@ -12,14 +12,14 @@ export function SettingsSection({
   badge?: string;
 }) {
   return (
-    <section className="space-y-3">
-      <h3 className="flex items-center gap-2.5 text-xs font-bold uppercase tracking-wider text-[#0F172A]">
+    <section className="space-y-3.5">
+      <h3 className="flex items-center gap-2.5 text-sm font-bold uppercase tracking-wider text-[#0F172A]">
         <span className="flex h-6 w-6 items-center justify-center rounded-full border border-[#E2E8F0] bg-white text-xs font-semibold text-[#0F172A]">
           {number}
         </span>
         <span>{title}</span>
         {badge && (
-          <span className="rounded-md bg-[#EEF2FF] border border-[#C7D2FE] px-2 py-0.5 text-[10px] font-semibold text-[#2B50EC]">
+          <span className="rounded-md bg-[#EEF2FF] border border-[#C7D2FE] px-2.5 py-0.5 text-xs font-semibold text-[#2B50EC]">
             {badge}
           </span>
         )}
@@ -53,11 +53,11 @@ export function InputField({
   placeholder?: string;
 }) {
   return (
-    <label className="block text-xs text-[#475569]">
-      <span className="flex items-center gap-2 mb-1.5 font-semibold text-[#475569]">
+    <label className="block text-sm text-[#334155]">
+      <span className="flex items-center gap-2 mb-1.5 font-semibold text-[#334155]">
         {label}
         {badge && (
-          <span className="rounded-md bg-[#DCFCE7] px-2 py-0.5 text-[10px] font-semibold text-[#059669]">
+          <span className="rounded-md bg-[#DCFCE7] px-2 py-0.5 text-xs font-semibold text-[#059669]">
             {badge}
           </span>
         )}
@@ -70,7 +70,7 @@ export function InputField({
         placeholder={placeholder}
         value={value}
         onChange={onChange}
-        className="w-full rounded-xl border border-[#E2E8F0] px-4 py-3 text-xs font-normal text-[#0F172A] bg-white focus:outline-none focus:border-[#2B50EC] transition-colors"
+        className="w-full rounded-xl border border-[#E2E8F0] px-4 py-3 text-sm font-normal text-[#0F172A] bg-white focus:outline-none focus:border-[#2B50EC] transition-colors"
       />
     </label>
   );

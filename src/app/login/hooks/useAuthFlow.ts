@@ -68,7 +68,7 @@ export function useAuthFlow() {
         }
 
         window.history.replaceState({}, document.title, window.location.pathname);
-        router.push("/dashboard");
+        setMode("reset-loading");
       }
     }
   }, [router]);
@@ -127,7 +127,7 @@ export function useAuthFlow() {
         }
       }
       setIsLoading(false);
-      router.push("/dashboard");
+      setMode("reset-loading");
     } catch (err: any) {
       setIsLoading(false);
       setError(err.message || "Invalid email or password. Please try again.");
@@ -166,7 +166,7 @@ export function useAuthFlow() {
         localStorage.removeItem("isOnboarded");
       }
       setIsLoading(false);
-      router.push("/dashboard");
+      setMode("reset-loading");
     } catch (err: any) {
       setIsLoading(false);
       setError(err.message || "Registration failed. Please try again.");

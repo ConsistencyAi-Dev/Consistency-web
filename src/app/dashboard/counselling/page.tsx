@@ -1,149 +1,217 @@
 "use client";
 
-import React from "react";
-import ComingSoon from "../components/ComingSoon";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function CounsellingPage() {
-  return <ComingSoon title="Career Counseling & Advisory" description="1:1 career guidance, roadmap planning, and cohort advisory are coming soon." />;
-}
+  const [isLoading, setIsLoading] = useState(true);
 
-/*
-import { useState } from "react";
-
-const timeSlots = [
-  "Mon, 9:00 AM",
-  "Tue, 11:30 AM",
-  "Wed, 2:00 PM",
-  "Thu, 4:30 PM",
-  "Fri, 10:00 AM",
-  "Sat, 1:00 PM",
-];
-
-export function OriginalCounsellingPage() {
-  const [selectedSlot, setSelectedSlot] = useState(timeSlots[2]);
-  const [submitted, setSubmitted] = useState(false);
-
-  const handleSubmit = () => {
-    setSubmitted(true);
-  };
-
-  if (submitted) {
-    return (
-      <div className="mx-auto w-full max-w-3xl rounded-[28px] border border-[#E2E8F0] bg-white p-8 shadow-[0px_1px_3px_rgba(15,23,42,0.06)] sm:p-10">
-        <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[#2B50EC] text-2xl text-white shadow-[0px_10px_24px_rgba(43,80,236,0.28)]">
-          ✓
-        </div>
-        <h1 className="mt-6 text-center text-3xl font-bold tracking-tight text-[#0F172A]">Session booked!</h1>
-        <p className="mx-auto mt-3 max-w-xl text-center text-[14px] leading-6 text-[#64748B]">
-          Your free 15-minute counseling session has been scheduled successfully. Our advisor will send the calendar invite and meeting link to your email.
-        </p>
-
-        <div className="mt-8 rounded-2xl border border-[#E2E8F0] bg-[#F8FAFC] p-5">
-          <div className="flex items-center justify-between gap-3 border-b border-[#E2E8F0] pb-3 text-[13px] text-[#64748B]">
-            <span>Advisor</span>
-            <span className="font-semibold text-[#0F172A]">AI Career Coach</span>
-          </div>
-          <div className="mt-3 flex items-center justify-between gap-3 border-b border-[#E2E8F0] pb-3 text-[13px] text-[#64748B]">
-            <span>Time</span>
-            <span className="font-semibold text-[#0F172A]">{selectedSlot}</span>
-          </div>
-          <div className="mt-3 flex items-center justify-between gap-3 text-[13px] text-[#64748B]">
-            <span>Format</span>
-            <span className="font-semibold text-[#0F172A]">1:1 video call</span>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  useEffect(() => {
+    const timeoutId = window.setTimeout(() => setIsLoading(false), 2600);
+    return () => window.clearTimeout(timeoutId);
+  }, []);
 
   return (
-    <div className="mx-auto w-full max-w-6xl rounded-[32px] border border-[#E2E8F0] bg-white p-6 shadow-[0px_1px_3px_rgba(15,23,42,0.05)] sm:p-8 lg:p-10">
-      <div className="grid gap-8 lg:grid-cols-[1.05fr_1.3fr]">
-        <div className="rounded-[28px] bg-[linear-gradient(135deg,#EEF2FF_0%,#F8FAFC_100%)] p-6 sm:p-8">
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-2xl shadow-[0px_1px_2px_rgba(15,23,42,0.05)]">📞</div>
-          <p className="mt-5 text-[11px] font-semibold uppercase tracking-[0.2em] text-[#2B50EC]">Free advisor call</p>
-          <h1 className="mt-3 text-3xl font-bold tracking-tight text-[#0F172A]">Build a roadmap that fits your goals.</h1>
-          <p className="mt-4 text-[14px] leading-6 text-[#475569]">
-            Speak with a learning advisor for 15 minutes to clarify your path, choose the right cohort, and identify the fastest route to a role you want.
-          </p>
-
-          <div className="mt-6 space-y-3 text-[13px] text-[#334155]">
-            {[
-              "Personalized guidance based on your current strengths",
-              "Advice on the best cohort and learning plan",
-              "Clear next steps for job prep and portfolio building",
-            ].map((item) => (
-              <div key={item} className="flex items-start gap-3 rounded-xl border border-white/70 bg-white/60 px-3 py-2">
-                <span className="mt-1 inline-flex h-4 w-4 items-center justify-center rounded-full bg-[#2B50EC] text-[10px] font-bold text-white">✓</span>
-                <span>{item}</span>
+    <div className="mx-auto max-w-[760px] pb-8">
+      <div className="rounded-[24px] border border-[#E2E8F0] bg-[#F8FAFC] p-0 shadow-[0_1px_2px_rgba(15,23,42,0.04)]">
+        {isLoading ? (
+          <div className="px-5 py-6 sm:px-6">
+            <div className="mx-auto w-full max-w-[560px] rounded-[24px] border border-[#E6E9EE] bg-[#F7F8FA] p-5 sm:p-7">
+              <div className="mx-auto flex h-[72px] w-[72px] items-center justify-center rounded-full border-[6px] border-[#dfe8ff] bg-[#eef4ff]">
+                <div className="h-8 w-8 animate-spin rounded-full border-[4px] border-[#2B50EC] border-t-transparent" />
               </div>
-            ))}
-          </div>
-        </div>
 
-        <div className="rounded-[28px] border border-[#E2E8F0] bg-[#F8FAFC] p-5 sm:p-6">
-          <div className="mb-5">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#64748B]">Book your session</p>
-            <h2 className="mt-2 text-[24px] font-bold tracking-tight text-[#0F172A]">Tell us about your goals</h2>
-          </div>
+              <h2 className="mt-7 text-center text-[20px] font-semibold leading-[30px] text-[#0F172A]">
+                Booking Your Session...
+              </h2>
 
-          <div className="space-y-4">
-            <div className="grid gap-4 sm:grid-cols-2">
-              <label className="block text-[12px] font-semibold uppercase tracking-[0.12em] text-[#475569]">
-                First name
-                <input
-                  defaultValue="John"
-                  className="mt-2 w-full rounded-xl border border-[#E2E8F0] bg-white px-3 py-3 text-[14px] text-[#0F172A] outline-none ring-0 placeholder:text-[#94A3B8] focus:border-[#2B50EC]"
-                />
-              </label>
-              <label className="block text-[12px] font-semibold uppercase tracking-[0.12em] text-[#475569]">
-                Email
-                <input
-                  defaultValue="john.doe@gmail.com"
-                  className="mt-2 w-full rounded-xl border border-[#E2E8F0] bg-white px-3 py-3 text-[14px] text-[#0F172A] outline-none placeholder:text-[#94A3B8] focus:border-[#2B50EC]"
-                />
-              </label>
-            </div>
+              <p className="mt-2 text-center text-[14px] leading-[21px] text-[#64748B]">
+                Please wait while we confirm your session with the counsellor.
+              </p>
 
-            <label className="block text-[12px] font-semibold uppercase tracking-[0.12em] text-[#475569]">
-              Goal
-              <input
-                defaultValue="Switch to software engineering"
-                className="mt-2 w-full rounded-xl border border-[#E2E8F0] bg-white px-3 py-3 text-[14px] text-[#0F172A] outline-none placeholder:text-[#94A3B8] focus:border-[#2B50EC]"
-              />
-            </label>
+              <div className="mt-8 space-y-4 border-t border-[#E2E8F0] pt-4">
+                <div className="flex items-center justify-between gap-4 text-[14px] text-[#475569]">
+                  <div className="flex items-center gap-3">
+                    <span className="inline-flex h-5 w-5 items-center justify-center text-[#2B50EC]">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-4 w-4" aria-hidden="true">
+                        <path d="M12 8v4l3 2" strokeLinecap="round" strokeLinejoin="round" />
+                        <circle cx="12" cy="12" r="8" />
+                      </svg>
+                    </span>
+                    <span>Duration</span>
+                  </div>
+                  <span className="font-medium text-[#0F172A]">30 minutes</span>
+                </div>
 
-            <div>
-              <p className="text-[12px] font-semibold uppercase tracking-[0.12em] text-[#475569]">Available slots</p>
-              <div className="mt-3 grid gap-2 sm:grid-cols-2">
-                {timeSlots.map((slot) => (
-                  <button
-                    key={slot}
-                    type="button"
-                    onClick={() => setSelectedSlot(slot)}
-                    className={`rounded-xl border px-3 py-2.5 text-left text-[13px] font-medium transition-colors ${
-                      selectedSlot === slot
-                        ? "border-[#2B50EC] bg-[#EEF2FF] text-[#1E3BB3]"
-                        : "border-[#E2E8F0] bg-white text-[#334155] hover:border-[#CBD5E1]"
-                    }`}
-                  >
-                    {slot}
-                  </button>
-                ))}
+                <div className="flex items-center justify-between gap-4 text-[14px] text-[#475569]">
+                  <div className="flex items-center gap-3">
+                    <span className="inline-flex h-5 w-5 items-center justify-center text-[#2B50EC]">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-4 w-4" aria-hidden="true">
+                        <path d="M4 7.5A2.5 2.5 0 0 1 6.5 5h11A2.5 2.5 0 0 1 20 7.5v9A2.5 2.5 0 0 1 17.5 19h-11A2.5 2.5 0 0 1 4 16.5v-9Z" strokeLinecap="round" strokeLinejoin="round" />
+                        <path d="M4 9.5h16" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </span>
+                    <span>Fee</span>
+                  </div>
+                  <span className="font-medium text-[#0F172A]">Free</span>
+                </div>
+
+                <div className="flex items-center justify-between gap-4 text-[14px] text-[#475569]">
+                  <div className="flex items-center gap-3">
+                    <span className="inline-flex h-5 w-5 items-center justify-center text-[#2B50EC]">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-4 w-4" aria-hidden="true">
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2" strokeLinecap="round" strokeLinejoin="round" />
+                        <circle cx="9.5" cy="7" r="4" />
+                        <path d="M22 21v-2a4 4 0 0 0-3-3.87" strokeLinecap="round" strokeLinejoin="round" />
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </span>
+                    <span>Counsellor</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[linear-gradient(135deg,#f7d7c4_0%,#d1a58a_100%)] text-[10px] font-bold text-[#1f2937]">
+                      SK
+                    </div>
+                    <div className="text-right">
+                      <div className="font-medium text-[#0F172A]">Santhosh Kumar</div>
+                      <div className="text-[11px] text-[#64748B]">Senior Career Counsellor</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-8">
+                <div className="h-[5px] w-full overflow-hidden rounded-full bg-[#E5E7EB]">
+                  <div className="h-full w-[70%] rounded-full bg-[#2B50EC]" />
+                </div>
+                <p className="mt-3 text-center text-[12px] font-medium uppercase tracking-[0.08em] text-[#64748B]">
+                  Confirming your slot...
+                </p>
               </div>
             </div>
-
-            <button
-              type="button"
-              onClick={handleSubmit}
-              className="mt-2 w-full rounded-full bg-[#2B50EC] px-5 py-3 text-[14px] font-semibold text-white shadow-[0px_8px_18px_rgba(43,80,236,0.24)] transition-colors hover:bg-[#1E3BB3]"
-            >
-              Book free counseling
-            </button>
           </div>
+        ) : (
+          <div className="px-5 py-6 sm:px-6">
+            <div className="mx-auto w-full max-w-[560px] rounded-[24px] border border-[#E6E9EE] bg-[#F7F8FA] p-5 sm:p-7">
+              <div className="mx-auto flex h-[72px] w-[72px] items-center justify-center rounded-full bg-[#DFF7EE]">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#10B981" strokeWidth="2.5" className="h-9 w-9" aria-hidden="true">
+                  <path d="M5 12.5 9.5 17 19 7.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </div>
+
+              <h2 className="mt-7 text-center text-[20px] font-semibold leading-[30px] text-[#0F172A]">
+                Session Booked Successfully!
+              </h2>
+
+              <p className="mt-2 text-center text-[14px] leading-[21px] text-[#64748B]">
+                Your session has been confirmed. You will receive a confirmation email shortly.
+              </p>
+
+              <div className="mt-8 space-y-4 border-t border-[#E2E8F0] pt-4">
+                <div className="flex items-center justify-between gap-4 text-[14px] text-[#475569]">
+                  <div className="flex items-center gap-3">
+                    <span className="inline-flex h-5 w-5 items-center justify-center text-[#2B50EC]">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-4 w-4" aria-hidden="true">
+                        <path d="M12 8v4l3 2" strokeLinecap="round" strokeLinejoin="round" />
+                        <circle cx="12" cy="12" r="8" />
+                      </svg>
+                    </span>
+                    <span>Duration</span>
+                  </div>
+                  <span className="font-medium text-[#0F172A]">30 minutes</span>
+                </div>
+
+                <div className="flex items-center justify-between gap-4 text-[14px] text-[#475569]">
+                  <div className="flex items-center gap-3">
+                    <span className="inline-flex h-5 w-5 items-center justify-center text-[#2B50EC]">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-4 w-4" aria-hidden="true">
+                        <path d="M4 7.5A2.5 2.5 0 0 1 6.5 5h11A2.5 2.5 0 0 1 20 7.5v9A2.5 2.5 0 0 1 17.5 19h-11A2.5 2.5 0 0 1 4 16.5v-9Z" strokeLinecap="round" strokeLinejoin="round" />
+                        <path d="M4 9.5h16" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </span>
+                    <span>Fee</span>
+                  </div>
+                  <span className="font-medium text-[#0F172A]">Free</span>
+                </div>
+
+                <div className="flex items-center justify-between gap-4 text-[14px] text-[#475569]">
+                  <div className="flex items-center gap-3">
+                    <span className="inline-flex h-5 w-5 items-center justify-center text-[#2B50EC]">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-4 w-4" aria-hidden="true">
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2" strokeLinecap="round" strokeLinejoin="round" />
+                        <circle cx="9.5" cy="7" r="4" />
+                        <path d="M22 21v-2a4 4 0 0 0-3-3.87" strokeLinecap="round" strokeLinejoin="round" />
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </span>
+                    <span>Counsellor</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[linear-gradient(135deg,#f7d7c4_0%,#d1a58a_100%)] text-[10px] font-bold text-[#1f2937]">
+                      SK
+                    </div>
+                    <div className="text-right">
+                      <div className="font-medium text-[#0F172A]">Santhosh Kumar</div>
+                      <div className="text-[11px] text-[#64748B]">Senior Career Counsellor</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-7">
+                <Link
+                  href="/dashboard"
+                  className="inline-flex h-12 w-full items-center justify-center rounded-[12px] bg-[#2B50EC] text-[16px] font-semibold text-white shadow-[0_6px_12px_rgba(43,80,236,0.25)] transition-colors hover:bg-[#1E3BB3]"
+                >
+                  Go to Dashboard
+                </Link>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+
+      <div className="mx-auto mt-8 w-full max-w-[560px] rounded-[22px] border border-[#E2E8F0] bg-[#F7F8FA] p-5 sm:p-6">
+        <h3 className="text-center text-[20px] font-semibold leading-[30px] text-[#0F172A]">
+          Prepare for Your Session
+        </h3>
+
+        <div className="mt-6 space-y-4">
+          {[
+            {
+              icon: "🧭",
+              title: "Update Your Profile",
+              text: "Complete your profile for a personalized career recommendation.",
+            },
+            {
+              icon: "📝",
+              title: "Prepare Questions",
+              text: "Write down your career goals, doubts, and specific questions.",
+            },
+            {
+              icon: "🎯",
+              title: "Join 5 Mins Early",
+              text: "Test your audio, video, and internet connection before joining.",
+            },
+          ].map((item) => (
+            <div key={item.title} className="flex items-center gap-4 rounded-[14px] bg-[#EEF2F7] p-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-[10px] bg-white text-lg shadow-[0_1px_2px_rgba(15,23,42,0.05)]">
+                {item.icon}
+              </div>
+              <div className="min-w-0 flex-1">
+                <div className="text-[14px] font-semibold leading-[21px] text-[#0F172A]">{item.title}</div>
+                <div className="text-[12px] leading-[18px] text-[#64748B]">{item.text}</div>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
+
+      <p className="mt-6 text-center text-[12px] leading-[18px] text-[#64748B]">
+        Need to reschedule? You can modify or cancel your booking up to 24 hours before the
+        session.
+      </p>
     </div>
   );
 }
-*/
+

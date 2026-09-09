@@ -119,7 +119,7 @@ export default function DashboardSidebarWidgets() {
               Goals assessment
             </span>
             {!hasGoals && (
-              <Link href="/dashboard/settings" className="ml-auto text-[10px] font-semibold leading-[15px] text-[#2B50EC] hover:text-[#1E3BB3]">
+              <Link href="/dashboard/settings?edit=true" className="ml-auto text-[10px] font-semibold leading-[15px] text-[#2B50EC] hover:text-[#1E3BB3]">
                 Complete
               </Link>
             )}
@@ -140,7 +140,7 @@ export default function DashboardSidebarWidgets() {
               Basic profile
             </span>
             {!hasBasicProfile && (
-              <Link href="/dashboard/settings" className="ml-auto text-[10px] font-semibold leading-[15px] text-[#2B50EC] hover:text-[#1E3BB3]">
+              <Link href="/dashboard/settings?edit=true" className="ml-auto text-[10px] font-semibold leading-[15px] text-[#2B50EC] hover:text-[#1E3BB3]">
                 Complete
               </Link>
             )}
@@ -161,7 +161,7 @@ export default function DashboardSidebarWidgets() {
               Add resume / LinkedIn
             </span>
             {!hasResumeOrLinkedIn && (
-              <Link href="/dashboard/settings" className="ml-auto text-[10px] font-semibold leading-[15px] text-[#2B50EC] hover:text-[#1E3BB3]">
+              <Link href="/dashboard/settings?edit=true" className="ml-auto text-[10px] font-semibold leading-[15px] text-[#2B50EC] hover:text-[#1E3BB3]">
                 Complete
               </Link>
             )}
@@ -182,7 +182,7 @@ export default function DashboardSidebarWidgets() {
               Skill assessment quiz (5 min)
             </span>
             {!hasQuiz && (
-              <Link href="/dashboard/settings" className="ml-auto text-[10px] font-semibold leading-[15px] text-[#2B50EC] hover:text-[#1E3BB3]">
+              <Link href="/dashboard/settings?edit=true" className="ml-auto text-[10px] font-semibold leading-[15px] text-[#2B50EC] hover:text-[#1E3BB3]">
                 Complete
               </Link>
             )}

@@ -59,7 +59,7 @@ export default function ResetLoadingTransition({
   }, [stage, onComplete]);
 
   return (
-    <div className="relative flex min-h-screen w-full items-center justify-center bg-[#f7f9fb] text-center">
+    <div className="fixed inset-0 z-50 flex h-screen w-screen items-center justify-center bg-[#F9FBFF] text-center">
       <div className="flex -translate-y-px flex-col items-center gap-10">
         <motion.div
           className="flex h-16 w-16 items-center justify-center rounded-[7.627px] shadow-[42px_40px_16px_0px_rgba(0,0,0,0),27px_26px_15px_0px_rgba(0,0,0,0.01),15px_15px_13px_0px_rgba(0,0,0,0.05),7px_6px_9px_0px_rgba(0,0,0,0.09),2px_2px_5px_0px_rgba(0,0,0,0.1)]"
