@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Staatliches, Plus_Jakarta_Sans } from "next/font/google";
+import { Staatliches } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
 const staatliches = Staatliches({
@@ -8,8 +9,8 @@ const staatliches = Staatliches({
   subsets: ["latin"],
 });
 
-const plusJakartaSans = Plus_Jakarta_Sans({
-  subsets: ["latin"],
+const stackSansHeadline = localFont({
+  src: "../fonts/StackSansHeadline-VariableFont_wght.ttf",
   variable: "--font-stack-sans-headline",
   display: "swap",
 });
@@ -27,7 +28,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${staatliches.variable} ${plusJakartaSans.variable} h-full antialiased`}
+      className={`${staatliches.variable} ${stackSansHeadline.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col font-sans" suppressHydrationWarning>{children}</body>

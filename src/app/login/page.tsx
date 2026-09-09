@@ -38,15 +38,19 @@ export default function LoginPage() {
   const isCenterCardMode = ["forgot-email", "forgot-code", "forgot-success", "reset-loading"].includes(mode);
 
   return (
-    <div className="h-screen w-full flex bg-[#F8F9FC] font-sans overflow-hidden relative">
-      <div className="w-full flex h-full">
+    <div className="h-screen w-full flex items-center justify-center bg-[#F3F4F6] font-sans overflow-hidden relative">
+      <div className="w-full flex h-full items-center justify-center">
         {/* Left Side: Form Container */}
         <div
           className={`w-full ${
             isCenterCardMode ? "lg:w-full" : "lg:w-1/2"
           } flex items-center justify-center px-6 sm:px-12 lg:px-16 py-6 lg:py-8 bg-transparent relative transition-all duration-300`}
         >
-          <div className={`w-full ${mode === "signup" ? "max-w-[448px]" : "max-w-[420px]"}`}>
+          <div
+            className={`w-full ${
+              isCenterCardMode ? "max-w-[560px]" : mode === "signup" ? "max-w-[448px]" : "max-w-[420px]"
+            }`}
+          >
             <AnimatePresence mode="wait">
               {mode === "login" && (
                 <motion.div
