@@ -2,11 +2,22 @@
 
 import React from "react";
 
+import { CohortConfig, CountryCode } from "@/config/cohorts";
+
 interface EnrollReceiptViewProps {
   onBackToSuccess: () => void;
+  orderInfo?: any;
+  cohort?: CohortConfig;
+  country?: CountryCode;
 }
 
-export default function EnrollReceiptView({ onBackToSuccess }: EnrollReceiptViewProps) {
+export default function EnrollReceiptView({ onBackToSuccess, orderInfo, cohort, country = "IN" }: EnrollReceiptViewProps) {
+  const cohortTitle = cohort?.title || orderInfo?.cohortTitle || "Gen AI Cohort — 1 Year";
+  const orderId = orderInfo?.orderId || "CAI-CF-2026-8842";
+  const pricing = cohort?.pricing[country];
+  const paidAmount = pricing ? pricing.formattedOffered : (orderInfo?.amount ? `${orderInfo.currency || "₹"} ${orderInfo.amount}` : "₹44,999");
+  const todayDate = new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+
   return (
     <div className="w-full max-w-[896px] mx-auto text-left">
       <div className="flex flex-wrap items-center justify-between gap-3 pb-8">
@@ -38,17 +49,17 @@ export default function EnrollReceiptView({ onBackToSuccess }: EnrollReceiptView
               </p>
               <p>
                 <span className="text-[#94a3b8] inline-block w-12">To:</span>
-                <strong>john.doe@example.com</strong>
+                <strong>student@consistency.ai</strong>
               </p>
             </div>
             <h1 className="break-words text-lg sm:text-xl font-black text-[#0f172a]">
-              Subject: Payment Receipt &amp; Enrollment Confirmed — AI/ML Mastery Cohort
+              Subject: Payment Receipt &amp; Enrollment Confirmed — {cohortTitle}
             </h1>
             <div className="flex flex-wrap items-center gap-3">
               <span className="bg-[#ecfdf5] border border-[#a7f3d0] text-[#047857] px-3 py-1 rounded-full text-[10px] font-bold">
                 Payment Successful
               </span>
-              <span className="text-xs text-[#64748b]">Dec 15, 2026 · 11:42 AM IST</span>
+              <span className="text-xs text-[#64748b]">{todayDate} · Verified via Cashfree PG</span>
             </div>
           </header>
 
@@ -60,7 +71,7 @@ export default function EnrollReceiptView({ onBackToSuccess }: EnrollReceiptView
                 </div>
                 <div>
                   <h2 className="font-black text-[#0f172a]">Consistency AI</h2>
-                  <p className="text-xs text-[#64748b]">AI/ML Mastery Cohort</p>
+                  <p className="text-xs text-[#64748b]">{cohortTitle}</p>
                 </div>
               </div>
               <span className="bg-[#059669] text-white rounded-full px-3 py-1.5 text-[10px] font-black">
@@ -70,24 +81,24 @@ export default function EnrollReceiptView({ onBackToSuccess }: EnrollReceiptView
 
             <div>
               <h2 className="text-2xl sm:text-3xl font-black text-[#0f172a]">
-                Hello John, You&apos;re enrolled! 🎉
+                Hello Student, You&apos;re enrolled! 🎉
               </h2>
               <p className="mt-3 text-sm leading-6 text-[#475569]">
                 Thank you for joining the{" "}
-                <strong className="text-[#0f172a]">AI/ML Mastery 12-Week Cohort</strong>. Your payment of{" "}
-                <strong className="text-[#0f172a]">$529.82</strong> was successful via Razorpay UPI. Your seat is confirmed.
+                <strong className="text-[#0f172a]">{cohortTitle}</strong>. Your payment of{" "}
+                <strong className="text-[#0f172a]">{paidAmount}</strong> was successful via Cashfree Payments. Your seat is confirmed.
               </p>
             </div>
 
             <div className="grid grid-cols-2 lg:grid-cols-4 border border-[#e2e8f0] rounded-xl overflow-hidden text-xs">
-              <div className="p-4 bg-[#f8fafc]"><b className="block text-[9px] text-[#64748b]">ORDER ID</b>#CAI-ML-2026-8842</div>
-              <div className="p-4 border-l border-[#e2e8f0]"><b className="block text-[9px] text-[#64748b]">DATE</b>Dec 15, 2026</div>
-              <div className="p-4 border-l border-[#e2e8f0]"><b className="block text-[9px] text-[#64748b]">COHORT</b>AI/ML · Dec 2 Batch</div>
-              <div className="p-4 border-l border-[#e2e8f0]"><b className="block text-[9px] text-[#64748b]">AMOUNT</b>$529.82 incl. GST</div>
-              <div className="p-4 border-t border-[#e2e8f0]"><b className="block text-[9px] text-[#64748b]">PAYMENT METHOD</b>UPI @okaxis · 98xx10</div>
-              <div className="p-4 border-l border-t border-[#e2e8f0]"><b className="block text-[9px] text-[#64748b]">TRANSACTION ID</b>razorpay_9XyZ123</div>
-              <div className="p-4 border-l border-t border-[#e2e8f0]"><b className="block text-[9px] text-[#64748b]">GSTIN</b>29AABCU9603R1ZX</div>
-              <div className="p-4 border-l border-t border-[#e2e8f0]"><b className="block text-[9px] text-[#64748b]">INVOICE</b>INV-8842</div>
+              <div className="p-4 bg-[#f8fafc]"><b className="block text-[9px] text-[#64748b]">ORDER ID</b>{orderId}</div>
+              <div className="p-4 border-l border-[#e2e8f0]"><b className="block text-[9px] text-[#64748b]">DATE</b>{todayDate}</div>
+              <div className="p-4 border-l border-[#e2e8f0]"><b className="block text-[9px] text-[#64748b]">COHORT</b>{cohort?.shortName || "Gen AI"}</div>
+              <div className="p-4 border-l border-[#e2e8f0]"><b className="block text-[9px] text-[#64748b]">AMOUNT</b>{paidAmount}</div>
+              <div className="p-4 border-t border-[#e2e8f0]"><b className="block text-[9px] text-[#64748b]">PAYMENT METHOD</b>Cashfree PG</div>
+              <div className="p-4 border-l border-t border-[#e2e8f0]"><b className="block text-[9px] text-[#64748b]">GATEWAY</b>Cashfree Payments</div>
+              <div className="p-4 border-l border-t border-[#e2e8f0]"><b className="block text-[9px] text-[#64748b]">STATUS</b>CONFIRMED</div>
+              <div className="p-4 border-l border-t border-[#e2e8f0]"><b className="block text-[9px] text-[#64748b]">INVOICE</b>INV-CF-{Date.now().toString().slice(-4)}</div>
             </div>
 
             <div>

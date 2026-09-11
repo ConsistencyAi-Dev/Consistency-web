@@ -5,6 +5,7 @@ export interface LearningPathStep {
 }
 
 export interface CohortItem {
+  id?: string;
   title: string;
   match: string;
   duration: string;
@@ -22,6 +23,8 @@ export interface CohortItem {
   badgeBg: string;
   badgeTextColor: string;
   showSpark: boolean;
+  backgroundImage?: string;
+  liveRecorded?: boolean;
 }
 
 export interface MentorItem {
@@ -55,61 +58,69 @@ export const LEARNING_PATH_STEPS: LearningPathStep[] = [
 
 export const COHORTS_DATA: CohortItem[] = [
   {
-    title: "Gen AI  Cohort",
-    match: "BEST MATCH 98%",
+    id: "genai-1yr",
+    title: "Gen AI Cohort — 1 Year",
+    match: "BEST MATCH 96%",
     duration: "1 Year",
     rating: "4.9",
-    students: "240",
-    skills: ["React", "Node.js", "PostgreSQL"],
-    mentor: "Alex Morgan",
-    mentorTitle: "Ex-Google, Staff Eng",
-    mentorAvatar: "A",
-    price: "₹35,000",
-    originalPrice: "₹40,000",
-    startDate: null,
+    students: "180+",
+    skills: ["Python", "Transformers", "RAG", "MLOps"],
+    mentor: "Bhavanidevi Manyala",
+    mentorTitle: "Data Analyst & AI Engineer",
+    mentorAvatar: "B",
+    price: "₹44,999",
+    originalPrice: "₹55,000",
+    startDate: "Oct 15, 2026",
     disabled: false,
     gradient: "linear-gradient(170deg, #2B50EC 0%, #8B9EFF 100%)",
     badgeBg: "bg-white",
     badgeTextColor: "text-[#2B50EC]",
     showSpark: true,
+    backgroundImage: "https://www.figma.com/api/mcp/asset/2e54e928-accc-43bc-a8ea-d15894ca5d22.png",
+    liveRecorded: true,
   },
   {
-    title: "DSA + System Design Cohort",
-    match: "92% MATCH",
+    id: "genai-6mo",
+    title: "Gen AI Cohort — 6 Months",
+    match: "94% MATCH",
     duration: "6 Months",
-    rating: "4.8",
-    students: "180",
-    skills: ["DSA", "System Design", "Mock Interviews"],
-    mentor: "Priya Singh",
-    mentorTitle: "Ex-Meta, Senior Staff",
-    mentorAvatar: "P",
-    price: "₹28,000",
-    originalPrice: "₹35,000",
-    startDate: "Sep 25, 2026",
-    disabled: true,
+    rating: "4.9",
+    students: "140+",
+    skills: ["LLMs", "Prompt Eng", "Vector DBs", "RAG"],
+    mentor: "Bhavanidevi Manyala",
+    mentorTitle: "Data Analyst & AI Engineer",
+    mentorAvatar: "B",
+    price: "₹35,000",
+    originalPrice: "₹45,000",
+    startDate: "Nov 1, 2026",
+    disabled: false,
     gradient: "linear-gradient(170deg, #0F172A 0%, #334155 100%)",
     badgeBg: "bg-black/20 text-white backdrop-blur-[4px] outline outline-[1px] outline-white/20 -outline-offset-[1px]",
     badgeTextColor: "text-white",
     showSpark: false,
+    backgroundImage: "https://www.figma.com/api/mcp/asset/6286cdeb-917e-431b-9c60-056f86cba1a3.png",
+    liveRecorded: true,
   },
   {
-    title: "Full Stack Developer",
-    match: "85% MATCH",
-    duration: "1 Year",
-    rating: "4.7",
-    students: "120",
-    skills: ["Next.js", "Tailwind", "Framer Motion"],
-    mentor: "David Chen",
-    mentorTitle: "Ex-Vercel, Design Eng",
-    mentorAvatar: "D",
-    price: "₹21,000",
-    originalPrice: "₹28,000",
-    startDate: "Oct 10, 2026",
-    disabled: true,
-    gradient: "linear-gradient(170deg, #F59E0B 0%, #EC4899 100%)",
+    id: "dsa-system",
+    title: "DSA + System Design",
+    match: "91% MATCH",
+    duration: "4 to 6 Months",
+    rating: "4.8",
+    students: "210+",
+    skills: ["DSA Patterns", "HLD + LLD", "Mock Interviews"],
+    mentor: "Priya Singh",
+    mentorTitle: "Ex-Meta, Senior SWE",
+    mentorAvatar: "P",
+    price: "₹40,000",
+    originalPrice: "₹50,000",
+    startDate: "Oct 20, 2026",
+    disabled: false,
+    gradient: "linear-gradient(170deg, #1E293B 0%, #4338CA 100%)",
     badgeBg: "bg-black/20 text-white backdrop-blur-[4px] outline outline-[1px] outline-white/20 -outline-offset-[1px]",
     badgeTextColor: "text-white",
     showSpark: false,
+    liveRecorded: true,
   },
 ];
 

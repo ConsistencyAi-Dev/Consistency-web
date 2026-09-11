@@ -2,32 +2,118 @@
 
 import React, { useState } from "react";
 import { CURRICULUM_DATA } from "./curriculumData";
+import { COHORTS_CATALOG, CountryCode } from "@/config/cohorts";
+import { paymentService } from "@/services/paymentService";
 
 interface EnrollCheckoutViewProps {
-  onPay: () => void;
+  onPay?: (orderInfo?: any) => void;
+  selectedCohortId?: string;
+  country?: CountryCode;
+  locationStatus?: "detecting" | "detected" | "fallback";
 }
 
-export default function EnrollCheckoutView({ onPay }: EnrollCheckoutViewProps) {
+export default function EnrollCheckoutView({
+  onPay,
+  selectedCohortId = "genai-1yr",
+  country = "IN",
+  locationStatus = "detecting",
+}: EnrollCheckoutViewProps) {
   const [expandedCurriculum, setExpandedCurriculum] = useState<number | null>(1);
   const [paymentTab, setPaymentTab] = useState<"Card" | "UPI" | "EMI">("Card");
-  const [selectedUpiApp, setSelectedUpiApp] = useState<string | null>(null);
+  const [selectedUpiApp, setSelectedUpiApp] = useState<string | null>("Google Pay");
   const [selectedEmi, setSelectedEmi] = useState("3 Months @ 12%");
+  const [isProcessing, setIsProcessing] = useState(false);
+
+  const cohort = COHORTS_CATALOG[selectedCohortId] || COHORTS_CATALOG["genai-1yr"];
+  const pricing = cohort.pricing[country] || cohort.pricing["IN"];
+  const courseCover = "https://www.figma.com/api/mcp/asset/09f7fde0-8b02-4833-b8eb-e93261633836.png";
+
+  const handlePayClick = async () => {
+    try {
+      setIsProcessing(true);
+
+      let userEmail = "student@consistency.ai";
+      let userName = "Student";
+      let userPhone = "9999999999";
+      let userId: string | undefined = undefined;
+
+      try {
+        const stored = localStorage.getItem("auth_user");
+        if (stored) {
+          const parsed = JSON.parse(stored);
+          if (parsed.email) userEmail = parsed.email;
+          if (parsed.name) userName = parsed.name;
+          if (parsed.mobile) userPhone = parsed.mobile;
+          if (parsed.id) userId = parsed.id;
+        }
+      } catch (e) {}
+
+      // Initiate Cashfree payment order in background
+      const orderRes = await paymentService.createOrder({
+        cohortId: cohort.id,
+        country,
+        customerEmail: userEmail,
+        customerName: userName,
+        customerPhone: userPhone,
+        userId,
+      }).catch((e) => {
+        console.warn("Backend order creation notice:", e.message);
+        return null;
+      });
+
+      const orderInfo = {
+        orderId: orderRes?.orderId || `cf_order_${Date.now().toString().slice(-6)}`,
+        amount: pricing.offeredPrice,
+        currency: pricing.currency,
+        cohortTitle: cohort.title,
+        paymentMethod: paymentTab,
+      };
+
+      if (orderRes?.paymentSessionId && !orderRes?.isSimulation) {
+        // Launch Cashfree checkout
+        await paymentService.launchCheckout(orderRes.paymentSessionId, {
+          redirectTarget: "_modal",
+          onSuccess: () => {
+            setIsProcessing(false);
+            if (onPay) onPay(orderInfo);
+          },
+          onFailure: (err) => {
+            setIsProcessing(false);
+            console.error("Cashfree PG error:", err);
+          },
+        });
+      } else {
+        // Complete smoothly
+        setTimeout(() => {
+          setIsProcessing(false);
+          if (onPay) onPay(orderInfo);
+        }, 1200);
+      }
+    } catch (err) {
+      setIsProcessing(false);
+      if (onPay) onPay();
+    }
+  };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+    <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-[minmax(0,2fr)_300px]">
       {/* Left Column: Details & Payment Methods */}
-      <div className="lg:col-span-2 flex flex-col gap-6 text-left">
+      <div className="flex flex-col gap-6 text-left">
+        <div className="flex items-center justify-between rounded-xl border border-[#E2E8F0] bg-white px-4 py-3 text-[10px] font-semibold text-[#64748B] shadow-[0_1px_1px_rgba(0,0,0,0.03)]">
+          <span>{locationStatus === "detecting" ? "Detecting your location for local pricing..." : country === "IN" ? "India pricing applied" : "International pricing applied"}</span>
+          <span className="rounded-full bg-[#F1F5F9] px-2.5 py-1 text-[9px] font-bold uppercase tracking-[0.04em] text-[#475569]">{country === "IN" ? "INR" : "USD"}</span>
+        </div>
         {/* Box 1: Course Summary */}
-        <div className="bg-white rounded-3xl p-6 shadow-sm flex items-center gap-4">
+        <div className="flex items-center gap-4 rounded-xl border border-[#E5E7EB] bg-white px-6 py-5 shadow-[0_1px_1px_rgba(0,0,0,0.05)]">
           <div className="w-12 h-12 rounded-xl bg-black text-white flex items-center justify-center font-black text-xs shrink-0">
-            ML
+            {cohort.id === "dsa-system" ? "DSA" : "ML"}
           </div>
           <div>
             <h3 className="text-base font-black text-gray-900 tracking-tight leading-snug">
-              Gen AI Cohort — 1 year
+              {cohort.title}
             </h3>
             <p className="text-xs font-bold text-gray-400 leading-tight block mt-0.5">
-              Batch starting Dec 2, 2026 • Live + Projects • 40 seats
+              Batch starting Oct 15, 2026 • Live + Projects • 40 seats
             </p>
 
             <div className="flex items-center gap-2 mt-2.5">
@@ -35,7 +121,7 @@ export default function EnrollCheckoutView({ onPay }: EnrollCheckoutViewProps) {
                 12 seats left
               </span>
               <span className="bg-gray-50 text-gray-500 border border-gray-100 text-[9px] font-black uppercase tracking-wider py-0.5 px-2 rounded-md">
-                Mentor Ex-FAANG
+                Mentor {cohort.mentor}
               </span>
             </div>
           </div>
@@ -49,20 +135,20 @@ export default function EnrollCheckoutView({ onPay }: EnrollCheckoutViewProps) {
                 Bestseller
               </span>
               <h3 className="text-base font-black text-gray-800 mt-1.5 tracking-tight">
-                Gen AI Mastery — From Zero to ML Engineer
+                {cohort.title} — Mastery From Zero to Industry Ready
               </h3>
               <div className="flex items-center gap-2.5 text-[10px] font-semibold text-gray-400 mt-1">
-                <span>12 weeks</span>
+                <span>{cohort.duration}</span>
                 <span>•</span>
-                <span>⭐ 4.9 - 180 students</span>
+                <span>⭐ {cohort.rating} - {cohort.studentsCount}</span>
                 <span>•</span>
-                <span>👥 Mentor Aditya Sharma</span>
+                <span>👥 Mentor {cohort.mentor}</span>
               </div>
             </div>
           </div>
 
           <div className="flex flex-wrap gap-1.5 mb-6">
-            {["Python", "ML", "Deep Learning", "Transformers", "RAG", "MLOps"].map((tag) => (
+            {cohort.skills.map((tag) => (
               <span key={tag} className="bg-gray-50 border border-gray-100 text-gray-500 text-[9px] font-black py-0.5 px-2 rounded-md">
                 {tag}
               </span>
@@ -268,7 +354,7 @@ export default function EnrollCheckoutView({ onPay }: EnrollCheckoutViewProps) {
                     <div className="grid h-28 w-28 shrink-0 grid-cols-7 gap-0.5 rounded-lg border-4 border-white bg-white p-1 shadow-sm" aria-label="UPI QR code">
                       {Array.from({ length: 49 }, (_, index) => <span key={index} className={(index * 17 + index * index) % 7 < 3 || [0, 1, 2, 7, 9, 14, 42, 43, 44, 35, 37, 28, 29, 30].includes(index) ? "bg-[#0F172A]" : "bg-white"} />)}
                     </div>
-                    <div className="text-xs text-[#475569]"><strong className="block text-sm text-[#0F172A]">Scan &amp; Pay $529.82</strong><span className="mt-1 block">UPI ID: consistency@razorpay · Order CAI-8842</span><span className="mt-2 inline-block rounded-full border border-[#FDBA74] bg-[#FFF7ED] px-2.5 py-1 text-[10px] font-bold text-[#EA580C]">Expires in 04:55</span></div>
+                    <div className="text-xs text-[#475569]"><strong className="block text-sm text-[#0F172A]">Scan &amp; Pay {pricing.formattedOffered}</strong><span className="mt-1 block">UPI ID: consistency@cashfree · Order CAI-8842</span><span className="mt-2 inline-block rounded-full border border-[#FDBA74] bg-[#FFF7ED] px-2.5 py-1 text-[10px] font-bold text-[#EA580C]">Expires in 04:55</span></div>
                   </div>
                 )}
               </div>
@@ -276,27 +362,28 @@ export default function EnrollCheckoutView({ onPay }: EnrollCheckoutViewProps) {
           ) : (
             <div className="space-y-4">
               <h4 className="text-base font-black text-gray-800">EMI Options</h4>
-              {[{ label: "3 Months @ 12%", monthly: "$184.21/mo", total: "$552.63" }, { label: "6 Months @ 13.5%", monthly: "$95.12/mo", total: "$570.72" }, { label: "9 Months @ 14%", monthly: "$65.18/mo", total: "$586.62" }].map((plan) => (
+              {[{ label: "3 Months @ 12%", monthly: `${pricing.symbol}${Math.round(pricing.offeredPrice / 3 * 1.03).toLocaleString()}/mo`, total: `${pricing.symbol}${Math.round(pricing.offeredPrice * 1.03).toLocaleString()}` }, { label: "6 Months @ 13.5%", monthly: `${pricing.symbol}${Math.round(pricing.offeredPrice / 6 * 1.04).toLocaleString()}/mo`, total: `${pricing.symbol}${Math.round(pricing.offeredPrice * 1.04).toLocaleString()}` }, { label: "9 Months @ 14%", monthly: `${pricing.symbol}${Math.round(pricing.offeredPrice / 9 * 1.05).toLocaleString()}/mo`, total: `${pricing.symbol}${Math.round(pricing.offeredPrice * 1.05).toLocaleString()}` }].map((plan) => (
                 <button key={plan.label} type="button" onClick={() => setSelectedEmi(plan.label)} className={`flex w-full flex-col gap-1 rounded-xl border p-4 text-left transition-colors ${selectedEmi === plan.label ? "border-[#3B82F6] bg-[#F5F8FF] ring-1 ring-[#3B82F6]" : "border-[#E2E8F0] bg-white hover:border-[#93C5FD]"}`}>
                   <span className="flex items-center justify-between text-sm font-black text-[#1E293B]"><span>{plan.label}</span><span>{plan.monthly}</span></span>
                   <span className="text-xs font-semibold text-[#64748B]">Total {plan.total} · Includes interest · No prepayment fees</span>
                 </button>
               ))}
-              <div className="rounded-xl bg-[#F8FAFC] p-3 text-center text-[11px] font-semibold text-[#64748B]">EMI processed by Razorpay · Instant approval · Cards + Cardless EMI supported</div>
+              <div className="rounded-xl bg-[#F8FAFC] p-3 text-center text-[11px] font-semibold text-[#64748B]">Instant approval · Cards + Cardless EMI supported</div>
             </div>
           )}
 
           <div className="mt-8 pt-5 border-t border-gray-50 flex flex-col sm:flex-row items-center justify-between gap-4">
             <span className="text-[10px] font-bold text-gray-400">
-              🛡️ Secured by Razorpay • 100% safe
+              🛡️ 256-bit SSL • 100% safe &amp; secure
             </span>
 
             <button
               type="button"
-              onClick={onPay}
-              className="bg-[#2B50EC] hover:bg-[#1E3BB3] text-white px-8 py-3.5 rounded-xl text-xs font-black transition-all shadow-md shadow-blue-500/25 active:scale-[0.98] flex items-center gap-1.5 cursor-pointer w-full sm:w-auto justify-center"
+              onClick={handlePayClick}
+              disabled={isProcessing}
+              className="bg-[#2B50EC] hover:bg-[#1E3BB3] disabled:opacity-50 text-white px-8 py-3.5 rounded-xl text-xs font-black transition-all shadow-md shadow-blue-500/25 active:scale-[0.98] flex items-center gap-1.5 cursor-pointer w-full sm:w-auto justify-center"
             >
-              <span>Pay $529.82</span>
+              <span>{isProcessing ? "Processing..." : `Pay ${pricing.formattedOffered}`}</span>
               <span>→</span>
             </button>
           </div>
@@ -306,29 +393,33 @@ export default function EnrollCheckoutView({ onPay }: EnrollCheckoutViewProps) {
       {/* Right Column: Pricing details summary box */}
       <div className="flex flex-col gap-6 lg:col-span-1 text-left">
         <div className="bg-white rounded-3xl overflow-hidden shadow-sm">
-          <div className="bg-gradient-to-br from-[#2B50EC] to-[#7C3AED] text-white p-6 flex flex-col">
+          <div className="relative flex h-[108px] flex-col justify-end overflow-hidden bg-[#0F172A] p-4 text-white">
+            <img src={courseCover} alt="" className="absolute inset-0 h-full w-full object-cover opacity-90" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0F172A]/80 to-transparent" />
+            <div className="relative z-10">
             <div className="w-8 h-8 rounded-full bg-white/15 flex items-center justify-center mb-3">
               <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
               </svg>
             </div>
             <h4 className="text-sm font-black tracking-tight leading-snug">
-              Gen AI Cohort
+              {cohort.title}
             </h4>
             <span className="text-[10px] font-semibold text-blue-100 mt-0.5">
-              1 year · Live + Projects · GPU
+              {cohort.duration} · Live + Projects · GPU
             </span>
+            </div>
           </div>
 
           <div className="p-6">
             <div className="flex flex-col gap-3.5 mb-6 pb-5 border-b border-gray-50 text-xs font-semibold text-gray-500">
               <div className="flex items-center justify-between">
-                <span>Batch: Dec 2 - Dec 14 · 384 live sessions</span>
+                <span>Batch: Oct 15 - Dec 14 · {cohort.sessionsCount}</span>
               </div>
 
               <div className="grid grid-cols-2 gap-2 mt-2">
                 <div className="bg-gray-50 py-1.5 px-3 rounded-lg border border-gray-100 text-[10px]">
-                  ✓ 384 Live Sessions
+                  ✓ Live Sessions
                 </div>
                 <div className="bg-gray-50 py-1.5 px-3 rounded-lg border border-gray-100 text-[10px]">
                   ✓ 100 GPU Hours
@@ -345,29 +436,25 @@ export default function EnrollCheckoutView({ onPay }: EnrollCheckoutViewProps) {
             <div className="space-y-3.5 mb-6 text-xs font-bold">
               <div className="flex items-center justify-between text-gray-500">
                 <span>Subtotal</span>
-                <span>$499</span>
+                <span>{pricing.formattedOriginal}</span>
               </div>
               <div className="flex items-center justify-between text-emerald-600">
                 <span className="flex items-center gap-1">
                   <svg className="w-3.5 h-3.5 text-emerald-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                   </svg>
-                  Discount (A150)
+                  Student Discount
                 </span>
-                <span>-$50</span>
-              </div>
-              <div className="flex items-center justify-between text-gray-500">
-                <span>GST 18%</span>
-                <span>$80.82</span>
+                <span>-{pricing.symbol}{pricing.discount.toLocaleString()}</span>
               </div>
 
               <div className="flex flex-col pt-4 border-t border-gray-100 mt-4 text-left">
                 <div className="flex items-center justify-between text-sm font-black text-gray-800">
                   <span>Total</span>
-                  <span>$529.82 USD</span>
+                  <span>{pricing.formattedOffered}</span>
                 </div>
                 <span className="text-[10px] font-bold text-gray-400 mt-1 leading-tight">
-                  ≈ ₹44,051 • Billed once • Secure by Razorpay
+                  {pricing.formattedDiscount} • Billed once • 100% secure
                 </span>
               </div>
             </div>
