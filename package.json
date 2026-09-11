@@ -3,12 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --webpack",
+    "dev": "next dev",
+    "dev:webpack": "next dev --webpack",
     "build": "next build",
     "start": "next start",
     "lint": "eslint"
   },
   "dependencies": {
+    "@cashfreepayments/cashfree-js": "^1.0.7",
     "framer-motion": "^12.42.2",
     "motion": "^12.42.2",
     "next": "16.2.10",

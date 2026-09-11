@@ -213,6 +213,7 @@ export default function DashboardLayout({
                   <Link
                     key={item.name}
                     href={item.href}
+                    prefetch={true}
                     onClick={() => setIsMobileSidebarOpen(false)}
                     className={`flex h-[40px] w-full items-center gap-2.5 rounded-lg px-2.5 transition-colors ${
                       isActive ? "bg-[#2B50EC] text-white shadow-[0px_3px_10px_rgba(43,80,236,0.2)]" : "text-[#64748B] hover:bg-[#EEF2FF]"
@@ -240,9 +241,13 @@ export default function DashboardLayout({
                   Unlock AI Mentor, Projects,<br />
                   Certificates &amp; more.
                 </p>
-                <button className="w-full rounded-lg border border-[rgba(43,80,236,0.2)] bg-[rgba(43,80,236,0.05)] px-1 py-[6px] text-[11px] leading-4 text-[#2B50EC] transition-colors hover:bg-[rgba(43,80,236,0.08)]">
+                <Link
+                  href="/cohort-enroll"
+                  prefetch={true}
+                  className="block text-center w-full rounded-lg border border-[rgba(43,80,236,0.2)] bg-[rgba(43,80,236,0.05)] px-1 py-[6px] text-[11px] leading-4 text-[#2B50EC] transition-colors hover:bg-[rgba(43,80,236,0.08)]"
+                >
                   Upgrade Now
-                </button>
+                </Link>
               </div>
             </div>
 

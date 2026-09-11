@@ -1,21 +1,71 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { logoPng } from "@/assets";
+import { COHORTS_CATALOG, CountryCode } from "@/config/cohorts";
 import EnrollCheckoutView from "./components/EnrollCheckoutView";
 import EnrollSuccessView from "./components/EnrollSuccessView";
 import EnrollReceiptView from "./components/EnrollReceiptView";
 
-export default function CohortEnrollPage() {
-  const [view, setView] = useState<"checkout" | "success" | "receipt" | "loading">("checkout");
+function CohortEnrollContent() {
+  const searchParams = useSearchParams();
+  const cohortParam = searchParams.get("cohort") || "genai-1yr";
 
-  const handlePay = () => {
-    setView("loading");
-    setTimeout(() => {
-      setView("success");
-    }, 1800);
+  const [selectedCohortId, setSelectedCohortId] = useState<string>(
+    COHORTS_CATALOG[cohortParam] ? cohortParam : "genai-1yr"
+  );
+  const [country, setCountry] = useState<CountryCode>("IN");
+  const [locationStatus, setLocationStatus] = useState<"detecting" | "detected" | "fallback">("detecting");
+  const [view, setView] = useState<"checkout" | "success" | "receipt" | "loading">("checkout");
+  const [paidOrderInfo, setPaidOrderInfo] = useState<any>(null);
+
+  useEffect(() => {
+    if (cohortParam && COHORTS_CATALOG[cohortParam]) {
+      setSelectedCohortId(cohortParam);
+    }
+  }, [cohortParam]);
+
+  useEffect(() => {
+    const fallbackToLocale = () => {
+      const locale = typeof navigator !== "undefined" ? navigator.language.toLowerCase() : "";
+      const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone.toLowerCase();
+      setCountry(locale.endsWith("-in") || timezone.includes("calcutta") || timezone.includes("kolkata") ? "IN" : "OTHER");
+      setLocationStatus("fallback");
+    };
+
+    if (!navigator.geolocation) {
+      fallbackToLocale();
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      async ({ coords }) => {
+        try {
+          const response = await fetch(
+            `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${coords.latitude}&lon=${coords.longitude}`,
+            { headers: { Accept: "application/json" } }
+          );
+          const result = await response.json();
+          setCountry(result.address?.country_code?.toLowerCase() === "in" ? "IN" : "OTHER");
+        } catch {
+          fallbackToLocale();
+          return;
+        }
+        setLocationStatus("detected");
+      },
+      fallbackToLocale,
+      { enableHighAccuracy: false, timeout: 7000, maximumAge: 300000 }
+    );
+  }, []);
+
+  const handlePaySuccess = (orderInfo: any) => {
+    setPaidOrderInfo(orderInfo);
+    setView("success");
   };
+
+  const currentCohort = COHORTS_CATALOG[selectedCohortId] || COHORTS_CATALOG["genai-1yr"];
 
   return (
     <div className="min-h-screen bg-[#f7f9fb] font-sans antialiased text-gray-800 flex flex-col">
@@ -27,7 +77,9 @@ export default function CohortEnrollPage() {
           </div>
           <div className="text-left">
             <span className="font-extrabold text-gray-900 text-sm tracking-tight block">Consistency AI</span>
-            <span className="text-[9px] font-bold text-gray-400 block -mt-1 uppercase">AI/ML COHORT - DEC 2026</span>
+            <span className="text-[9px] font-bold text-gray-400 block -mt-1 uppercase">
+              {currentCohort.title}
+            </span>
           </div>
         </Link>
 
@@ -73,23 +125,52 @@ export default function CohortEnrollPage() {
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
               </svg>
             </div>
-            <h3 className="text-lg font-bold text-gray-900">Processing secure payment...</h3>
+            <h3 className="text-lg font-bold text-gray-900">Processing secure payment with Cashfree...</h3>
             <p className="text-gray-400 text-xs font-semibold mt-1">Please do not refresh the page or click back.</p>
           </div>
         )}
 
-        {view === "checkout" && <EnrollCheckoutView onPay={handlePay} />}
+        {view === "checkout" && (
+          <EnrollCheckoutView
+            selectedCohortId={selectedCohortId}
+            country={country}
+            locationStatus={locationStatus}
+            onPay={handlePaySuccess}
+          />
+        )}
 
-        {view === "success" && <EnrollSuccessView onViewReceipt={() => setView("receipt")} />}
+        {view === "success" && (
+          <EnrollSuccessView
+            onViewReceipt={() => setView("receipt")}
+            orderInfo={paidOrderInfo}
+            cohort={currentCohort}
+            country={country}
+          />
+        )}
 
-        {view === "receipt" && <EnrollReceiptView onBackToSuccess={() => setView("success")} />}
+        {view === "receipt" && (
+          <EnrollReceiptView
+            onBackToSuccess={() => setView("success")}
+            orderInfo={paidOrderInfo}
+            cohort={currentCohort}
+            country={country}
+          />
+        )}
       </main>
 
       {/* Footer stripe */}
       <footer className="bg-[#f1f5f9] border-t border-[#e2e8f0] py-5 px-6 sm:px-12 flex flex-col sm:flex-row items-center justify-between text-[9px] font-bold text-[#64748b] mt-auto select-none shrink-0">
-        <span>Payments secured by Razorpay • 256-bit SSL • PCI DSS Compliant</span>
-        <span>© 2026 Consistency AI • GSTIN 29AABCU9603R1ZX</span>
+        <span>Payments secured by Cashfree Payments • 256-bit SSL • PCI DSS Compliant</span>
+        <span>© 2026 Consistency AI • RBI Authorized Payment Gateway Partner</span>
       </footer>
     </div>
+  );
+}
+
+export default function CohortEnrollPage() {
+  return (
+    <Suspense fallback={<div className="p-10 text-center text-sm font-bold text-gray-500">Loading checkout...</div>}>
+      <CohortEnrollContent />
+    </Suspense>
   );
 }

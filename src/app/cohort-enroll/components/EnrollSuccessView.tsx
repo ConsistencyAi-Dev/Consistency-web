@@ -3,15 +3,25 @@
 import React, { useState } from "react";
 import Link from "next/link";
 
+import { CohortConfig, CountryCode } from "@/config/cohorts";
+
 interface EnrollSuccessViewProps {
   onViewReceipt: () => void;
+  orderInfo?: any;
+  cohort?: CohortConfig;
+  country?: CountryCode;
 }
 
-export default function EnrollSuccessView({ onViewReceipt }: EnrollSuccessViewProps) {
+export default function EnrollSuccessView({ onViewReceipt, orderInfo, cohort, country = "IN" }: EnrollSuccessViewProps) {
   const [isLeetCodeConnected, setIsLeetCodeConnected] = useState(false);
   const [isGitHubConnected, setIsGitHubConnected] = useState(false);
   const [isLinkedInConnected, setIsLinkedInConnected] = useState(false);
   const [profileProgress, setProfileProgress] = useState(25);
+
+  const cohortTitle = cohort?.title || orderInfo?.cohortTitle || "AI/ML Mastery Cohort";
+  const orderId = orderInfo?.orderId || "CAI-CF-2026-8842";
+  const pricing = cohort?.pricing[country];
+  const paidAmount = pricing ? pricing.formattedOffered : (orderInfo?.amount ? `${orderInfo.currency || "₹"} ${orderInfo.amount}` : "₹44,999");
 
   const handleConnectLeetCode = () => {
     setIsLeetCodeConnected(true);
@@ -33,21 +43,22 @@ export default function EnrollSuccessView({ onViewReceipt }: EnrollSuccessViewPr
       {/* Header check circle badge */}
       <div className="success-header w-full flex flex-col items-center border-b border-[#f1f5f9] px-6 py-12 sm:px-16 sm:py-16">
         <div className="w-20 h-20 rounded-full bg-[#10b981] border-0 flex items-center justify-center mx-auto mb-4 shadow-sm shadow-emerald-500/10">
-          <svg className="w-7 h-7 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+          <svg className="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
           </svg>
         </div>
 
         <h2 className="text-2xl sm:text-4xl font-black text-[#0f172a] tracking-tight leading-tight">
-          Welcome John – You&apos;re in! 🎉
+          Congratulations – You&apos;re Enrolled! 🎉
         </h2>
 
         <p className="text-[#475569] text-sm sm:text-lg font-semibold mt-2.5 max-w-[672px] mx-auto leading-7">
-          Your payment succeeded and enrollment is confirmed. Order <strong className="text-gray-800 font-bold">#CAI-ML-2026-8842</strong> - Cohort starts Dec 2
+          Your payment succeeded and your seat is confirmed for <strong className="text-gray-900 font-bold">{cohortTitle}</strong>.
+          <span className="block text-xs sm:text-sm text-gray-500 mt-1">Order ID: <strong className="text-gray-800 font-bold">{orderId}</strong></span>
         </p>
 
         <span className="bg-[#ecfdf5] text-[#047857] border border-[#d1fae5] text-[10px] sm:text-sm font-semibold py-2 px-4 rounded-full mt-4 inline-block">
-          ● Payment via UPI @okaxis - razorpay_9XyZ123
+          ● Paid {paidAmount} via Cashfree Payments Gateway
         </span>
       </div>
 

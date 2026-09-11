@@ -22,5 +22,10 @@ export const siteConfig = {
       submit: "/api/v1/quiz/submit",
       scoreProfile: "/api/v1/quiz/score-profile",
     },
+    payments: {
+      cohorts: "/api/v1/payments/cohorts",
+      createOrder: "/api/v1/payments/create-order",
+      verifyOrder: "/api/v1/payments/order",
+    },
   },
 };

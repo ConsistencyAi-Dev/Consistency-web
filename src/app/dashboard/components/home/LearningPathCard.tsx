@@ -78,7 +78,7 @@ export default function LearningPathCard() {
             <div className="h-[6px] w-20 rounded-full bg-[#E2E8F0]" />
             <span className="text-[10px] leading-[15px] text-[#64748B]">0 of 5 milestones completed</span>
           </div>
-          <Link href="/dashboard/roadmap" className="inline-flex items-center gap-1 text-[11px] leading-[16.5px] text-[#2B50EC] transition-colors hover:text-[#1E3BB3] cursor-pointer">
+          <Link href="/dashboard/roadmap" prefetch={true} className="inline-flex items-center gap-1 text-[11px] leading-[16.5px] text-[#2B50EC] transition-colors hover:text-[#1E3BB3] cursor-pointer">
             <span>View detailed roadmap</span>
             <Image src={arrowRight14Svg} alt="Arrow" width={14} height={14} />
           </Link>
