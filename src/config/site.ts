@@ -5,7 +5,7 @@
 export const siteConfig = {
   name: "Consistency AI",
   description: "Consistent learning, skill assessment, and AI-driven career roadmaps.",
-  apiUrl: process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000",
+  apiUrl: (process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000").replace(/\/api\/v1\/?$/, ""),
   endpoints: {
     auth: {
       register: "/api/v1/auth/register",

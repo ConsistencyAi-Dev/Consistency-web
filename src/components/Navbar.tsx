@@ -1,11 +1,28 @@
 "use client";
 
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { logoPng, textPng } from "@/assets";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    const checkAuth = () => {
+      if (typeof window !== "undefined") {
+        const token = localStorage.getItem("auth_token") || localStorage.getItem("access_token");
+        setIsAuthenticated(Boolean(token));
+      }
+    };
+    checkAuth();
+    window.addEventListener("storage", checkAuth);
+    window.addEventListener("auth_state_changed", checkAuth);
+    return () => {
+      window.removeEventListener("storage", checkAuth);
+      window.removeEventListener("auth_state_changed", checkAuth);
+    };
+  }, []);
 
   return (
     <div className="fixed top-3 md:top-8 left-1/2 -translate-x-1/2 z-50 w-[96%] max-w-7xl px-1 sm:px-2 md:px-6">
@@ -27,12 +44,21 @@ export default function Navbar() {
 
         {/* Actions */}
         <div className="flex items-center gap-2 shrink-0">
-          <Link
-            href="/login"
-            className="inline-block bg-[#0055FF] bg-linear-to-r from-[#0066FF] to-[#0044FF] text-white px-4 py-1.5 md:px-10 md:py-2.5 rounded-full text-[13px] md:text-[14px] font-semibold hover:shadow-[0_4px_14px_0_rgba(0,102,255,0.39)] transition-all"
-          >
-            Log in
-          </Link>
+          {isAuthenticated ? (
+            <Link
+              href="/dashboard"
+              className="inline-block bg-[#0055FF] bg-linear-to-r from-[#0066FF] to-[#0044FF] text-white px-4 py-1.5 md:px-8 md:py-2.5 rounded-full text-[13px] md:text-[14px] font-semibold hover:shadow-[0_4px_14px_0_rgba(0,102,255,0.39)] transition-all"
+            >
+              Dashboard
+            </Link>
+          ) : (
+            <Link
+              href="/login"
+              className="inline-block bg-[#0055FF] bg-linear-to-r from-[#0066FF] to-[#0044FF] text-white px-4 py-1.5 md:px-10 md:py-2.5 rounded-full text-[13px] md:text-[14px] font-semibold hover:shadow-[0_4px_14px_0_rgba(0,102,255,0.39)] transition-all"
+            >
+              Log in
+            </Link>
+          )}
 
           {/* Mobile Hamburger Button */}
           <button
@@ -61,6 +87,25 @@ export default function Navbar() {
           <Link href="#how-it-works" onClick={() => setIsOpen(false)} className="px-3 py-2 rounded-xl hover:bg-gray-100 transition-colors">How It Works</Link>
           <Link href="#recruiters" onClick={() => setIsOpen(false)} className="px-3 py-2 rounded-xl hover:bg-gray-100 transition-colors">For Recruiters</Link>
           <Link href="#faq" onClick={() => setIsOpen(false)} className="px-3 py-2 rounded-xl hover:bg-gray-100 transition-colors">FAQ</Link>
+          <div className="pt-2 border-t border-gray-100">
+            {isAuthenticated ? (
+              <Link
+                href="/dashboard"
+                onClick={() => setIsOpen(false)}
+                className="block text-center bg-[#0055FF] text-white py-2 rounded-xl text-sm font-semibold"
+              >
+                Dashboard
+              </Link>
+            ) : (
+              <Link
+                href="/login"
+                onClick={() => setIsOpen(false)}
+                className="block text-center bg-[#0055FF] text-white py-2 rounded-xl text-sm font-semibold"
+              >
+                Log in
+              </Link>
+            )}
+          </div>
         </div>
       )}
     </div>

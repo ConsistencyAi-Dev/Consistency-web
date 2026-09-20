@@ -9,7 +9,10 @@ export async function httpClient<T>(
   options: RequestInit = {}
 ): Promise<ApiEnvelope<T>> {
   const url = `${siteConfig.apiUrl}${endpoint}`;
-  const token = typeof window !== "undefined" ? localStorage.getItem("access_token") : null;
+  const token =
+    typeof window !== "undefined"
+      ? localStorage.getItem("auth_token") || localStorage.getItem("access_token")
+      : null;
 
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
@@ -22,6 +25,12 @@ export async function httpClient<T>(
     const json: ApiEnvelope<T> = await response.json();
 
     if (!response.ok || !json.success) {
+      if (response.status === 401 && typeof window !== "undefined") {
+        localStorage.removeItem("auth_token");
+        localStorage.removeItem("access_token");
+        localStorage.removeItem("auth_user");
+        document.cookie = "auth_token=; path=/; max-age=0; SameSite=Lax";
+      }
       throw new Error(json.message || `HTTP Request failed with status ${response.status}`);
     }
 

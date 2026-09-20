@@ -20,6 +20,7 @@ export default function LoginPage() {
     mode,
     setMode,
     isLoading,
+    isCheckingAuth,
     error,
     successMsg,
     forgotEmail,
@@ -34,6 +35,17 @@ export default function LoginPage() {
     handleVerifyCodeSubmit,
     handleResetPasswordSubmit,
   } = useAuthFlow();
+
+  if (isCheckingAuth) {
+    return (
+      <div className="h-screen w-full flex items-center justify-center bg-[#F3F4F6]">
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-8 h-8 border-2 border-[#0055FF] border-t-transparent rounded-full animate-spin" />
+          <p className="text-xs font-medium text-[#64748B]">Checking session...</p>
+        </div>
+      </div>
+    );
+  }
 
   const isCenterCardMode = ["forgot-email", "forgot-code", "forgot-success"].includes(mode);
 

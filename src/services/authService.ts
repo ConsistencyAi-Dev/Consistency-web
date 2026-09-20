@@ -10,6 +10,12 @@ export const authService = {
     });
     if (res.data.token && typeof window !== "undefined") {
       localStorage.setItem("access_token", res.data.token);
+      localStorage.setItem("auth_token", res.data.token);
+      if (res.data.user) {
+        localStorage.setItem("auth_user", JSON.stringify(res.data.user));
+      }
+      document.cookie = `auth_token=${res.data.token}; path=/; max-age=604800; SameSite=Lax`;
+      window.dispatchEvent(new Event("auth_state_changed"));
     }
     return res.data;
   },
@@ -21,6 +27,12 @@ export const authService = {
     });
     if (res.data.token && typeof window !== "undefined") {
       localStorage.setItem("access_token", res.data.token);
+      localStorage.setItem("auth_token", res.data.token);
+      if (res.data.user) {
+        localStorage.setItem("auth_user", JSON.stringify(res.data.user));
+      }
+      document.cookie = `auth_token=${res.data.token}; path=/; max-age=604800; SameSite=Lax`;
+      window.dispatchEvent(new Event("auth_state_changed"));
     }
     return res.data;
   },
@@ -36,6 +48,11 @@ export const authService = {
   logout(): void {
     if (typeof window !== "undefined") {
       localStorage.removeItem("access_token");
+      localStorage.removeItem("auth_token");
+      localStorage.removeItem("auth_user");
+      localStorage.removeItem("isOnboarded");
+      document.cookie = "auth_token=; path=/; max-age=0; SameSite=Lax";
+      window.dispatchEvent(new Event("auth_state_changed"));
     }
   },
 };
