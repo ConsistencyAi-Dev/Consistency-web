@@ -7,6 +7,7 @@ import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import OnboardingWizard from "./components/OnboardingWizard";
 import DashboardLoading from "./components/DashboardLoading";
+import { authService } from "@/services/authService";
 import {
   brandMarkSvg,
   iconLockSvg, iconBoltSvg, iconSearchSvg, iconBellSvg,
@@ -253,7 +254,7 @@ export default function DashboardLayout({
 
             <button
               onClick={() => {
-                localStorage.removeItem("isOnboarded");
+                authService.logout();
                 router.push("/login");
               }}
               className="flex w-full items-center justify-center gap-2 rounded-lg border border-[#E2E8F0] bg-white py-1.5 text-[12px] leading-4 text-[#475569] transition-colors hover:bg-[#FEF2F2] hover:text-[#EF4444] hover:border-[#FECACA] group"

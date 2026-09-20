@@ -190,7 +190,8 @@ export default function LoginForm({
           type="button"
           disabled={isLoading}
           onClick={() => {
-            const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api/v1';
+            const rawApiUrl = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000').replace(/\/api\/v1\/?$/, '');
+            const apiUrl = `${rawApiUrl}/api/v1`;
             window.location.href = `${apiUrl}/auth/google`;
           }}
           className="flex items-center justify-center gap-2 py-2.5 px-4 border border-gray-200 hover:bg-gray-50 bg-white rounded-xl text-sm font-bold text-[#4B5563] transition-colors cursor-pointer"
@@ -207,7 +208,8 @@ export default function LoginForm({
           type="button"
           disabled={isLoading}
           onClick={() => {
-            const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api/v1';
+            const rawApiUrl = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000').replace(/\/api\/v1\/?$/, '');
+            const apiUrl = `${rawApiUrl}/api/v1`;
             window.location.href = `${apiUrl}/auth/github`;
           }}
           className="flex items-center justify-center gap-2 py-2.5 px-4 border border-gray-200 hover:bg-gray-50 bg-white rounded-xl text-sm font-bold text-[#4B5563] transition-colors cursor-pointer"

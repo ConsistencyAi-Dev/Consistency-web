@@ -25,6 +25,7 @@ export function useAuthFlow() {
   // State Machine Mode
   const [mode, setMode] = useState<AuthMode>("login");
   const [isLoading, setIsLoading] = useState(false);
+  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
 
@@ -35,7 +36,7 @@ export function useAuthFlow() {
   const [isResending, setIsResending] = useState(false);
   const [verificationError, setVerificationError] = useState(false);
 
-  // Check for OAuth redirect tokens or errors in URL params
+  // Check for existing session or OAuth redirect tokens/errors in URL params
   useEffect(() => {
     if (typeof window !== "undefined") {
       const params = new URLSearchParams(window.location.search);
@@ -47,8 +48,11 @@ export function useAuthFlow() {
       if (err) {
         setError(decodeURIComponent(err));
         window.history.replaceState({}, document.title, window.location.pathname);
+        setIsCheckingAuth(false);
       } else if (token) {
         localStorage.setItem("auth_token", token);
+        localStorage.setItem("access_token", token);
+        document.cookie = `auth_token=${token}; path=/; max-age=604800; SameSite=Lax`;
         let parsedUser: any = null;
         if (userStr) {
           try {
@@ -69,6 +73,17 @@ export function useAuthFlow() {
 
         window.history.replaceState({}, document.title, window.location.pathname);
         setMode("reset-loading");
+        setIsCheckingAuth(false);
+      } else {
+        // Check if user is already authenticated
+        const existingToken = localStorage.getItem("auth_token") || localStorage.getItem("access_token");
+        if (existingToken) {
+          // Sync cookie for Next.js middleware and redirect to dashboard
+          document.cookie = `auth_token=${existingToken}; path=/; max-age=604800; SameSite=Lax`;
+          router.replace("/dashboard");
+          return;
+        }
+        setIsCheckingAuth(false);
       }
     }
   }, [router]);
@@ -110,7 +125,12 @@ export function useAuthFlow() {
       const res = await loginApi(emailVal, passwordVal);
       if (res.data?.token) {
         localStorage.setItem("auth_token", res.data.token);
-        localStorage.setItem("auth_user", JSON.stringify(res.data.user));
+        localStorage.setItem("access_token", res.data.token);
+        document.cookie = `auth_token=${res.data.token}; path=/; max-age=604800; SameSite=Lax`;
+        if (res.data.user) {
+          localStorage.setItem("auth_user", JSON.stringify(res.data.user));
+        }
+        window.dispatchEvent(new Event("auth_state_changed"));
         
         // If user has completed onboarding in DB or has full profile, set isOnboarded
         const hasCompletedProfile = Boolean(
@@ -162,8 +182,13 @@ export function useAuthFlow() {
       });
       if (res.data?.token) {
         localStorage.setItem("auth_token", res.data.token);
-        localStorage.setItem("auth_user", JSON.stringify(res.data.user));
+        localStorage.setItem("access_token", res.data.token);
+        document.cookie = `auth_token=${res.data.token}; path=/; max-age=604800; SameSite=Lax`;
+        if (res.data.user) {
+          localStorage.setItem("auth_user", JSON.stringify(res.data.user));
+        }
         localStorage.removeItem("isOnboarded");
+        window.dispatchEvent(new Event("auth_state_changed"));
       }
       setIsLoading(false);
       setMode("reset-loading");
@@ -237,6 +262,7 @@ export function useAuthFlow() {
   const handleResetPasswordSubmit = async (passwordVal: string, confirmVal: string) => {
     setError(null);
     setSuccessMsg(null);
+    setVerificationError(false);
 
     if (passwordVal !== confirmVal) {
       setError("Passwords do not match.");
@@ -267,6 +293,7 @@ export function useAuthFlow() {
     mode,
     setMode,
     isLoading,
+    isCheckingAuth,
     error,
     successMsg,
     forgotEmail,

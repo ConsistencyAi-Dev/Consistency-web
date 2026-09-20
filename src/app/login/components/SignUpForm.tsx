@@ -68,7 +68,8 @@ export default function SignUpForm({
           type="button"
           disabled={isLoading}
           onClick={() => {
-            const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api/v1';
+            const rawApiUrl = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000').replace(/\/api\/v1\/?$/, '');
+            const apiUrl = `${rawApiUrl}/api/v1`;
             window.location.href = `${apiUrl}/auth/google`;
           }}
           className="flex items-center justify-center gap-2 rounded-xl border border-[#E2E8F0] bg-white px-4 py-[9px] text-[14px] leading-5 text-[#1E293B] transition-colors hover:bg-[#F8FAFC] disabled:cursor-not-allowed disabled:opacity-70 cursor-pointer"
@@ -80,7 +81,8 @@ export default function SignUpForm({
           type="button"
           disabled={isLoading}
           onClick={() => {
-            const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api/v1';
+            const rawApiUrl = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000').replace(/\/api\/v1\/?$/, '');
+            const apiUrl = `${rawApiUrl}/api/v1`;
             window.location.href = `${apiUrl}/auth/github`;
           }}
           className="flex items-center justify-center gap-2 rounded-xl border border-[#E2E8F0] bg-white px-4 py-[9px] text-[14px] leading-5 text-[#1E293B] transition-colors hover:bg-[#F8FAFC] disabled:cursor-not-allowed disabled:opacity-70 cursor-pointer"
