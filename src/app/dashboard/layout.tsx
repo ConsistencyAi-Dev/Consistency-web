@@ -23,12 +23,12 @@ type NavItem = {
 
 const navItems: NavItem[] = [
   { name: "Home", href: "/dashboard", icon: "home" },
-  { name: "AI Tools", href: "/dashboard/ai-tools", icon: "ai" },
-  { name: "Projects", href: "/dashboard/projects", icon: "folder" },
-  { name: "Events", href: "/dashboard/events", icon: "calendar" },
-  { name: "Community", href: "/dashboard/community", icon: "users" },
-  { name: "Mentors", href: "/dashboard/mentors", icon: "graduation" },
-  { name: "Jobs", href: "/dashboard/jobs", icon: "briefcase" },
+  { name: "AI Tools", href: "/dashboard/ai-tools", icon: "ai", comingSoon: true },
+  { name: "Projects", href: "/dashboard/projects", icon: "folder", comingSoon: true },
+  { name: "Events", href: "/dashboard/events", icon: "calendar", comingSoon: true },
+  { name: "Community", href: "/dashboard/community", icon: "users", comingSoon: true },
+  { name: "Mentors", href: "/dashboard/mentors", icon: "graduation", comingSoon: true },
+  { name: "Jobs", href: "/dashboard/jobs", icon: "briefcase", comingSoon: true },
   { name: "Settings", href: "/dashboard/settings", icon: "settings" },
 ];
 
@@ -109,6 +109,7 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const [isOnboarded, setIsOnboarded] = useState<boolean | null>(null);
+  const [showPortalLoading, setShowPortalLoading] = useState(true);
   const [currentUser, setCurrentUser] = useState<{
     id?: string;
     name?: string;
@@ -122,6 +123,12 @@ export default function DashboardLayout({
   useEffect(() => {
     const loadUser = () => {
       try {
+        const token = localStorage.getItem("auth_token") || localStorage.getItem("access_token");
+        if (!token) {
+          router.replace("/");
+          return;
+        }
+
         const stored = localStorage.getItem("auth_user");
         if (stored) {
           const user = JSON.parse(stored);
@@ -168,8 +175,14 @@ export default function DashboardLayout({
     } catch (e) { }
   };
 
-  if (isOnboarded === null) {
-    return <DashboardLoading />;
+  if (showPortalLoading || isOnboarded === null) {
+    return (
+      <DashboardLoading
+        onComplete={() => {
+          setShowPortalLoading(false);
+        }}
+      />
+    );
   }
 
   if (!isOnboarded) {
@@ -181,9 +194,8 @@ export default function DashboardLayout({
       <div className="flex min-h-screen md:h-screen flex-col md:flex-row md:overflow-hidden">
         {/* Sidebar */}
         <aside
-          className={`w-full border-r border-[#E2E8F0] bg-[#F9FBFF] md:fixed md:top-0 md:bottom-0 md:left-0 md:z-30 md:w-[220px] md:h-screen md:overflow-y-auto md:overflow-x-hidden md:flex md:flex-col md:justify-between no-scrollbar ${
-            isMobileSidebarOpen ? "block" : "hidden md:flex"
-          }`}
+          className={`w-full border-r border-[#E2E8F0] bg-[#F9FBFF] md:fixed md:top-0 md:bottom-0 md:left-0 md:z-30 md:w-[230px] md:h-screen md:overflow-y-auto md:overflow-x-hidden md:flex md:flex-col md:justify-between no-scrollbar ${isMobileSidebarOpen ? "block" : "hidden md:flex"
+            }`}
         >
           <div>
             <div className="flex items-center justify-between px-4 py-3.5">
@@ -216,14 +228,26 @@ export default function DashboardLayout({
                     href={item.href}
                     prefetch={true}
                     onClick={() => setIsMobileSidebarOpen(false)}
-                    className={`flex h-[40px] w-full items-center gap-2.5 rounded-lg px-2.5 transition-colors ${
-                      isActive ? "bg-[#2B50EC] text-white shadow-[0px_3px_10px_rgba(43,80,236,0.2)]" : "text-[#64748B] hover:bg-[#EEF2FF]"
-                    }`}
+                    className={`flex h-[40px] w-full items-center gap-2 rounded-lg px-2.5 transition-colors ${isActive ? "bg-[#2B50EC] text-white shadow-[0px_3px_10px_rgba(43,80,236,0.2)]" : "text-[#64748B] hover:bg-[#EEF2FF]"
+                      }`}
                   >
                     <span className="flex h-[16px] w-[16px] items-center justify-center shrink-0">
                       <NavIcon type={item.icon} active={isActive} />
                     </span>
-                    <span className="text-[14px] leading-5 font-normal">{item.name}</span>
+                    <span className="text-[13px] leading-5 font-normal truncate">{item.name}</span>
+
+                    {item.comingSoon && (
+                      <span
+                        className={`ml-auto inline-flex items-center gap-1 rounded px-1.5 py-0.5 text-[8.5px] font-medium tracking-tight shrink-0 ${
+                          isActive ? "bg-white/20 text-white" : "bg-[#F1F5F9] text-[#64748B]"
+                        }`}
+                      >
+                        <svg className="w-2.5 h-2.5 shrink-0 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                        </svg>
+                        <span>Coming soon</span>
+                      </span>
+                    )}
                   </Link>
                 );
               })}
@@ -255,7 +279,7 @@ export default function DashboardLayout({
             <button
               onClick={() => {
                 authService.logout();
-                router.push("/login");
+                router.replace("/login");
               }}
               className="flex w-full items-center justify-center gap-2 rounded-lg border border-[#E2E8F0] bg-white py-1.5 text-[12px] leading-4 text-[#475569] transition-colors hover:bg-[#FEF2F2] hover:text-[#EF4444] hover:border-[#FECACA] group"
             >
@@ -269,7 +293,7 @@ export default function DashboardLayout({
           </div>
         </aside>
 
-        <div className="flex min-h-screen md:h-screen flex-1 flex-col bg-[#F9FBFF] md:ml-[220px] md:overflow-hidden">
+        <div className="flex min-h-screen md:h-screen flex-1 flex-col bg-[#F9FBFF] md:ml-[230px] md:overflow-hidden">
           <header className="flex min-h-[64px] md:min-h-[76px] items-center justify-between border-b border-[#E2E8F0] bg-white px-4 md:px-8 py-3.5">
             <div className="flex items-center gap-3">
               <button
@@ -281,12 +305,23 @@ export default function DashboardLayout({
                   <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
               </button>
-              <div>
-                <h1 className="text-[16px] md:text-[20px] leading-6 md:leading-7 text-[#0F172A] font-semibold">
-                  Good morning, {currentUser?.name?.split(" ")[0] || "Learner"} 👋
-                </h1>
-                <p className="text-[12px] md:text-[14px] leading-4 md:leading-5 text-[#64748B]">Let&apos;s learn, build and grow together.</p>
-              </div>
+              {pathname?.startsWith("/dashboard/roadmap") ? (
+                <div>
+                  <h1 className="text-[18px] md:text-[22px] leading-6 md:leading-7 text-[#0F172A] font-bold">
+                    Your Learning Roadmap
+                  </h1>
+                  <p className="text-[12px] md:text-[13px] leading-4 md:leading-5 text-[#64748B] mt-0.5">
+                    12-Month Gen AI Engineering Program Path
+                  </p>
+                </div>
+              ) : (
+                <div>
+                  <h1 className="text-[16px] md:text-[20px] leading-6 md:leading-7 text-[#0F172A] font-semibold">
+                    Good morning, {currentUser?.name?.split(" ")[0] || "Learner"} 👋
+                  </h1>
+                  <p className="text-[12px] md:text-[14px] leading-4 md:leading-5 text-[#64748B]">Let&apos;s learn, build and grow together.</p>
+                </div>
+              )}
             </div>
 
             <div className="hidden items-center gap-3 lg:flex">

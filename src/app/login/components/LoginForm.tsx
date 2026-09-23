@@ -41,12 +41,16 @@ export default function LoginForm({
         <div className="mb-5 p-4 bg-[#FFF5F5] border border-[#FED7D7] rounded-2xl flex items-center gap-3.5 shadow-sm animate-fade-in">
           <div className="w-5 h-5 rounded-full border border-[#E53E3E] flex items-center justify-center shrink-0">
             <svg className="w-3 h-3 text-[#E53E3E]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
             </svg>
           </div>
           <div className="text-[13px] leading-[18px] text-[#9B2C2C] font-normal">
-            <p>The email or password you entered is incorrect.</p>
-            <p>Please try again.</p>
+            <p className="font-semibold text-[#9B2C2C]">{error}</p>
+            {error.toLowerCase().includes("not found") ? (
+              <p className="text-[12px] text-[#9B2C2C]/80 mt-0.5">Please check your email, sign up, or sign in with Google.</p>
+            ) : (
+              <p className="text-[12px] text-[#9B2C2C]/80 mt-0.5">Please verify your credentials and try again.</p>
+            )}
           </div>
         </div>
       )}
@@ -86,6 +90,11 @@ export default function LoginForm({
               }`}
             />
           </div>
+          {error && error.toLowerCase().includes("not found") && (
+            <p className="text-[12px] text-[#E53E3E] leading-[16px] mt-1.5 font-normal">
+              Account not found.
+            </p>
+          )}
         </div>
 
         {/* Password Input */}
@@ -126,9 +135,9 @@ export default function LoginForm({
               )}
             </button>
           </div>
-          {error && (
+          {error && !error.toLowerCase().includes("not found") && (
             <p className="text-[12px] text-[#E53E3E] leading-[16px] mt-1.5 font-normal">
-              Incorrect password. 2 attempts remaining before account lockout.
+              Incorrect password. Please try again.
             </p>
           )}
         </div>

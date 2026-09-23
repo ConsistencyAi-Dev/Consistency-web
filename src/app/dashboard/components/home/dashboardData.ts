@@ -76,7 +76,7 @@ export const COHORTS_DATA: CohortItem[] = [
     badgeBg: "bg-white",
     badgeTextColor: "text-[#2B50EC]",
     showSpark: true,
-    backgroundImage: "https://www.figma.com/api/mcp/asset/2e54e928-accc-43bc-a8ea-d15894ca5d22.png",
+    backgroundImage: "/images/cohorts/cohort_3.jpg",
     liveRecorded: true,
   },
   {
@@ -98,7 +98,7 @@ export const COHORTS_DATA: CohortItem[] = [
     badgeBg: "bg-black/20 text-white backdrop-blur-[4px] outline outline-[1px] outline-white/20 -outline-offset-[1px]",
     badgeTextColor: "text-white",
     showSpark: false,
-    backgroundImage: "https://www.figma.com/api/mcp/asset/6286cdeb-917e-431b-9c60-056f86cba1a3.png",
+    backgroundImage: "/images/cohorts/cohort_2.jpg",
     liveRecorded: true,
   },
   {
@@ -120,6 +120,7 @@ export const COHORTS_DATA: CohortItem[] = [
     badgeBg: "bg-black/20 text-white backdrop-blur-[4px] outline outline-[1px] outline-white/20 -outline-offset-[1px]",
     badgeTextColor: "text-white",
     showSpark: false,
+    backgroundImage: "/images/cohorts/cohort_1.jpg",
     liveRecorded: true,
   },
 ];

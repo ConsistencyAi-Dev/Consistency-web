@@ -1,35 +1,104 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
 import { brandMarkSvg } from "@/assets";
 
-export default function DashboardLoading() {
-  return (
-    <div className="fixed inset-0 z-50 flex h-screen w-screen flex-col items-center justify-center bg-[#F9FBFF] text-center px-4">
-      <div className="flex flex-col items-center gap-6">
-        <div className="relative flex h-16 w-16 items-center justify-center rounded-2xl bg-[linear-gradient(48.1deg,#2B50EC_27.45%,#61D3F9_94.96%)] shadow-[0px_10px_24px_rgba(43,80,236,0.28)] animate-pulse">
-          <Image
-            src={brandMarkSvg}
-            alt="Consistency AI"
-            width={34}
-            height={34}
-            className="h-[34px] w-[34px]"
-            priority
-          />
-        </div>
+interface DashboardLoadingProps {
+  onComplete?: () => void;
+}
 
-        <div className="flex flex-col items-center gap-2">
-          <div className="flex items-center gap-2">
-            <div className="h-4 w-4 animate-spin rounded-full border-2 border-[#2B50EC] border-t-transparent" />
-            <p className="text-[17px] font-semibold text-[#0F172A] tracking-tight">
-              Loading your dashboard...
-            </p>
-          </div>
-          <p className="text-[12px] uppercase font-medium tracking-wider text-[#64748B]">
-            Consistency AI Student Portal
-          </p>
-        </div>
+export default function DashboardLoading({ onComplete }: DashboardLoadingProps) {
+  const [stage, setStage] = useState<1 | 2 | 3>(1);
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const stage2Timer = setTimeout(() => {
+      setStage(2);
+    }, 900);
+
+    return () => clearTimeout(stage2Timer);
+  }, []);
+
+  useEffect(() => {
+    if (stage !== 2) return;
+
+    const duration = 1200;
+    const intervalTime = 30; // ms
+    const totalSteps = duration / intervalTime;
+    const increment = 100 / totalSteps;
+
+    const timer = setInterval(() => {
+      setProgress((prev) => {
+        const next = prev + increment;
+        if (next >= 100) {
+          clearInterval(timer);
+          setTimeout(() => {
+            setStage(3);
+          }, 250);
+          return 100;
+        }
+        return next;
+      });
+    }, intervalTime);
+
+    return () => clearInterval(timer);
+  }, [stage]);
+
+  useEffect(() => {
+    if (stage !== 3) return;
+
+    const completeTimer = setTimeout(() => {
+      if (onComplete) {
+        onComplete();
+      }
+    }, 1100);
+
+    return () => clearTimeout(completeTimer);
+  }, [stage, onComplete]);
+
+  return (
+    <div className="fixed inset-0 z-50 flex h-screen w-screen items-center justify-center bg-[#F9FBFF] text-center px-4">
+      <div className="flex -translate-y-px flex-col items-center gap-10">
+        <motion.div
+          className="flex h-16 w-16 items-center justify-center rounded-[7.627px] shadow-[42px_40px_16px_0px_rgba(0,0,0,0),27px_26px_15px_0px_rgba(0,0,0,0.01),15px_15px_13px_0px_rgba(0,0,0,0.05),7px_6px_9px_0px_rgba(0,0,0,0.09),2px_2px_5px_0px_rgba(0,0,0,0.1)]"
+          style={{ backgroundImage: "linear-gradient(48.105926deg, #2b50ec 27.447%, #61d3f9 94.962%)" }}
+          initial={{ opacity: 0, scale: 0.6 }}
+          animate={stage < 3 ? { opacity: [0.65, 1, 0.85, 0.65], scale: [0.94, 1, 0.96, 0.94] } : { opacity: 1, scale: 1 }}
+          transition={stage < 3 ? { duration: 2, repeat: Infinity, ease: "easeInOut" } : { duration: 0.25 }}
+        >
+          <Image src={brandMarkSvg} alt="Consistency AI" width={36.25} height={36.25} className="h-[36.25px] w-[36.25px]" priority />
+        </motion.div>
+
+        <AnimatePresence mode="wait">
+          {stage === 1 && (
+            <motion.div key="connecting" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="flex flex-col items-center gap-2">
+              <p className="text-[18px] font-medium leading-normal text-[#0f172a]">Connecting to server...</p>
+              <p className="text-[13px] font-medium uppercase leading-normal text-[#64748b]">Student Portal</p>
+            </motion.div>
+          )}
+          {stage === 2 && (
+            <motion.div key="loading" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="flex flex-col items-center gap-2">
+              <p className="text-[18px] font-medium leading-normal text-[#0f172a]">
+                Loading your dashboard... {Math.round(progress)}%
+              </p>
+              <p className="text-[13px] font-medium uppercase leading-normal text-[#64748b]">Student Portal</p>
+            </motion.div>
+          )}
+          {stage === 3 && (
+            <motion.div key="verified" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col items-center gap-6">
+              <motion.div initial={{ scale: 0.8 }} animate={{ scale: 1 }} className="flex items-center gap-2 rounded-full bg-[#e0f2fe] px-4 py-2 text-[14px] font-semibold leading-normal text-[#2b50ec]">
+                <span className="flex h-4 w-4 items-center justify-center rounded-full border-[1.5px] border-[#2b50ec] text-[10px]">✓</span>
+                <span>Verified</span>
+              </motion.div>
+              <div className="flex flex-col items-center gap-2">
+                <p className="text-[18px] font-medium leading-normal text-[#0f172a]">Welcome back! Redirecting...</p>
+                <p className="text-[13px] font-medium uppercase leading-normal text-[#64748b]">Student Portal</p>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );

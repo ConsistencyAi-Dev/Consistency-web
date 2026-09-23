@@ -18,7 +18,7 @@ export default function ResetLoadingTransition({
   useEffect(() => {
     const stage2Timer = setTimeout(() => {
       setStage(2);
-    }, 1800);
+    }, 900);
 
     return () => clearTimeout(stage2Timer);
   }, []);
@@ -26,8 +26,8 @@ export default function ResetLoadingTransition({
   useEffect(() => {
     if (stage !== 2) return;
 
-    const duration = 2500;
-    const intervalTime = 40; // ms
+    const duration = 1200;
+    const intervalTime = 30; // ms
     const totalSteps = duration / intervalTime;
     const increment = 100 / totalSteps;
 
@@ -38,7 +38,7 @@ export default function ResetLoadingTransition({
           clearInterval(timer);
           setTimeout(() => {
             setStage(3);
-          }, 500);
+          }, 250);
           return 100;
         }
         return next;
@@ -53,7 +53,7 @@ export default function ResetLoadingTransition({
 
     const completeTimer = setTimeout(() => {
       onComplete();
-    }, 2200);
+    }, 1100);
 
     return () => clearTimeout(completeTimer);
   }, [stage, onComplete]);
