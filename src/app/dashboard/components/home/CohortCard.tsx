@@ -24,6 +24,9 @@ export default function CohortCard({ cohort }: CohortCardProps) {
               : {}),
           }}
         >
+          {/* Subtle gradient overlay for contrast and legibility */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/20 pointer-events-none" />
+
           {/* Match Badge */}
           <div className={`absolute left-[12px] top-[12px] inline-flex items-center gap-[4px] rounded-full px-[8px] py-[4px] shadow-[0px_1px_2px_rgba(0,0,0,0.05)] ${cohort.badgeBg}`}>
             {cohort.showSpark && (

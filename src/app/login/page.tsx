@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 
 // Import Components
@@ -61,6 +62,17 @@ export default function LoginPage() {
 
   return (
     <div className="h-screen w-full flex items-center justify-center bg-[#F3F4F6] font-sans overflow-hidden relative">
+      {/* Top Left: Back to Home Link */}
+      <Link
+        href="/"
+        className="absolute top-5 left-5 sm:top-6 sm:left-8 z-30 flex items-center gap-2 text-xs sm:text-sm font-semibold text-gray-500 hover:text-gray-900 transition-colors bg-white/75 backdrop-blur-sm px-3.5 py-1.5 rounded-xl border border-gray-200/80 shadow-xs cursor-pointer group"
+      >
+        <svg className="w-4 h-4 text-gray-500 group-hover:text-gray-900 group-hover:-translate-x-0.5 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        </svg>
+        <span>Back to home</span>
+      </Link>
+
       <div className="w-full flex h-full items-center justify-center">
         {/* Left Side: Form Container */}
         <div

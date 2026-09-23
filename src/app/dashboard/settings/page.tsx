@@ -7,6 +7,7 @@ import SettingsPreferencesTab from "./components/SettingsPreferencesTab";
 import SettingsSecurityTab from "./components/SettingsSecurityTab";
 import SettingsAppearanceTab from "./components/SettingsAppearanceTab";
 import { getProfileApi, updateProfileApi } from "@/lib/api";
+import { useToast } from "@/hooks/useToast";
 
 type ToggleProps = { checked: boolean; onChange: () => void; label: string };
 type SettingsUser = {
@@ -93,7 +94,7 @@ export default function SettingsPage() {
   const [viewMode, setViewMode] = useState<"settings" | "edit-profile">("settings");
   const [settingsTab, setSettingsTab] = useState<"General" | "Appearance" | "Privacy" | "Language & Region">("General");
   const [profileTab, setProfileTab] = useState<"Profile" | "Social Links" | "Preferences" | "Security">("Profile");
-  const [saveToast, setSaveToast] = useState(false);
+  const { toast } = useToast();
   const [isSaving, setIsSaving] = useState(false);
   const [currentUser, setCurrentUser] = useState<SettingsUser | null>(null);
 
@@ -204,8 +205,7 @@ export default function SettingsPage() {
           token
         );
       }
-      setSaveToast(true);
-      setTimeout(() => setSaveToast(false), 2500);
+      toast.success("Settings updated successfully!");
     } finally {
       setIsSaving(false);
     }
@@ -322,11 +322,6 @@ export default function SettingsPage() {
 
   return (
     <div className="mx-auto w-full max-w-[1000px] pb-8">
-      {saveToast && (
-        <div className="fixed right-6 top-20 z-50 rounded-xl border border-[#A7F3D0] bg-[#ECFDF5] px-5 py-3 text-xs font-semibold text-[#065F46] shadow-lg">
-          Settings updated successfully!
-        </div>
-      )}
 
       {/* Profile Overview Card */}
       <section className="mb-6 flex flex-col items-start justify-between gap-5 rounded-2xl border border-[#CBD5E1] bg-white p-6 shadow-[0_1px_3px_rgba(0,0,0,0.05)] sm:flex-row sm:items-center">

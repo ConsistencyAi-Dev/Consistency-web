@@ -16,25 +16,49 @@ import FinalCtaSection from "@/components/FinalCtaSection";
 import Footer from "@/components/Footer";
 import RealResultsSection from "@/components/RealResultsSection";
 import CodingPlaygroundSection from "@/components/CodingPlaygroundSection";
+import AnimatedSection from "@/components/AnimatedSection";
 
 export default function Home() {
   return (
     <main className="min-h-screen bg-[#F9F9F9]">
       <Navbar />
       <Hero />
-      <ProblemSection />
-      <CommunityVoices />
-
-      <GapSection />
-      <SolutionSection />
-      <MentorSection />
-      <DailyRoutineSection />
-      <TracksCarouselSection />
-      <JourneySection />
-      <RealResultsSection />
-      <CodingPlaygroundSection />
-      <FaqSection />
-      <FinalCtaSection />
+      <AnimatedSection>
+        <ProblemSection />
+      </AnimatedSection>
+      <AnimatedSection>
+        <CommunityVoices />
+      </AnimatedSection>
+      <AnimatedSection>
+        <GapSection />
+      </AnimatedSection>
+      <AnimatedSection>
+        <SolutionSection />
+      </AnimatedSection>
+      <AnimatedSection>
+        <MentorSection />
+      </AnimatedSection>
+      <AnimatedSection>
+        <DailyRoutineSection />
+      </AnimatedSection>
+      <AnimatedSection>
+        <TracksCarouselSection />
+      </AnimatedSection>
+      <AnimatedSection>
+        <JourneySection />
+      </AnimatedSection>
+      <AnimatedSection>
+        <RealResultsSection />
+      </AnimatedSection>
+      <AnimatedSection>
+        <CodingPlaygroundSection />
+      </AnimatedSection>
+      <AnimatedSection>
+        <FaqSection />
+      </AnimatedSection>
+      <AnimatedSection>
+        <FinalCtaSection />
+      </AnimatedSection>
       <Footer />
     </main>
   );

@@ -22,19 +22,27 @@ export async function httpClient<T>(
 
   try {
     const response = await fetch(url, { ...options, headers });
-    const json: ApiEnvelope<T> = await response.json();
+    const text = await response.text();
+    let json: any = null;
+    if (text) {
+      try {
+        json = JSON.parse(text);
+      } catch {
+        json = { message: text };
+      }
+    }
 
-    if (!response.ok || !json.success) {
+    if (!response.ok || !json?.success) {
       if (response.status === 401 && typeof window !== "undefined") {
         localStorage.removeItem("auth_token");
         localStorage.removeItem("access_token");
         localStorage.removeItem("auth_user");
         document.cookie = "auth_token=; path=/; max-age=0; SameSite=Lax";
       }
-      throw new Error(json.message || `HTTP Request failed with status ${response.status}`);
+      throw new Error(json?.message || `HTTP Request failed with status ${response.status}`);
     }
 
-    return json;
+    return json as ApiEnvelope<T>;
   } catch (error: any) {
     console.error(`[HttpClient Error] ${endpoint}:`, error.message || error);
     throw error;

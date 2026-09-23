@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { useToast } from "@/hooks/useToast";
 import PostInteractionBar from "./PostInteractionBar";
 import PostCommentsThread from "./PostCommentsThread";
 
@@ -54,7 +55,7 @@ export default function CommunityPostCard({ post }: CommunityPostCardProps) {
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [comments, setComments] = useState<Comment[]>(post.comments || []);
   const [showMenu, setShowMenu] = useState(false);
-  const [copiedToast, setCopiedToast] = useState(false);
+  const { toast } = useToast();
 
   const handleUpvote = () => {
     setUpvotes((prev) => (isUpvoted ? prev - 1 : prev + 1));
@@ -128,9 +129,8 @@ export default function CommunityPostCard({ post }: CommunityPostCardProps) {
 
   const handleCopyLink = () => {
     navigator.clipboard.writeText(window.location.href);
-    setCopiedToast(true);
     setShowMenu(false);
-    setTimeout(() => setCopiedToast(false), 2000);
+    toast.success("Link copied to clipboard!");
   };
 
   return (
@@ -266,11 +266,6 @@ export default function CommunityPostCard({ post }: CommunityPostCardProps) {
         onBookmark={handleBookmark}
       />
 
-      {copiedToast && (
-        <div className="w-full bg-[#ECFDF5] border border-[#A7F3D0] text-[#065F46] px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center justify-between">
-          <span>Link copied to clipboard!</span>
-        </div>
-      )}
 
       {/* Expanded Comments Thread */}
       {isExpanded && (

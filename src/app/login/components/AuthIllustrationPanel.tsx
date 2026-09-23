@@ -42,14 +42,14 @@ export default function AuthIllustrationPanel({ mode, error }: AuthIllustrationP
 
         {mode === "login" && (
           <motion.div
-            key={error && error.includes("incorrect") ? "login-error-illustration" : "login-illustration"}
+            key={error ? "login-error-illustration" : "login-illustration"}
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ duration: 0.3 }}
             className="w-full flex flex-col items-center justify-center text-center"
           >
-            {error && error.includes("incorrect") ? (
+            {error ? (
               <Image
                 src={studentLoginErrorIllustration}
                 alt="Student Login Error Illustration"

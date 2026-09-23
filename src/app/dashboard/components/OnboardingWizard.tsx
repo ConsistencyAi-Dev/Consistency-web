@@ -9,6 +9,7 @@ import QuizStep from "./QuizStep";
 import OnboardingHeader from "./OnboardingHeader";
 import OnboardingTransition from "./OnboardingTransition";
 import { updateProfileApi, submitQuizApi, getProfileApi } from "@/lib/api";
+import { useToast } from "@/hooks/useToast";
 
 interface OnboardingWizardProps {
   onComplete: () => void;
@@ -21,11 +22,7 @@ export default function OnboardingWizard({ onComplete }: OnboardingWizardProps) 
   const [isFinishing, setIsFinishing] = useState(false);
   const [hasAttemptedContinue, setHasAttemptedContinue] = useState(false);
 
-  // Toast notification state
-  const [toast, setToast] = useState<{
-    message: string;
-    type: "error" | "info" | "success";
-  } | null>(null);
+  const { showToast } = useToast();
 
   // Step 1 States: Welcome (Starts Empty)
   const [name, setName] = useState("");
@@ -59,19 +56,6 @@ export default function OnboardingWizard({ onComplete }: OnboardingWizardProps) 
 
   const isInitialMount = useRef(true);
 
-  // Show Toast Helper
-  const showToast = (message: string, type: "error" | "info" | "success" = "error") => {
-    setToast({ message, type });
-  };
-
-  // Auto-dismiss toast after 4s
-  useEffect(() => {
-    if (!toast) return;
-    const timer = setTimeout(() => {
-      setToast(null);
-    }, 4000);
-    return () => clearTimeout(timer);
-  }, [toast]);
 
   // Load existing details from localStorage & Backend API on mount
   useEffect(() => {
@@ -108,7 +92,12 @@ export default function OnboardingWizard({ onComplete }: OnboardingWizardProps) 
 
       // Populate Step 1 states
       const loadedName = draftData.name ?? userData.name ?? "";
-      const loadedSource = draftData.source ?? userData.source ?? "";
+      // For OAuth users (Google/GitHub), auto-populate source so they skip Step 1.
+      // If no source saved yet, derive it from their auth provider.
+      let providerSource = "";
+      if (userData.provider === "google") providerSource = "Google";
+      else if (userData.provider === "github") providerSource = "Others";
+      const loadedSource = draftData.source ?? userData.source ?? providerSource;
       setName(loadedName);
       setSource(loadedSource);
 
@@ -154,14 +143,19 @@ export default function OnboardingWizard({ onComplete }: OnboardingWizardProps) 
 
       // Smart Step Selection: Find first incomplete step or restore saved step
       const isStep1Done = Boolean(loadedName.trim() && loadedSource.trim());
+
+      // Check goals from both flat draft (saved by this wizard) AND nested userData.goals (from backend).
+      // Goals can live in either place depending on whether the user completed Step 2 in this session.
+      const goalsData = userData.goals || {};
       const isStep2Done = Boolean(
-        draftData.mainGoal &&
-        draftData.timeline &&
-        draftData.currentStatus &&
-        draftData.yearsCoding &&
-        Array.isArray(draftData.targetRoles) &&
-        draftData.targetRoles.length > 0
+        (draftData.mainGoal || goalsData.mainGoal) &&
+        (draftData.timeline || goalsData.timeline) &&
+        (draftData.currentStatus || goalsData.currentStatus) &&
+        (draftData.yearsCoding || goalsData.yearsCoding) &&
+        (Array.isArray(draftData.targetRoles) && draftData.targetRoles.length > 0 ||
+         Array.isArray(goalsData.targetRoles) && goalsData.targetRoles.length > 0)
       );
+
       const isStep3Done = Boolean(
         loadedName.trim() &&
         loadedEmail.trim() &&
@@ -171,20 +165,31 @@ export default function OnboardingWizard({ onComplete }: OnboardingWizardProps) 
       );
 
       let targetInitialStep: 1 | 2 | 3 | 4 = 1;
-      if (draftData.step && draftData.step >= 1 && draftData.step <= 4) {
-        targetInitialStep = draftData.step as 1 | 2 | 3 | 4;
-      } else if (!isStep1Done) {
-        targetInitialStep = 1;
+      // Determine the smart step based on completion
+      let smartStep: 1 | 2 | 3 | 4 = 1;
+      if (!isStep1Done) {
+        smartStep = 1;
       } else if (!isStep2Done) {
-        targetInitialStep = 2;
+        smartStep = 2;
       } else if (!isStep3Done) {
-        targetInitialStep = 3;
+        smartStep = 3;
       } else {
-        targetInitialStep = 4;
+        smartStep = 4;
+      }
+
+      // Mark initial mount done BEFORE setStep so the save-draft effect
+      // doesn't fire on the first re-render and overwrite the correct saved step.
+      isInitialMount.current = false;
+
+      // Only use the saved draft step if it moves the user FORWARD (not backward).
+      // This prevents stale drafts from pushing OAuth users back to Step 1.
+      if (draftData.step && draftData.step >= smartStep && draftData.step <= 4) {
+        targetInitialStep = draftData.step as 1 | 2 | 3 | 4;
+      } else {
+        targetInitialStep = smartStep;
       }
 
       setStep(targetInitialStep);
-      isInitialMount.current = false;
     };
 
     loadSavedState();
@@ -249,17 +254,27 @@ export default function OnboardingWizard({ onComplete }: OnboardingWizardProps) 
 
   const handleParseProfile = () => {
     if (isParsing) return;
+
+    const trimmedUrl = linkedinUrl.trim();
+
+    // Check if URL was entered at all
+    if (!trimmedUrl) {
+      showToast("Please enter your LinkedIn profile URL before parsing.", "error");
+      return;
+    }
+
+    // Validate it looks like a LinkedIn profile URL
+    const isValidLinkedIn = /^(https?:\/\/)?(www\.)?linkedin\.com\/in\/[a-zA-Z0-9\-_%]+\/?/.test(trimmedUrl);
+    if (!isValidLinkedIn) {
+      showToast("Please enter a valid LinkedIn profile URL (e.g. linkedin.com/in/yourname).", "error");
+      return;
+    }
+
     setIsParsing(true);
     setTimeout(() => {
-      if (!name) setName("John Doe");
-      if (!email) setEmail("john.doe@email.com");
-      setMobile("+91 98765 43210");
-      setLocation("Bengaluru, India");
-      setBio("Aspiring Full-Stack developer with 1-2 years of coding experience. Passionate about building web applications and learning new technologies.");
-      setLinkedinUrl("linkedin.com/in/johndoe");
       setIsParsing(false);
-      showToast("Profile parsed successfully from LinkedIn!", "success");
-    }, 1500);
+      showToast("LinkedIn URL saved! Fill in remaining fields manually (live parsing coming soon).", "info");
+    }, 1000);
   };
 
   const handleResumeUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -561,42 +576,6 @@ export default function OnboardingWizard({ onComplete }: OnboardingWizardProps) 
 
   return (
     <div className="min-h-screen bg-[#F8F9FC] flex flex-col relative">
-      {/* Floating Toast Notification */}
-      <AnimatePresence>
-        {toast && (
-          <motion.div
-            initial={{ opacity: 0, y: -40, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -20, scale: 0.95 }}
-            transition={{ duration: 0.25 }}
-            className="fixed top-20 left-1/2 -translate-x-1/2 z-[100] max-w-md w-full px-4"
-          >
-            <div
-              className={`flex items-center justify-between gap-3 p-4 rounded-2xl shadow-xl border backdrop-blur-md ${
-                toast.type === "error"
-                  ? "bg-red-900/90 border-red-700/80 text-white shadow-red-900/20"
-                  : toast.type === "success"
-                  ? "bg-emerald-900/90 border-emerald-700/80 text-white shadow-emerald-900/20"
-                  : "bg-gray-900/90 border-gray-700/80 text-white shadow-gray-900/20"
-              }`}
-            >
-              <div className="flex items-center gap-2.5">
-                <span className="text-lg">
-                  {toast.type === "error" ? "⚠️" : toast.type === "success" ? "✅" : "ℹ️"}
-                </span>
-                <span className="text-xs sm:text-sm font-bold leading-tight">{toast.message}</span>
-              </div>
-              <button
-                type="button"
-                onClick={() => setToast(null)}
-                className="text-white/70 hover:text-white text-xs font-bold px-1.5 py-0.5 rounded cursor-pointer"
-              >
-                ✕
-              </button>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       {/* Onboarding Header */}
       <OnboardingHeader step={step} quizState={quizState} />

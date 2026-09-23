@@ -9,6 +9,7 @@ import {
   loginApi,
   registerApi,
 } from "@/lib/api";
+import { useToast } from "@/hooks/useToast";
 
 export type AuthMode =
   | "login"
@@ -21,6 +22,7 @@ export type AuthMode =
 
 export function useAuthFlow() {
   const router = useRouter();
+  const { toast } = useToast();
 
   // State Machine Mode
   const [mode, setMode] = useState<AuthMode>("login");
@@ -46,7 +48,9 @@ export function useAuthFlow() {
       const err = params.get("error");
 
       if (err) {
-        setError(decodeURIComponent(err));
+        const decoded = decodeURIComponent(err);
+        setError(decoded);
+        toast.error(decoded);
         window.history.replaceState({}, document.title, window.location.pathname);
         setIsCheckingAuth(false);
       } else if (token) {
@@ -71,16 +75,16 @@ export function useAuthFlow() {
           localStorage.setItem("isOnboarded", "true");
         }
 
+        // Clean URL params and trigger portal loading animation before redirecting
         window.history.replaceState({}, document.title, window.location.pathname);
         setMode("reset-loading");
-        setIsCheckingAuth(false);
       } else {
         // Check if user is already authenticated
         const existingToken = localStorage.getItem("auth_token") || localStorage.getItem("access_token");
         if (existingToken) {
-          // Sync cookie for Next.js middleware and redirect to dashboard
+          // Sync cookie for Next.js middleware and show loading portal before redirecting
           document.cookie = `auth_token=${existingToken}; path=/; max-age=604800; SameSite=Lax`;
-          router.replace("/dashboard");
+          setMode("reset-loading");
           return;
         }
         setIsCheckingAuth(false);
@@ -132,12 +136,12 @@ export function useAuthFlow() {
         }
         window.dispatchEvent(new Event("auth_state_changed"));
         
-        // If user has completed onboarding in DB or has full profile, set isOnboarded
+        // Only consider user onboarded if the backend explicitly says so,
+        // OR if they have BOTH mobile and location filled in (meaningful profile data).
+        // Do NOT use profileStrength as a proxy — new users start at 20-25 which is > 20.
         const hasCompletedProfile = Boolean(
           res.data.user?.isOnboarded ||
-          res.data.user?.mobile ||
-          res.data.user?.location ||
-          (res.data.user?.profileStrength && res.data.user?.profileStrength > 20)
+          (res.data.user?.mobile && res.data.user?.location)
         );
 
         if (hasCompletedProfile) {
@@ -150,7 +154,9 @@ export function useAuthFlow() {
       setMode("reset-loading");
     } catch (err: any) {
       setIsLoading(false);
-      setError(err.message || "Invalid email or password. Please try again.");
+      const msg = err.message || "Invalid email or password. Please try again.";
+      setError(msg);
+      toast.error(msg);
     }
   };
 
@@ -194,7 +200,9 @@ export function useAuthFlow() {
       setMode("reset-loading");
     } catch (err: any) {
       setIsLoading(false);
-      setError(err.message || "Registration failed. Please try again.");
+      const msg = err.message || "Registration failed. Please try again.";
+      setError(msg);
+      toast.error(msg);
     }
   };
 
@@ -209,10 +217,14 @@ export function useAuthFlow() {
       setIsLoading(false);
       setMode("forgot-code");
       setCountdown(59);
-      setSuccessMsg("Verification code sent to your email!");
+      const msg = "Verification code sent to your email!";
+      setSuccessMsg(msg);
+      toast.info(msg);
     } catch (err: any) {
       setIsLoading(false);
-      setError(err.message || "Failed to send verification code. Please check your email.");
+      const msg = err.message || "Failed to send verification code. Please check your email.";
+      setError(msg);
+      toast.error(msg);
     }
   };
 
@@ -226,10 +238,14 @@ export function useAuthFlow() {
       await sendOtpApi({ email: forgotEmail, purpose: "FORGOT_PASSWORD" });
       setIsResending(false);
       setCountdown(59);
-      setSuccessMsg("A new verification code was sent to your email!");
+      const msg = "A new verification code was sent to your email!";
+      setSuccessMsg(msg);
+      toast.info(msg);
     } catch (err: any) {
       setIsResending(false);
-      setError(err.message || "Failed to resend verification code.");
+      const msg = err.message || "Failed to resend verification code.";
+      setError(msg);
+      toast.error(msg);
     }
   };
 
@@ -254,7 +270,9 @@ export function useAuthFlow() {
       setMode("forgot-success");
     } catch (err: any) {
       setIsLoading(false);
-      setError(err.message || "Invalid verification code. Please try again.");
+      const msg = err.message || "Invalid verification code. Please try again.";
+      setError(msg);
+      toast.error(msg);
       setVerificationError(true);
     }
   };
@@ -282,10 +300,13 @@ export function useAuthFlow() {
         newPassword: passwordVal,
       });
       setIsLoading(false);
+      toast.success("Password reset successfully! Redirecting...");
       setMode("reset-loading");
     } catch (err: any) {
       setIsLoading(false);
-      setError(err.message || "Failed to reset password. Please try again.");
+      const msg = err.message || "Failed to reset password. Please try again.";
+      setError(msg);
+      toast.error(msg);
     }
   };
 

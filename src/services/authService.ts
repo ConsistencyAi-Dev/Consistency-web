@@ -51,6 +51,7 @@ export const authService = {
       localStorage.removeItem("auth_token");
       localStorage.removeItem("auth_user");
       localStorage.removeItem("isOnboarded");
+      localStorage.removeItem("onboarding_draft");
       document.cookie = "auth_token=; path=/; max-age=0; SameSite=Lax";
       window.dispatchEvent(new Event("auth_state_changed"));
     }
