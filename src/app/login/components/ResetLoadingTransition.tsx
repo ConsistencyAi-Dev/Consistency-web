@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { brandMarkSvg } from "@/assets";
@@ -14,6 +14,8 @@ export default function ResetLoadingTransition({
 }: ResetLoadingTransitionProps) {
   const [stage, setStage] = useState<1 | 2 | 3>(1);
   const [progress, setProgress] = useState(0);
+  const onCompleteRef = useRef(onComplete);
+  onCompleteRef.current = onComplete;
 
   useEffect(() => {
     const stage2Timer = setTimeout(() => {
@@ -52,11 +54,11 @@ export default function ResetLoadingTransition({
     if (stage !== 3) return;
 
     const completeTimer = setTimeout(() => {
-      onComplete();
+      onCompleteRef.current();
     }, 1100);
 
     return () => clearTimeout(completeTimer);
-  }, [stage, onComplete]);
+  }, [stage]);
 
   return (
     <div className="fixed inset-0 z-50 flex h-screen w-screen items-center justify-center bg-[#F9FBFF] text-center">

@@ -127,9 +127,9 @@ export const COHORTS_CATALOG: Record<string, CohortConfig> = {
     badge: 'INTERVIEW MASTERY',
     duration: '4-6 Months',
     sessionsCount: '160 Live Sessions',
-    mentor: 'Priya Singh',
-    mentorRole: 'Ex-Meta, Senior SWE',
-    rating: '4.8',
+    mentor: 'Bhavanidevi Manyala',
+    mentorRole: 'Data Analyst & AI Engineer',
+    rating: '4.9',
     studentsCount: '210+ enrolled',
     skills: ['Advanced DSA', 'System Design (HLD + LLD)', 'Concurrency', 'Microservices', 'Mock Interviews'],
     features: [

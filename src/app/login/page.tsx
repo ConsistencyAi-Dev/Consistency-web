@@ -37,6 +37,16 @@ export default function LoginPage() {
     handleResetPasswordSubmit,
   } = useAuthFlow();
 
+  if (mode === "reset-loading") {
+    return (
+      <ResetLoadingTransition
+        onComplete={() => {
+          window.location.href = "/dashboard";
+        }}
+      />
+    );
+  }
+
   if (isCheckingAuth) {
     return (
       <div className="h-screen w-full flex items-center justify-center bg-[#F3F4F6]">
@@ -49,16 +59,6 @@ export default function LoginPage() {
   }
 
   const isCenterCardMode = ["forgot-email", "forgot-code", "forgot-success"].includes(mode);
-
-  if (mode === "reset-loading") {
-    return (
-      <ResetLoadingTransition
-        onComplete={() => {
-          router.push("/dashboard");
-        }}
-      />
-    );
-  }
 
   return (
     <div className="h-screen w-full flex items-center justify-center bg-[#F3F4F6] font-sans overflow-hidden relative">

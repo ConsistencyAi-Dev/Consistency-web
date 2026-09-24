@@ -109,9 +109,9 @@ export const COHORTS_DATA: CohortItem[] = [
     rating: "4.8",
     students: "210+",
     skills: ["DSA Patterns", "HLD + LLD", "Mock Interviews"],
-    mentor: "Priya Singh",
-    mentorTitle: "Ex-Meta, Senior SWE",
-    mentorAvatar: "P",
+    mentor: "Bhavanidevi Manyala",
+    mentorTitle: "Data Analyst & AI Engineer",
+    mentorAvatar: "B",
     price: "₹40,000",
     originalPrice: "₹50,000",
     startDate: "Oct 20, 2026",
@@ -126,9 +126,7 @@ export const COHORTS_DATA: CohortItem[] = [
 ];
 
 export const MENTORS_DATA: MentorItem[] = [
-  { name: "Alex Morgan", rating: "4.9", title: "Staff Engineer @ Linear • 2.1k students", initial: "AM", color: "bg-[#2B50EC]" },
-  { name: "Priya Singh", rating: "4.9", title: "Senior SWE @ Meta • 1.8k students", initial: "PS", color: "bg-[#0F172A]" },
-  { name: "David Chen", rating: "4.8", title: "Design Engineer @ Vercel • 1.2k students", initial: "DC", color: "bg-[#F59E0B]" },
+  { name: "Bhavanidevi Manyala", rating: "4.9", title: "Data Analyst & AI Engineer • 1.5k students", initial: "BM", color: "bg-[#2B50EC]" },
 ];
 
 export const WORKSHOPS_DATA: WorkshopItem[] = [
@@ -136,13 +134,13 @@ export const WORKSHOPS_DATA: WorkshopItem[] = [
     type: "Career",
     date: "Tomorrow, 7 PM IST",
     title: "How to crack FAANG in 90 days",
-    author: "by Alex Morgan",
+    author: "by Bhavanidevi Manyala",
   },
   {
     type: "Live Build",
     date: "Sat, 11 AM IST",
     title: "System Design Live: Design YouTube",
-    author: "by Priya Singh",
+    author: "by Bhavanidevi Manyala",
   },
 ];
 
