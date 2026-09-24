@@ -71,12 +71,15 @@ export function useAuthFlow() {
         const isNew = isNewUserParam === "true" || parsedUser?.isNewUser === true || (!parsedUser?.mobile && !parsedUser?.location && !parsedUser?.isOnboarded);
         if (isNew) {
           localStorage.removeItem("isOnboarded");
+          localStorage.removeItem("onboarding_draft");
         } else {
           localStorage.setItem("isOnboarded", "true");
         }
 
         // Clean URL params and trigger portal loading animation before redirecting
         window.history.replaceState({}, document.title, window.location.pathname);
+        window.dispatchEvent(new Event("auth_state_changed"));
+        setIsCheckingAuth(false);
         setMode("reset-loading");
       } else {
         // Check if user is already authenticated
@@ -84,6 +87,7 @@ export function useAuthFlow() {
         if (existingToken) {
           // Sync cookie for Next.js middleware and show loading portal before redirecting
           document.cookie = `auth_token=${existingToken}; path=/; max-age=604800; SameSite=Lax`;
+          setIsCheckingAuth(false);
           setMode("reset-loading");
           return;
         }
@@ -148,6 +152,7 @@ export function useAuthFlow() {
           localStorage.setItem("isOnboarded", "true");
         } else {
           localStorage.removeItem("isOnboarded");
+          localStorage.removeItem("onboarding_draft");
         }
       }
       setIsLoading(false);
@@ -194,6 +199,7 @@ export function useAuthFlow() {
           localStorage.setItem("auth_user", JSON.stringify(res.data.user));
         }
         localStorage.removeItem("isOnboarded");
+        localStorage.removeItem("onboarding_draft");
         window.dispatchEvent(new Event("auth_state_changed"));
       }
       setIsLoading(false);

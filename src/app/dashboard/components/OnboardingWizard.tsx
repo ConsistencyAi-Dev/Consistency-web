@@ -90,14 +90,9 @@ export default function OnboardingWizard({ onComplete }: OnboardingWizardProps) 
         }
       }
 
-      // Populate Step 1 states
+      // Populate Step 1 states (Do not auto-populate source so new users always complete Step 1)
       const loadedName = draftData.name ?? userData.name ?? "";
-      // For OAuth users (Google/GitHub), auto-populate source so they skip Step 1.
-      // If no source saved yet, derive it from their auth provider.
-      let providerSource = "";
-      if (userData.provider === "google") providerSource = "Google";
-      else if (userData.provider === "github") providerSource = "Others";
-      const loadedSource = draftData.source ?? userData.source ?? providerSource;
+      const loadedSource = draftData.source ?? userData.source ?? "";
       setName(loadedName);
       setSource(loadedSource);
 
@@ -181,9 +176,11 @@ export default function OnboardingWizard({ onComplete }: OnboardingWizardProps) 
       // doesn't fire on the first re-render and overwrite the correct saved step.
       isInitialMount.current = false;
 
-      // Only use the saved draft step if it moves the user FORWARD (not backward).
-      // This prevents stale drafts from pushing OAuth users back to Step 1.
-      if (draftData.step && draftData.step >= smartStep && draftData.step <= 4) {
+      // If Step 1 is not complete (e.g. new user hasn't selected source), always start at Step 1.
+      // Otherwise, restore the user's furthest reached step.
+      if (!isStep1Done) {
+        targetInitialStep = 1;
+      } else if (draftData.step && draftData.step >= smartStep && draftData.step <= 4) {
         targetInitialStep = draftData.step as 1 | 2 | 3 | 4;
       } else {
         targetInitialStep = smartStep;
@@ -405,10 +402,12 @@ export default function OnboardingWizard({ onComplete }: OnboardingWizardProps) 
     try {
       const stored = localStorage.getItem("auth_user");
       const token = localStorage.getItem("auth_token") || undefined;
-      let userId = "usr_1";
+      let userId = "profile";
       if (stored) {
-        const parsedUser = JSON.parse(stored);
-        userId = parsedUser.id || userId;
+        try {
+          const parsedUser = JSON.parse(stored);
+          userId = parsedUser.id || parsedUser.userId || "profile";
+        } catch (e) {}
       }
 
       const onboardingGoals = {
@@ -471,11 +470,13 @@ export default function OnboardingWizard({ onComplete }: OnboardingWizardProps) 
     try {
       const stored = localStorage.getItem("auth_user");
       const token = localStorage.getItem("auth_token") || undefined;
-      let userId = "usr_1";
+      let userId = "profile";
       let parsedUser: any = {};
       if (stored) {
-        parsedUser = JSON.parse(stored);
-        userId = parsedUser.id || userId;
+        try {
+          parsedUser = JSON.parse(stored);
+          userId = parsedUser.id || parsedUser.userId || "profile";
+        } catch (e) {}
       }
 
       // Calculate final profile strength

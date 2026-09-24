@@ -193,7 +193,7 @@ export default function DashboardSidebarWidgets() {
       {/* Widget 2: Potential Mentors */}
       <div className="inline-flex w-full flex-col items-start gap-4 rounded-2xl bg-white p-5 shadow-[0px_1px_2px_rgba(0,0,0,0.05)] outline outline-[1px] outline-[#E2E8F0] -outline-offset-[1px]">
         <div className="flex w-full items-center justify-between">
-          <h4 className="text-[13.5px] font-semibold leading-[20.25px] text-[#0F172A]">Meet Your Potential Mentors</h4>
+          <h4 className="text-[13.5px] font-semibold leading-[20.25px] text-[#0F172A]">Meet Your Mentor</h4>
           <span className="text-[11px] font-normal leading-[16.5px] text-[#64748B]">1:1 trial</span>
         </div>
 
@@ -227,7 +227,7 @@ export default function DashboardSidebarWidgets() {
         </div>
 
         <button className="inline-flex h-9 w-full items-center justify-center rounded-full bg-[#F8FAFC] outline outline-[1px] outline-[#E2E8F0] -outline-offset-[1px] text-[12.5px] font-normal leading-[18.75px] text-[#0F172A] transition-colors hover:bg-gray-100 cursor-pointer">
-          View all mentors
+          View mentor profile
         </button>
       </div>
 
