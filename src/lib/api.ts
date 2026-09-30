@@ -38,6 +38,30 @@ export interface ApiResponse<T = any> {
   errors?: string[];
 }
 
+async function safeFetchJson<T = any>(res: Response, defaultError: string): Promise<ApiResponse<T>> {
+  const text = await res.text();
+  let data: any = null;
+  if (text) {
+    try {
+      data = JSON.parse(text);
+    } catch {
+      data = { message: text };
+    }
+  }
+
+  if (!res.ok) {
+    const errorMsg = data?.message || data?.error || (typeof data === 'string' ? data : `${defaultError} (Status: ${res.status})`);
+    throw new Error(errorMsg);
+  }
+
+  return (data || {
+    success: true,
+    statusCode: res.status,
+    message: 'Success',
+    data: null as any,
+  }) as ApiResponse<T>;
+}
+
 export async function sendOtpApi(payload: SendOtpPayload): Promise<ApiResponse<{ email: string; purpose: string; expiresInSeconds: number }>> {
   const res = await fetch(`${API_BASE_URL}/auth/send-otp`, {
     method: 'POST',
@@ -51,11 +75,7 @@ export async function sendOtpApi(payload: SendOtpPayload): Promise<ApiResponse<{
     }),
   });
 
-  const data = await res.json();
-  if (!res.ok) {
-    throw new Error(data.message || data.error || 'Failed to send verification code');
-  }
-  return data;
+  return safeFetchJson(res, 'Failed to send verification code');
 }
 
 export async function verifyOtpApi(payload: VerifyOtpPayload): Promise<ApiResponse<{ verified: boolean; email: string; resetToken?: string }>> {
@@ -71,11 +91,7 @@ export async function verifyOtpApi(payload: VerifyOtpPayload): Promise<ApiRespon
     }),
   });
 
-  const data = await res.json();
-  if (!res.ok) {
-    throw new Error(data.message || data.error || 'Invalid verification code');
-  }
-  return data;
+  return safeFetchJson(res, 'Invalid verification code');
 }
 
 export async function resetPasswordApi(payload: ResetPasswordPayload): Promise<ApiResponse<{ success: boolean; email: string }>> {
@@ -87,11 +103,7 @@ export async function resetPasswordApi(payload: ResetPasswordPayload): Promise<A
     body: JSON.stringify(payload),
   });
 
-  const data = await res.json();
-  if (!res.ok) {
-    throw new Error(data.message || data.error || 'Failed to reset password');
-  }
-  return data;
+  return safeFetchJson(res, 'Failed to reset password');
 }
 
 export async function loginApi(emailVal: string, passwordVal: string): Promise<ApiResponse<{ user: any; token: string; refreshToken: string }>> {
@@ -106,11 +118,7 @@ export async function loginApi(emailVal: string, passwordVal: string): Promise<A
     }),
   });
 
-  const data = await res.json();
-  if (!res.ok) {
-    throw new Error(data.message || data.error || 'Invalid email or password');
-  }
-  return data;
+  return safeFetchJson(res, 'Invalid email or password');
 }
 
 export async function registerApi(payload: {
@@ -130,11 +138,7 @@ export async function registerApi(payload: {
     body: JSON.stringify(payload),
   });
 
-  const data = await res.json();
-  if (!res.ok) {
-    throw new Error(data.message || data.error || 'Registration failed');
-  }
-  return data;
+  return safeFetchJson(res, 'Registration failed');
 }
 
 export async function getProfileApi(token?: string, userId?: string): Promise<ApiResponse<any>> {
@@ -153,11 +157,7 @@ export async function getProfileApi(token?: string, userId?: string): Promise<Ap
     headers,
   });
 
-  const data = await res.json();
-  if (!res.ok) {
-    throw new Error(data.message || data.error || 'Failed to fetch user profile');
-  }
-  return data;
+  return safeFetchJson(res, 'Failed to fetch user profile');
 }
 
 export async function updateProfileApi(userId: string, updates: any, token?: string): Promise<ApiResponse<any>> {
@@ -174,11 +174,7 @@ export async function updateProfileApi(userId: string, updates: any, token?: str
     body: JSON.stringify(updates),
   });
 
-  const data = await res.json();
-  if (!res.ok) {
-    throw new Error(data.message || data.error || 'Failed to update user profile');
-  }
-  return data;
+  return safeFetchJson(res, 'Failed to update user profile');
 }
 
 export async function submitQuizApi(payload: {
@@ -194,11 +190,7 @@ export async function submitQuizApi(payload: {
     body: JSON.stringify(payload),
   });
 
-  const data = await res.json();
-  if (!res.ok) {
-    throw new Error(data.message || data.error || 'Failed to submit quiz assessment');
-  }
-  return data;
+  return safeFetchJson(res, 'Failed to submit quiz assessment');
 }
 
 export async function getProfileStrengthApi(userId?: string, token?: string): Promise<ApiResponse<{
@@ -242,11 +234,7 @@ export async function getProfileStrengthApi(userId?: string, token?: string): Pr
     headers,
   });
 
-  const data = await res.json();
-  if (!res.ok) {
-    throw new Error(data.message || data.error || 'Failed to fetch profile strength');
-  }
-  return data;
+  return safeFetchJson(res, 'Failed to fetch profile strength');
 }
 
 export async function getScoreProfileApi(userId: string): Promise<ApiResponse<any>> {
@@ -257,9 +245,5 @@ export async function getScoreProfileApi(userId: string): Promise<ApiResponse<an
     },
   });
 
-  const data = await res.json();
-  if (!res.ok) {
-    throw new Error(data.message || data.error || 'Failed to fetch score profile');
-  }
-  return data;
+  return safeFetchJson(res, 'Failed to fetch score profile');
 }

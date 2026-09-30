@@ -7,7 +7,7 @@ import GoalsStep from "./GoalsStep";
 import ProfileStep from "./ProfileStep";
 import QuizStep from "./QuizStep";
 import OnboardingHeader from "./OnboardingHeader";
-import OnboardingTransition from "./OnboardingTransition";
+import DashboardLoading from "./DashboardLoading";
 import { updateProfileApi, submitQuizApi, getProfileApi } from "@/lib/api";
 import { useToast } from "@/hooks/useToast";
 
@@ -572,7 +572,7 @@ export default function OnboardingWizard({ onComplete }: OnboardingWizardProps) 
   };
 
   if (isFinishing) {
-    return <OnboardingTransition userName={name} onComplete={onComplete} />;
+    return <DashboardLoading onComplete={onComplete} />;
   }
 
   return (
