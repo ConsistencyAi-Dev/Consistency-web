@@ -109,7 +109,6 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const [isOnboarded, setIsOnboarded] = useState<boolean | null>(null);
-  const [showPortalLoading, setShowPortalLoading] = useState(true);
   const [currentUser, setCurrentUser] = useState<{
     id?: string;
     name?: string;
@@ -175,14 +174,8 @@ export default function DashboardLayout({
     } catch (e) { }
   };
 
-  if (showPortalLoading || isOnboarded === null) {
-    return (
-      <DashboardLoading
-        onComplete={() => {
-          setShowPortalLoading(false);
-        }}
-      />
-    );
+  if (isOnboarded === null) {
+    return <DashboardLoading />;
   }
 
   if (!isOnboarded) {
