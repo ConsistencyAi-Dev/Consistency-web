@@ -257,7 +257,8 @@ export default function EnrollCheckoutView({
                 </label>
                 <input
                   type="text"
-                  defaultValue="4242 4242 4242 4242"
+                  defaultValue=""
+                  placeholder="4242 4242 4242 4242"
                   className="w-full bg-gray-50 rounded-xl py-3 px-4 text-xs font-semibold focus:outline-none focus:border-blue-300 focus:bg-white transition-all shadow-inner border border-gray-100"
                 />
               </div>
@@ -269,7 +270,7 @@ export default function EnrollCheckoutView({
                   </label>
                   <input
                     type="text"
-                    defaultValue="12/28"
+                    placeholder="12/28"
                     className="w-full bg-gray-50 rounded-xl py-3 px-4 text-xs font-semibold focus:outline-none focus:border-blue-300 focus:bg-white transition-all shadow-inner border border-gray-100"
                   />
                 </div>
@@ -279,7 +280,7 @@ export default function EnrollCheckoutView({
                   </label>
                   <input
                     type="password"
-                    defaultValue="123"
+                    placeholder="123"
                     className="w-full bg-gray-50 rounded-xl py-3 px-4 text-xs font-semibold focus:outline-none focus:border-blue-300 focus:bg-white transition-all shadow-inner border border-gray-100"
                   />
                 </div>
